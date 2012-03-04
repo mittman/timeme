@@ -14,7 +14,7 @@ public class Main
 		
 		GUI home = new GUI();
 	    home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    home.setSize(210, 300);
+	    home.setSize(250, 300);
 	    home.setLocation(100, 100);
 	    home.setVisible(true);
 	}
