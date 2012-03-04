@@ -6,7 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 
 /**
- * @author kevin
+ * @author Team 0x00000001
  *
  */
 
@@ -28,11 +28,6 @@ public class GUI extends JFrame
 		add(msg3);
 	    JLabel msg4 = new JLabel("POTATO");
 		add(msg4);
-		
-		JLabel spacer2 = new JLabel("");
-		add(spacer2);
-		JLabel spacer3 = new JLabel("");
-		add(spacer3);
 
 	    JButton button1 = new JButton("Start");
 	    button1.setMnemonic(KeyEvent.VK_S);
