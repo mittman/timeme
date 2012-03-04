@@ -1,7 +1,7 @@
 import javax.swing.JFrame;
 
 /**
- * @author kevin
+ * @author Team 0x00000001
  *
  */
 
