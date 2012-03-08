@@ -20,7 +20,7 @@ public class GUI extends JFrame
 		super("Time Me");		
 	    setLayout(new GridLayout(0, 2));
 	    
-	    JLabel msg1 = new JLabel("It's me Mario");
+	    JLabel msg1 = new JLabel("It's me Mario!");
 		add(msg1);
 	    JLabel msg2 = new JLabel("doing?");
 		add(msg2);
