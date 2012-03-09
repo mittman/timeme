@@ -9,14 +9,19 @@ public class Main
 {
 	
 	public static void main(String[] args) 
-	{
-		System.out.println("Hello World!");
-		
-		GUI home = new GUI();
-	    home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    home.setSize(250, 300);
-	    home.setLocation(100, 100);
-	    home.setVisible(true);
+	{		
+        JFrame frame = new JFrame("TimeMe");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ 
+        //Create and set up the content pane.
+        Prototype1 newContentPane = new Prototype1();
+        newContentPane.setOpaque(true); 
+        frame.setContentPane(newContentPane);
+ 
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+	    
 	}
 
 }
