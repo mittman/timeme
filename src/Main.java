@@ -14,14 +14,14 @@ public class Main
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
         //Create and set up the content pane.
-        Prototype1 newContentPane = new Prototype1();
+        Frontend newContentPane = new Frontend();
         newContentPane.setOpaque(true); 
         frame.setContentPane(newContentPane);
  
         //Display the window.
         frame.pack();
-        frame.setVisible(true);
-	    
+        frame.setResizable(false);
+        frame.setVisible(true);	    
 	}
 
 }
