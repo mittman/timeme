@@ -16,31 +16,16 @@ public class summaryTab
     {
         JPanel pane = new JPanel();
         
- 
         JComponent component = new JPanel();
         Dimension size = new Dimension(150,100);
         component.setMaximumSize(size);
         component.setPreferredSize(size);
         component.setMinimumSize(size);
-        TitledBorder border = new TitledBorder(
-                                  new LineBorder(Color.black),
-                                  "A box here",
-                                  TitledBorder.CENTER,
-                                  TitledBorder.BELOW_TOP);
-        border.setTitleColor(Color.red);
-        component.setBorder(border);
- 
-        JButton button = new JButton("This is a JButton");
         
-        String title;
-
-        title = "Summary";
-        button.setAlignmentX(0);
-
+        String title = "Summary";
  
         pane.setBorder(BorderFactory.createTitledBorder(title));
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-        pane.add(button);
         pane.add(component);
         return pane;
     }

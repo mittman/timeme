@@ -1,4 +1,6 @@
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -25,6 +27,22 @@ public class summaryDock
         buttons.add(button1);
         buttons.add(button2);
                 
+        button1.addActionListener(new ActionListener()
+        {
+        	public void actionPerformed(ActionEvent e)
+        	{
+        		System.out.println("summaryDock::BROWSE PRESSED!");
+        	}
+        });
+        
+        button2.addActionListener(new ActionListener()
+        {
+        	public void actionPerformed(ActionEvent e)
+        	{
+        		System.out.println("summaryDock::GENERATE PRESSED!");
+        	}
+        });
+        
         pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
         pane.add(buttons);
         return pane;

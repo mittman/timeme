@@ -19,17 +19,18 @@ public class activityTab
 	protected JPanel activityTab()
     {
         JPanel pane = new JPanel();
-
-        JButton button = new JButton("This is a JButton");
         
-        String title;
-
-        title = "Add New";
-        button.setAlignmentX(0);
+        JComponent component = new JPanel();
+        Dimension size = new Dimension(150,100);
+        component.setMaximumSize(size);
+        component.setPreferredSize(size);
+        component.setMinimumSize(size);
+        
+        String title = "Add New";
 
         pane.setBorder(BorderFactory.createTitledBorder(title));
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-        pane.add(button);
+        pane.add(component);
         return pane;
     }
 }

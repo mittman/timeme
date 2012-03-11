@@ -1,9 +1,8 @@
-import java.awt.Dimension;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class manageTab 
 {
@@ -24,9 +23,37 @@ public class manageTab
         		{ "history19", "an activity", "00:00:00" }, { "history20", "an activity", "00:00:00" } };
         String columnNames[] = { "Title", "Description", "Elapsed" };
 
-        JTable table = new JTable(rowData, columnNames);
+        final JTable table = new JTable(rowData, columnNames);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.getTableHeader().setReorderingAllowed(false);
+        
+        
+        ListSelectionModel cellSelectionModel = table.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        cellSelectionModel.addListSelectionListener(new ListSelectionListener() 
+        {
+        	int oldNum = -1;
+            public void valueChanged(ListSelectionEvent e) 
+            {
+              String selectedData = null;
+              int num = -1;
+              int[] selectedRow = table.getSelectedRows();
+              
+              for (int i = 0; i < selectedRow.length; i++) 
+              {
+            	  num = table.getSelectedRow();
+            	  selectedData = (String) table.getValueAt(selectedRow[i], 0);
+              }
+              
+              if (num != oldNum)
+              {
+            	  System.out.println("Selected: " + num + " " + selectedData);
+              }
+              oldNum = num;
+            }
+
+          });
+        
         
         pane.add(table);
         return pane;

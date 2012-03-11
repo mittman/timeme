@@ -1,4 +1,6 @@
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,6 +24,22 @@ public class clockPane
         JButton button2 = new JButton("<html><body topmargin=8 marginheight=10>PAUSE</body></html>");
         button2.setAlignmentX(0); 
         dock.setLayout(new BoxLayout(dock, BoxLayout.X_AXIS));
+        
+        button1.addActionListener(new ActionListener()
+        {
+        	public void actionPerformed(ActionEvent e)
+        	{
+        		System.out.println("clockPane::RESUME PRESSED!");
+        	}
+        });
+        
+        button2.addActionListener(new ActionListener()
+        {
+        	public void actionPerformed(ActionEvent e)
+        	{
+        		System.out.println("clockPane::PAUSE PRESSED!");
+        	}
+        });
         
         head.add(timer);
         dock.add(button1);
