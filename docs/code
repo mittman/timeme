@@ -1,0 +1,26 @@
+So I found a suitable container, BoxLayout.
+
+Description of containers here:
+http://java.sun.com/products/jfc/tsc/articles/containers/#swing_containers
+
+"Repurporsed" the example code:
+http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/BoxAlignmentDemoProject/src/layout/BoxAlignmentDemo.java
+
+Which is described here:
+http://docs.oracle.com/javase/tutorial/uiswing/layout/box.html
+
+And finally used this "in-line" HTML "hack" to make both the tabs and buttons bigger:
+http://weblogs.java.net/blog/xuanyun/archive/2009/01/change_the_tab_1.html Heh, had to do this before to format bash output using PHP.
+
+
+button event handler:
+http://www.codebeach.com/2009/03/introduction-to-java-swing.html
+
+tab event handler:
+http://www.exampledepot.com/egs/javax.swing/tabbed_TpEvt.html
+
+list event handler:
+http://www.devdaily.com/java/java-jlist-listselectionlistener-event
+
+table event handler:
+http://www.java2s.com/Tutorial/Java/0240__Swing/TableSelectionEventsandListeners.htm
