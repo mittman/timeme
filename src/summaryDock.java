@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,7 +13,7 @@ public class summaryDock
 {
 	protected JPanel summaryDock()
     {
-        JPanel pane = new JPanel();
+        final JPanel pane = new JPanel();
         
         JComponent buttons = new JPanel();
         Dimension dock = new Dimension(200,250);
@@ -32,6 +33,14 @@ public class summaryDock
         	public void actionPerformed(ActionEvent e)
         	{
         		System.out.println("summaryDock::BROWSE PRESSED!");
+        		try
+        		{
+					browsePath selectDirectory = new browsePath(pane);
+				} 
+        		catch (IOException e1) 
+        		{
+        			System.err.println("Error: " + e1.getMessage());			
+        		}
         	}
         });
         
