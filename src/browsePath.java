@@ -7,16 +7,36 @@ import javax.swing.JFileChooser;
 
 public class browsePath 
 {
-	protected browsePath(Component pane) throws IOException
+	File selected = null;
+	
+	protected browsePath(Component pane, File oldDir) throws IOException
 	{
-		JFileChooser fileChooser = new JFileChooser();
+		
+	    JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		
+		if (oldDir == null)
+		{
+			File curDir = new File(System.getProperty("user.dir"));
+			fileChooser.setCurrentDirectory(curDir);
+		}
+		else
+		{
+			fileChooser.setCurrentDirectory(oldDir);
+		}
+				
 		int browse = fileChooser.showOpenDialog(pane);
 		if (browse == JFileChooser.APPROVE_OPTION) 
 		{
-			File selected = fileChooser.getSelectedFile();
+			selected = fileChooser.getSelectedFile();
 			System.out.println(selected);
 			loadFile readData = new loadFile(selected);
 		}
 	}
+
+	protected File getSelected()
+	{
+		return selected;
+	}
+	
 }

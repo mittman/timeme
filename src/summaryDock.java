@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.BoxLayout;
@@ -11,6 +12,9 @@ import javax.swing.JPanel;
 
 public class summaryDock 
 {
+
+	browsePath selectDirectory;
+	
 	protected JPanel summaryDock()
     {
         final JPanel pane = new JPanel();
@@ -33,13 +37,25 @@ public class summaryDock
         	public void actionPerformed(ActionEvent e)
         	{
         		System.out.println("summaryDock::BROWSE PRESSED!");
+        		
+        		File oldDir = null;
+        		
         		try
         		{
-					browsePath selectDirectory = new browsePath(pane);
-				} 
-        		catch (IOException e1) 
+        			oldDir = selectDirectory.getSelected();
+        		}
+        		catch (Exception e1)
         		{
-        			System.err.println("Error: " + e1.getMessage());			
+        			System.err.println("Error: " + e1.getMessage());
+        		}
+
+        		try
+        		{
+        			selectDirectory = new browsePath(pane,oldDir);
+				} 
+        		catch (IOException e2) 
+        		{
+        			System.err.println("Error: " + e2.getMessage());			
         		}
         	}
         });
