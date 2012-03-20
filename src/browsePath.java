@@ -8,6 +8,7 @@ import javax.swing.JFileChooser;
 public class browsePath 
 {
 	File selected = null;
+	File curDir = null;
 	
 	protected browsePath(Component pane, File oldDir) throws IOException
 	{
@@ -17,7 +18,7 @@ public class browsePath
 		
 		if (oldDir == null)
 		{
-			File curDir = new File(System.getProperty("user.dir"));
+			curDir = new File(System.getProperty("user.dir"));
 			fileChooser.setCurrentDirectory(curDir);
 		}
 		else
@@ -37,6 +38,11 @@ public class browsePath
 	protected File getSelected()
 	{
 		return selected;
+	}
+	
+	protected File getCurrent()
+	{
+		return curDir;
 	}
 	
 }

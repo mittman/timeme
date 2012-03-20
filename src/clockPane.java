@@ -10,10 +10,11 @@ import javax.swing.JPanel;
 
 public class clockPane 
 {
+	static JLabel timer = new JLabel("00:00:00.00");
+
     protected JPanel clockPane()
     {
         JPanel head = new JPanel();
-        JLabel timer = new JLabel("00:00:00");  
         timer.setFont(new Font(timer.getFont().getName(),timer.getFont().getStyle(),50));
         timer.setAlignmentX(0);
         head.setLayout(new BoxLayout(head, BoxLayout.Y_AXIS));
@@ -30,6 +31,17 @@ public class clockPane
         	public void actionPerformed(ActionEvent e)
         	{
         		System.out.println("clockPane::RESUME PRESSED!");
+        		
+        		//Timer.startTimer(true);
+        		for (int i = 0; i < 10; i++)
+        		{
+        			timer.setText(Timer.getElapsed(1332210787341L));
+        		}
+        		
+        		/*
+                stopWatch timer = new stopWatch(0); 
+                stopWatch.increment(20);
+                */
         	}
         });
         
@@ -38,6 +50,8 @@ public class clockPane
         	public void actionPerformed(ActionEvent e)
         	{
         		System.out.println("clockPane::PAUSE PRESSED!");
+        		Timer.startTimer(false);
+
         	}
         });
         
