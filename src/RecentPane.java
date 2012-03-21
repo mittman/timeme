@@ -1,18 +1,18 @@
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+/**
+ * @name RecentPane
+ * @author Team 0x00000001
+ */
 
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
+import java.awt.Font;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 
-public class recentPane 
+public class RecentPane 
 {
-    protected JPanel recentPane()
+    protected JPanel RecentPane()
     {
         JPanel pane = new JPanel();
 

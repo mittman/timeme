@@ -1,22 +1,18 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.io.IOException;
+/**
+ * @name ActivityDock
+ * @author Team 0x00000001
+ */
 
+import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 
 
-public class activityTab 
+public class SummaryTab 
 {
-	protected JPanel activityTab()
+    protected JPanel SummaryTab()
     {
         JPanel pane = new JPanel();
         
@@ -26,8 +22,8 @@ public class activityTab
         component.setPreferredSize(size);
         component.setMinimumSize(size);
         
-        String title = "Add New";
-
+        String title = "Summary";
+ 
         pane.setBorder(BorderFactory.createTitledBorder(title));
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         pane.add(component);

@@ -1,16 +1,20 @@
+/**
+ * @name BrowsePath
+ * @author Team 0x00000001
+ */
+
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.JFileChooser;
 
 
-public class browsePath 
+public class BrowsePath 
 {
 	File selected = null;
 	File curDir = null;
 	
-	protected browsePath(Component pane, File oldDir) throws IOException
+	protected BrowsePath(Component pane, File oldDir) throws IOException
 	{
 		
 	    JFileChooser fileChooser = new JFileChooser();
@@ -31,7 +35,7 @@ public class browsePath
 		{
 			selected = fileChooser.getSelectedFile();
 			System.out.println(selected);
-			loadFile readData = new loadFile(selected);
+			LoadFile readData = new LoadFile(selected);
 		}
 	}
 

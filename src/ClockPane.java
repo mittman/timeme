@@ -1,9 +1,13 @@
+/**
+ * @name ActivityDock
+ * @author Team 0x00000001
+ */
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -11,12 +15,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-public class clockPane 
+public class ClockPane 
 {
 	static JLabel timeText = new JLabel("00:00:00.0");
-	stopWatch display = new stopWatch();
+	StopWatch display = new StopWatch();
 
-    protected JPanel clockPane()
+    protected JPanel ClockPane()
     {
         JPanel head = new JPanel();
         head.setLayout(new BoxLayout(head, BoxLayout.Y_AXIS));

@@ -1,13 +1,18 @@
-import java.awt.Dimension;
+/**
+ * @name ActivityTab
+ * @author Team 0x00000001
+ */
 
+import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-public class summaryTab 
+
+public class ActivityTab 
 {
-    protected JPanel summaryTab()
+	protected JPanel ActivityTab()
     {
         JPanel pane = new JPanel();
         
@@ -17,8 +22,8 @@ public class summaryTab
         component.setPreferredSize(size);
         component.setMinimumSize(size);
         
-        String title = "Summary";
- 
+        String title = "Add New";
+
         pane.setBorder(BorderFactory.createTitledBorder(title));
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         pane.add(component);

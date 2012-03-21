@@ -1,3 +1,8 @@
+/**
+ * @name LoadFile
+ * @author Team 0x00000001
+ */
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -8,9 +13,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 
-public class loadFile 
+public class LoadFile 
 {
-	protected loadFile(File pathToFile) throws IOException
+	protected LoadFile(File pathToFile) throws IOException
 	{
 		String fileName = pathToFile+"/timeme.tsv";
 		
@@ -40,7 +45,6 @@ public class loadFile
 				  System.out.println (strLine);
 			  }
 			  
-			  //Close the input stream
 			  in.close();
 		}
 		

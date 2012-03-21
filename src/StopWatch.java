@@ -1,21 +1,26 @@
+/**
+ * @name StopWatch
+ * @author Team 0x00000001
+ */
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 
-public class stopWatch implements ActionListener
+public class StopWatch implements ActionListener
 {
 	private Timer eggtimer = new javax.swing.Timer(100, this);
     private long now = System.currentTimeMillis();
 
-    public stopWatch() 
+    public StopWatch() 
     {
-        clockPane.timeText.setText(getElapsed());
+        ClockPane.timeText.setText(getElapsed());
     }
 
     public void actionPerformed(ActionEvent ae) 
     {
-        clockPane.timeText.setText(getElapsed());
+        ClockPane.timeText.setText(getElapsed());
     }
 
     public void start() 

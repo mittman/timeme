@@ -1,12 +1,18 @@
+/**
+ * @name ManageTab
+ * @author Team 0x00000001
+ */
+
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class manageTab 
+
+public class ManageTab 
 {
-	protected JPanel manageTab()
+	protected JPanel ManageTab()
     {
         JPanel pane = new JPanel();
     	              

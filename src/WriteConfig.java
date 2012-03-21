@@ -1,3 +1,8 @@
+/**
+ * @name WriteConfig
+ * @author Team 0x00000001
+ */
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -8,9 +13,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 
-public class writeConfig 
+public class WriteConfig 
 {
-	protected writeConfig(File pathToConfig, File pathToFile) throws IOException
+	protected WriteConfig(File pathToConfig, File pathToFile) throws IOException
 	{
 		String fileName = pathToConfig+"/timeme.conf";
 		String dataDir = pathToFile+"";

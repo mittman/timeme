@@ -1,21 +1,25 @@
+/**
+ * @name SummaryDock
+ * @author Team 0x00000001
+ */
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 
-public class summaryDock 
+public class SummaryDock 
 {
 
-	browsePath selectDirectory;
+	BrowsePath selectDirectory;
 	
-	protected JPanel summaryDock()
+	protected JPanel SummaryDock()
     {
         final JPanel pane = new JPanel();
         
@@ -54,7 +58,7 @@ public class summaryDock
 
         		try
         		{
-        			selectDirectory = new browsePath(pane,oldDir);
+        			selectDirectory = new BrowsePath(pane,oldDir);
 				} 
         		catch (IOException e2) 
         		{
@@ -92,7 +96,7 @@ public class summaryDock
 
         		try
         		{
-        			writeConfig setDefault = new writeConfig(curDir,saveDir);
+        			WriteConfig setDefault = new WriteConfig(curDir,saveDir);
 				} 
         		catch (IOException e3) 
         		{
