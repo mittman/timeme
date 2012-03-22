@@ -122,11 +122,49 @@ public class JarTest {
 		btnModfyRecordedT.setBounds(285, 37, 141, 31);
 		btnModfyRecordedT.setText("Modfy Time");
 		
+		Button btnRemoveTask = new Button(composite_2, SWT.NONE);
+		btnRemoveTask.setBounds(285, 74, 141, 31);
+		btnRemoveTask.setText("Remove Task");
+		
+		Button btnReturnToRecent = new Button(composite_2, SWT.NONE);
+		btnReturnToRecent.setBounds(285, 111, 141, 31);
+		btnReturnToRecent.setText("Resume Task");
+		
+		Button btnIncreasePriority = new Button(composite_2, SWT.NONE);
+		btnIncreasePriority.setBounds(283, 146, 68, 44);
+		btnIncreasePriority.setText("^^");
+		
+		Button btnV = new Button(composite_2, SWT.NONE);
+		btnV.setBounds(357, 146, 68, 44);
+		btnV.setText("vv");
+		
 		TabItem tbtmReports = new TabItem(tabFolder, SWT.NONE);
 		tbtmReports.setText("Reports");
 		
 		Composite composite_3 = new Composite(tabFolder, SWT.NONE);
 		tbtmReports.setControl(composite_3);
+		
+		Button btnNewButton = new Button(composite_3, SWT.NONE);
+		btnNewButton.setFont(SWTResourceManager.getFont("Segoe UI", 18, SWT.NORMAL));
+		btnNewButton.setBounds(270, 126, 146, 64);
+		btnNewButton.setText("Run Report");
+		
+		Button btnRadioButton = new Button(composite_3, SWT.RADIO);
+		btnRadioButton.setBounds(10, 39, 117, 23);
+		btnRadioButton.setText("Last Time Worked");
+		
+		Button btnRadioButton_1 = new Button(composite_3, SWT.RADIO);
+		btnRadioButton_1.setBounds(10, 68, 117, 16);
+		btnRadioButton_1.setText("First Time Worked");
+		
+		Label lblRunReportBased = new Label(composite_3, SWT.NONE);
+		lblRunReportBased.setFont(SWTResourceManager.getFont("Segoe UI", 13, SWT.NORMAL));
+		lblRunReportBased.setBounds(10, 10, 176, 23);
+		lblRunReportBased.setText("Run Report Based On:");
+		
+		Button btnRadioButton_2 = new Button(composite_3, SWT.RADIO);
+		btnRadioButton_2.setBounds(10, 90, 117, 23);
+		btnRadioButton_2.setText("Radio Button");
 
 		button.addSelectionListener(new SelectionAdapter() {
 			
