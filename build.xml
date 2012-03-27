@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<project name="HelloWorld">
+	<taskdef name="swtjar" classname="org.swtjar.ant.SWTJarTask" classpath="./gui/swtjar.jar"/>	
+	
+	<!-- Package cross platform SWT Jar -->
+	<swtjar jarfile="./jars/output.jar" targetmainclass="Main" swtversion="3.7.2">
+			
+		  <!-- Application Classes -->
+		  <fileset dir="./bin/" includes="**/*.class" />
+		  
+		  <!-- SWT Jars -->
+		  <fileset dir="./gui" includes="swt-*-3.7.2.jar" />
+		
+	</swtjar>
+</project>
