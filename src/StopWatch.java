@@ -11,7 +11,7 @@ import javax.swing.Timer;
 public class StopWatch implements ActionListener
 {
 	private Timer eggtimer = new javax.swing.Timer(100, this);
-    private long now = System.currentTimeMillis();
+    private long begin = System.currentTimeMillis();
 
     public StopWatch() 
     {
@@ -47,10 +47,10 @@ public class StopWatch implements ActionListener
 
     public String getElapsed()
     {
-		long elapsed = (System.currentTimeMillis() - now);
+		long elapsed = (System.currentTimeMillis() - begin);
         String HH = timeFormat((int) ((elapsed / 1000) / 3600));
         String MM = timeFormat((int) ((elapsed / 1000) % 3600) / 60);
-        String SS = timeFormat((int) ((elapsed / 1000) % 3600) % 60);
+        String SS = timeFormat((int) ((elapsed / 1000) % 60));
         String MS =  ""+((int) ((elapsed % 1000) / 100));
         return (HH + ":" + MM + ":" + SS + "." + MS);
     }

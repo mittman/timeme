@@ -2,19 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="images"/>
-	<classpathentry kind="lib" path="jars/swtjar.jar"/>
-	<classpathentry kind="lib" path="jars/BuildPathJars/com.ibm.icu_4.4.2.v20110208.jar"/>
-	<classpathentry kind="lib" path="jars/BuildPathJars/org.eclipse.core.commands_3.6.0.I20110111-0800.jar"/>
-	<classpathentry kind="lib" path="jars/BuildPathJars/org.eclipse.core.runtime_3.7.0.v20110110.jar"/>
-	<classpathentry kind="lib" path="jars/BuildPathJars/org.eclipse.equinox.registry_3.5.101.R37x_v20110810-1611.jar"/>
-	<classpathentry kind="lib" path="jars/BuildPathJars/org.eclipse.jdt.doc.isv_3.7.1.r371_20110831.jar"/>
-	<classpathentry kind="lib" path="jars/BuildPathJars/org.eclipse.jface_3.7.0.I20110522-1430.jar"/>
-	<classpathentry kind="lib" path="jars/BuildPathJars/org.eclipse.jface.text_3.7.1.r371_v20110825-0800.jar"/>
-	<classpathentry kind="lib" path="jars/BuildPathJars/org.eclipse.osgi.util_3.2.200.v20110110.jar"/>
-	<classpathentry kind="lib" path="jars/BuildPathJars/org.eclipse.swt.win32.win32.x86_64_3.7.1.v3738a.jar"/>
-	<classpathentry kind="lib" path="jars/BuildPathJars/org.eclipse.text_3.5.101.r371_v20110810-0800.jar"/>
-	<classpathentry kind="lib" path="jars/BuildPathJars/org.eclipse.ui.forms_3.5.100.v20110425.jar"/>
-	<classpathentry kind="lib" path="jars/BuildPathJars/org.eclipse.ui.workbench_3.7.0.I20110519-0100.jar"/>
+	<classpathentry kind="lib" path="gui/swt-linux32-3.7.2.jar"/>
+	<classpathentry kind="lib" path="gui/swt-linux64-3.7.2.jar"/>
+	<classpathentry kind="lib" path="gui/swt-osx32-3.7.2.jar"/>
+	<classpathentry kind="lib" path="gui/swt-osx64-3.7.2.jar"/>
+	<classpathentry kind="lib" path="gui/swt-win32-3.7.2.jar"/>
+	<classpathentry kind="lib" path="gui/swt-win64-3.7.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

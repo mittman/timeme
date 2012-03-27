@@ -1,20 +1,18 @@
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
+
 
 
 public class JarTest {
@@ -67,8 +65,9 @@ public class JarTest {
 		button.setText("<<");
 		button.setBounds(319, 104, 107, 25);
 		
+		
 		List list = new List(composite, SWT.BORDER);
-		list.setFont(SWTResourceManager.getFont("Segoe UI", 14, SWT.NORMAL));
+
 		list.setItems(new String[] {"Recent Item 1", "Recent Item 2", "Recent Item 3", "Recent Item 4", "Recent Item 5"});
 		list.setBounds(161, 0, 152, 129);
 		
@@ -82,7 +81,6 @@ public class JarTest {
 		
 		Label label = new Label(composite, SWT.NONE);
 		label.setAlignment(SWT.CENTER);
-		label.setFont(SWTResourceManager.getFont("Segoe UI", 32, SWT.NORMAL));
 		label.setBounds(319, 20, 107, 65);
 		label.setText("00:00");
 		
@@ -122,49 +120,11 @@ public class JarTest {
 		btnModfyRecordedT.setBounds(285, 37, 141, 31);
 		btnModfyRecordedT.setText("Modfy Time");
 		
-		Button btnRemoveTask = new Button(composite_2, SWT.NONE);
-		btnRemoveTask.setBounds(285, 74, 141, 31);
-		btnRemoveTask.setText("Remove Task");
-		
-		Button btnReturnToRecent = new Button(composite_2, SWT.NONE);
-		btnReturnToRecent.setBounds(285, 111, 141, 31);
-		btnReturnToRecent.setText("Resume Task");
-		
-		Button btnIncreasePriority = new Button(composite_2, SWT.NONE);
-		btnIncreasePriority.setBounds(283, 146, 68, 44);
-		btnIncreasePriority.setText("^^");
-		
-		Button btnV = new Button(composite_2, SWT.NONE);
-		btnV.setBounds(357, 146, 68, 44);
-		btnV.setText("vv");
-		
 		TabItem tbtmReports = new TabItem(tabFolder, SWT.NONE);
 		tbtmReports.setText("Reports");
 		
 		Composite composite_3 = new Composite(tabFolder, SWT.NONE);
 		tbtmReports.setControl(composite_3);
-		
-		Button btnNewButton = new Button(composite_3, SWT.NONE);
-		btnNewButton.setFont(SWTResourceManager.getFont("Segoe UI", 18, SWT.NORMAL));
-		btnNewButton.setBounds(270, 126, 146, 64);
-		btnNewButton.setText("Run Report");
-		
-		Button btnRadioButton = new Button(composite_3, SWT.RADIO);
-		btnRadioButton.setBounds(10, 39, 117, 23);
-		btnRadioButton.setText("Last Time Worked");
-		
-		Button btnRadioButton_1 = new Button(composite_3, SWT.RADIO);
-		btnRadioButton_1.setBounds(10, 68, 117, 16);
-		btnRadioButton_1.setText("First Time Worked");
-		
-		Label lblRunReportBased = new Label(composite_3, SWT.NONE);
-		lblRunReportBased.setFont(SWTResourceManager.getFont("Segoe UI", 13, SWT.NORMAL));
-		lblRunReportBased.setBounds(10, 10, 176, 23);
-		lblRunReportBased.setText("Run Report Based On:");
-		
-		Button btnRadioButton_2 = new Button(composite_3, SWT.RADIO);
-		btnRadioButton_2.setBounds(10, 90, 117, 23);
-		btnRadioButton_2.setText("Radio Button");
 
 		button.addSelectionListener(new SelectionAdapter() {
 			
