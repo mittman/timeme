@@ -56,3 +56,19 @@ http://stackoverflow.com/questions/2576353/stop-a-stopwatch/2576909#2576909
 
 Standard conventions:
 http://www.mc.vanderbilt.edu/infocntr/infointgr/AppDevelopment/javaCodingStd.html#secName
+
+// spacer
+
+
+SWT select all:
+http://stackoverflow.com/questions/4143751/how-to-restore-default-keybindings-ctrla-ctrlc-etc-for-widgets-in-swt
+
+
+SWT background thread:
+http://book.javanb.com/swt-the-standard-widget-toolkit/ch05lev1sec7.html
+
+SWT xygraph:
+http://swt-xy-graph.googlecode.com/git/PureJava/org.csstudio.swt.xygraph/html/GettingStarted.html
+
+SWT column sort:
+http://www.java-forums.org/swt/10050-sorting-swt-table-column.html
