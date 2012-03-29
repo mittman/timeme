@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<project name="HelloWorld">
+<project name="TimeMe">
 	<taskdef name="swtjar" classname="org.swtjar.ant.SWTJarTask" classpath="./gui/swtjar.jar"/>	
 	
 	<!-- Package cross platform SWT Jar -->
-	<swtjar jarfile="./jars/output.jar" targetmainclass="JarTest" swtversion="3.7.2">
+	<swtjar jarfile="./jars/output.jar" targetmainclass="Main" swtversion="3.7.2">
 			
 		  <!-- Application Classes -->
 		  <fileset dir="./bin/" includes="**/*.class" />
