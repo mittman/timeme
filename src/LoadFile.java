@@ -15,6 +15,8 @@ import java.io.InputStreamReader;
 
 public class LoadFile 
 {
+	private long elapsed;
+	
 	protected LoadFile(File pathToFile) throws IOException
 	{
 		String fileName = pathToFile+"/timeme.tsv";
@@ -52,5 +54,15 @@ public class LoadFile
 		{
 			System.err.println("Error: " + e.getMessage());			
 		}
+	}
+	
+	public LoadFile(int taskID)
+	{
+		elapsed = 25000L;
+	}
+	
+	public long getTotal()
+	{
+		return elapsed;
 	}
 }

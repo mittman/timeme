@@ -2,7 +2,7 @@
  * @name TimeObject
  * @author Team 0x00000001
  */
-
+/*
 public class TimeObject 
 {
     private long now = System.currentTimeMillis();
@@ -25,3 +25,4 @@ public class TimeObject
     	return begin;
     }
 }
+*/

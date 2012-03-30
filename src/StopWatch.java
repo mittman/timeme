@@ -2,6 +2,7 @@
 public class StopWatch 
 {
 	   private static long begin = System.currentTimeMillis();
+	   private static long elapsed;
 
 		public static void resume()
 		{
@@ -41,11 +42,30 @@ public class StopWatch
 
 	    public static String getElapsed()
 	    {
-			long elapsed = (System.currentTimeMillis() - begin);
+			elapsed = (System.currentTimeMillis() - begin);
 	        String HH = timeFormat((int) ((elapsed / 1000) / 3600));
 	        String MM = timeFormat((int) ((elapsed / 1000) % 3600) / 60);
 	        String SS = timeFormat((int) ((elapsed / 1000) % 60));
 	        String MS =  ""+((int) ((elapsed % 1000) / 100));
 	        return (HH + ":" + MM + ":" + SS + "." + MS);
 	    }
+	    
+		public static void saveRecord(int taskID)
+		{
+			new WriteFile(taskID, elapsed);
+		}
+		
+		public static void loadRecord(int taskID)
+		{
+			LoadFile foo = new LoadFile(taskID);
+			if (taskID == 1)
+			{
+				begin = System.currentTimeMillis() - foo.getTotal();
+			}
+			else
+			{
+				begin = System.currentTimeMillis();
+			}
+			Main.clock.setText(getElapsed());
+		}
 }

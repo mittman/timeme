@@ -315,7 +315,12 @@ public class Main implements SelectionListener
 			@Override
 			public void widgetSelected(SelectionEvent e) 
 			{
-				debug("plus");
+				StopWatch.loadRecord(1);
+				status = false;
+	            resume.setEnabled(true);
+	            pause.setEnabled(false);
+	            
+	            debug("plus");
 			}
 		});
 		
@@ -324,6 +329,11 @@ public class Main implements SelectionListener
 			@Override
 			public void widgetSelected(SelectionEvent e) 
 			{
+				StopWatch.loadRecord(0);
+				status = false;
+	            resume.setEnabled(true);
+	            pause.setEnabled(false);
+				
 				debug("minus");
 			}
 		});
