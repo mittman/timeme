@@ -79,6 +79,9 @@ public class Main implements SelectionListener
 		{
 			Main window = new Main();
 			window.open();
+			
+			// Close window gracefully
+			System.exit(0);
 		} 
 		catch (Exception e) 
 		{
