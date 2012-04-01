@@ -1,3 +1,10 @@
+External Java libraries:
+* SWT platform-specific libraries
+* swtjar.jar jar-in-jar packaging tool
+* WindowBuilder GUI
+* SWTResourceManager.java (WindowBuilder dependency)
+
+
 Code development environment:
 
 * Eclipse IDE
