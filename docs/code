@@ -72,3 +72,6 @@ http://swt-xy-graph.googlecode.com/git/PureJava/org.csstudio.swt.xygraph/html/Ge
 
 SWT column sort:
 http://www.java-forums.org/swt/10050-sorting-swt-table-column.html
+
+Close gracefully:
+http://stackoverflow.com/questions/483173/how-can-i-get-my-basic-swt-application-to-exit-properly-in-mac-os-x-10-5-6
