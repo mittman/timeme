@@ -75,3 +75,6 @@ http://www.java-forums.org/swt/10050-sorting-swt-table-column.html
 
 Close gracefully:
 http://stackoverflow.com/questions/483173/how-can-i-get-my-basic-swt-application-to-exit-properly-in-mac-os-x-10-5-6
+
+SWT filechooser:
+http://stackoverflow.com/questions/6872141/selecting-multiple-files-in-filechooser

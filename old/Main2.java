@@ -29,19 +29,14 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Group;
 
 
-public class Main implements SelectionListener
+public class Main2 implements SelectionListener
 {
 	private Text title;
 	private Table allTasks;
-    private String selectedDir = "";
-    private boolean radioToggle = false;
-    
 	protected Shell frame;
-	
 	public static Label clock;
 	public static Display display;
 	public static boolean status;
-	
 
 	////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +81,7 @@ public class Main implements SelectionListener
 	{
 		try 
 		{
-			Main window = new Main();
+			Main2 window = new Main2();
 			window.open();
 			
 			// Close window gracefully
@@ -128,66 +123,80 @@ public class Main implements SelectionListener
 	protected void createContents() 
 	{
 		frame = new Shell();
+		frame.setBackground(SWTResourceManager.getColor(51, 102, 102));
 		frame.setSize(435, 403);
 		frame.setText("TimeMe");
 		frame.setLayout(null);
 				
 		Composite topPane = new Composite(frame, SWT.NONE);
+		topPane.setBackground(SWTResourceManager.getColor(102, 153, 51));
 		topPane.setBounds(5, 5, 424, 135);
 		
 		final Button collapse = new Button(topPane, SWT.NONE);
+		collapse.setForeground(SWTResourceManager.getColor(0, 255, 102));
 		collapse.setBounds(4, 93, 40, 35);
 		collapse.setText("<<");
 		
 		List list = new List(topPane, SWT.BORDER);
+		list.setBackground(SWTResourceManager.getColor(51, 153, 0));
 		list.setBounds(0, 0, 130, 87);
 		list.setItems(new String[] {"Recent Item 1", "Recent Item 2", "Recent Item 3", "Recent Item 4"});
 		list.setSelection(0);
 		
 		clock = new Label(topPane, SWT.NONE);
+		clock.setBackground(SWTResourceManager.getColor(255, 255, 0));
 		clock.setFont(SWTResourceManager.getFont("Sans", 27, SWT.BOLD));
 		clock.setAlignment(SWT.CENTER);
 		clock.setBounds(177, 25, 229, 41);
 		clock.setText("00:00:00.0");
 				
 		Button plus = new Button(topPane, SWT.NONE);
+		plus.setForeground(SWTResourceManager.getColor(51, 255, 102));
 		plus.addSelectionListener(this);
 		plus.setBounds(136, 10, 25, 25);
 		plus.setText("+");
 		
 		Button minus = new Button(topPane, SWT.NONE);
+		minus.setForeground(SWTResourceManager.getColor(51, 255, 102));
 		minus.addSelectionListener(this);
 		minus.setBounds(136, 51, 25, 25);
 		minus.setText("—");
 		
 		final Button resume = new Button(topPane, SWT.NONE);
+		resume.setForeground(SWTResourceManager.getColor(51, 255, 153));
 		resume.setFont(SWTResourceManager.getFont("Sans", 15, SWT.NORMAL));
 		resume.setBounds(177, 76, 100, 50);
 		resume.setText("Resume");
 		
 		final Button pause = new Button(topPane, SWT.NONE);
+		pause.setForeground(SWTResourceManager.getColor(102, 255, 153));
 		pause.setFont(SWTResourceManager.getFont("Sans", 15, SWT.NORMAL));
 		pause.setEnabled(false);
 		pause.setBounds(306, 76, 100, 50);
 		pause.setText("Pause");
 		
 		Button newTask = new Button(topPane, SWT.NONE);
+		newTask.setForeground(SWTResourceManager.getColor(0, 204, 102));
 		newTask.addSelectionListener(this);
 		newTask.setBounds(50, 93, 80, 35);
 		newTask.setText("New Task");
 		
 		Label vDivider = new Label(topPane, SWT.SEPARATOR | SWT.VERTICAL);
+		vDivider.setBackground(SWTResourceManager.getColor(153, 255, 0));
 		vDivider.setBounds(167, 0, 4, 125);
 		
 		final TabFolder bottomPane = new TabFolder(frame, SWT.BORDER);
+		bottomPane.setBackground(SWTResourceManager.getColor(255, 255, 0));
 		bottomPane.setBounds(5, 156, 415, 216);
 		
-		final TabItem tab1 = new TabItem(bottomPane, SWT.NONE);
+		TabItem tab1 = new TabItem(bottomPane, SWT.NONE);
 		tab1.setText("Description");	
 		final Composite contentsTab1 = new Composite(bottomPane, SWT.NONE);
+		contentsTab1.setBackground(SWTResourceManager.getColor(51, 102, 153));
 		tab1.setControl(contentsTab1);
 	
 		title = new Text(contentsTab1, SWT.BORDER);
+		title.setBackground(SWTResourceManager.getColor(102, 204, 255));
 		title.setText("Title");
 		title.setBounds(40, 10, 320, 21);
 		
@@ -199,6 +208,7 @@ public class Main implements SelectionListener
 		scrollNotes.setBounds(40, 45, 341, 128);
 		
 		StyledText textNotes = new StyledText(scrollNotes, SWT.BORDER | SWT.WRAP);
+		textNotes.setBackground(SWTResourceManager.getColor(102, 204, 255));
 		textNotes.setTopMargin(5);
 		textNotes.setLeftMargin(5);
 		textNotes.setText("Notes");
@@ -206,25 +216,30 @@ public class Main implements SelectionListener
 		textNotes.addListener(SWT.KeyUp, ctrlAListener);
 		scrollNotes.setContent(textNotes);
 		
-		final TabItem tab2 = new TabItem(bottomPane, SWT.NONE);
+		TabItem tab2 = new TabItem(bottomPane, SWT.NONE);
 		tab2.setText("Manage Tasks");	
 		Composite contentsTab2 = new Composite(bottomPane, SWT.NONE);
+		contentsTab2.setForeground(SWTResourceManager.getColor(102, 204, 0));
 		tab2.setControl(contentsTab2);
 		
 		Button favoriteTask = new Button(contentsTab2, SWT.NONE);
+		favoriteTask.setForeground(SWTResourceManager.getColor(0, 102, 255));
 		favoriteTask.setBounds(285, 23, 100, 30);
 		favoriteTask.setText("Favorite");
 		
 		Button editNotes = new Button(contentsTab2, SWT.NONE);
+		editNotes.setForeground(SWTResourceManager.getColor(0, 102, 255));
 		editNotes.setBounds(285, 63, 100, 30);
 		editNotes.setText("Edit Notes");
 		
 		Button editTime = new Button(contentsTab2, SWT.NONE);
+		editTime.setForeground(SWTResourceManager.getColor(0, 102, 255));
 		editTime.addSelectionListener(this);
 		editTime.setBounds(285, 103, 100, 30);
 		editTime.setText("Edit Time");
 		
 		Button deleteTask = new Button(contentsTab2, SWT.NONE);
+		deleteTask.setForeground(SWTResourceManager.getColor(0, 102, 255));
 		deleteTask.addSelectionListener(this);
 		deleteTask.setBounds(285, 143, 100, 30);
 		deleteTask.setText("Delete Task");
@@ -236,6 +251,8 @@ public class Main implements SelectionListener
 		scrolledComposite.setExpandVertical(true);
 		
 		allTasks = new Table(scrolledComposite, SWT.BORDER | SWT.FULL_SELECTION);
+		allTasks.setForeground(SWTResourceManager.getColor(0, 0, 102));
+		allTasks.setBackground(SWTResourceManager.getColor(0, 153, 255));
 		allTasks.setHeaderVisible(true);
 		allTasks.setLinesVisible(true);
 		
@@ -256,84 +273,114 @@ public class Main implements SelectionListener
 		col4.setText("*");
 		
 		TableItem row01 = new TableItem(allTasks, SWT.NONE);
-		row01.setText(new String[] {"05", "Programming", "03:00:00", "x"});
+		row01.setText(new String[] {"08", "O", "00:04:01", "x"});
 		
 		TableItem row02 = new TableItem(allTasks, SWT.NONE);
-		row02.setText(new String[] {"02", "Studying", "02:00:00", "o"});
+		row02.setText(new String[] {"02", "P", "00:04:01", "o"});
 
 		TableItem row03 = new TableItem(allTasks, SWT.NONE);
-		row03.setText(new String[] {"03", "Reading", "01:00:00", "x"});
+		row03.setText(new String[] {"03", "R", "00:04:01", "x"});
 
 		TableItem row04 = new TableItem(allTasks, SWT.NONE);
-		row04.setText(new String[] {"04", "Coding", "07:00:00", "x"});
+		row04.setText(new String[] {"04", "I", "00:04:01", "x"});
 
 		TableItem row05 = new TableItem(allTasks, SWT.NONE);
-		row05.setText(new String[] {"01", "Scripting", "05:00:00", "o"});
+		row05.setText(new String[] {"01", "A", "00:04:01", "o"});
 
 		TableItem row06 = new TableItem(allTasks, SWT.NONE);
-		row06.setText(new String[] {"06", "Sleeping", "06:00:00", "x"});
+		row06.setText(new String[] {"06", "F", "00:04:01", "x"});
 		
 		TableItem row07 = new TableItem(allTasks, SWT.NONE);
-		row07.setText(new String[] {"07", "Eating", "04:00:00", "o"});
+		row07.setText(new String[] {"07", "O", "00:04:01", "o"});
 		
 		TableItem row08 = new TableItem(allTasks, SWT.NONE);
-		row08.setText(new String[] {"08", "Pokemon", "08:00:00", "x"});
+		row08.setText(new String[] {"05", "L", "00:04:01", "x"});
+		
+		TableItem row09 = new TableItem(allTasks, SWT.NONE);
+		row09.setText(new String[] {"09", "L", "00:04:01", "x"});
+		
+		TableItem row10 = new TableItem(allTasks, SWT.NONE);
+		row10.setText(new String[] {"10", "L", "00:04:01", "x"});
+		
+		TableItem row11 = new TableItem(allTasks, SWT.NONE);
+		row11.setText(new String[] {"11", "S", "00:04:01", "x"});
 				
 		scrolledComposite.setContent(allTasks);
 		scrolledComposite.setMinSize(allTasks.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
-		final TabItem tab3 = new TabItem(bottomPane, SWT.NONE);
+		TabItem tab3 = new TabItem(bottomPane, SWT.NONE);
 		tab3.setText("Reports");	
 		Composite contentsTab3 = new Composite(bottomPane, SWT.NONE);
+		contentsTab3.setBackground(SWTResourceManager.getColor(0, 102, 204));
+		contentsTab3.setForeground(SWTResourceManager.getColor(255, 255, 255));
 		tab3.setControl(contentsTab3);
 		
 		Button genReport = new Button(contentsTab3, SWT.NONE);
+		genReport.setForeground(SWTResourceManager.getColor(0, 51, 204));
 		genReport.setBounds(291, 30, 108, 50);
 		genReport.setText("Generate");
 		
 		Button clearReport = new Button(contentsTab3, SWT.NONE);
+		clearReport.setForeground(SWTResourceManager.getColor(0, 51, 204));
 		clearReport.setBounds(291, 105, 108, 50);
 		clearReport.setText("Clear");
 		
 		Scale scale = new Scale(contentsTab3, SWT.NONE);
+		scale.setForeground(SWTResourceManager.getColor(0, 255, 255));
+		scale.setBackground(SWTResourceManager.getColor(0, 0, 153));
 		scale.setBounds(34, 47, 224, 60);
 		
-		final TabItem tab4 = new TabItem(bottomPane, SWT.NONE);
+		TabItem tab4 = new TabItem(bottomPane, SWT.NONE);
 		tab4.setText("Configuration");
 		Composite contentsTab4 = new Composite(bottomPane, SWT.NONE);
+		contentsTab4.setBackground(SWTResourceManager.getColor(0, 102, 204));
+		contentsTab4.setForeground(SWTResourceManager.getColor(51, 255, 102));
 		contentsTab4.setEnabled(false);
 		tab4.setControl(contentsTab4);
 		
 		Button browseDir = new Button(contentsTab4, SWT.NONE);
+		browseDir.setForeground(SWTResourceManager.getColor(51, 51, 153));
 		browseDir.setBounds(270, 26, 108, 40);
 		browseDir.setText("Browse...");
 		
 		Button saveDir = new Button(contentsTab4, SWT.NONE);
+		saveDir.setForeground(SWTResourceManager.getColor(51, 51, 153));
 		saveDir.setBounds(270, 102, 108, 40);
 		saveDir.setText("Save default");
-				
+		
+	    FileDialog fileDialog = new FileDialog(frame, SWT.MULTI);
+	    final DirectoryDialog directoryDialog = new DirectoryDialog(frame);
+
+		
 		Group group1 = new Group(contentsTab4, SWT.NONE);
+		group1.setForeground(SWTResourceManager.getColor(255, 255, 255));
+		group1.setBackground(SWTResourceManager.getColor(51, 102, 153));
 		group1.setText("Task Mode");
 		group1.setBounds(20, 90, 120, 83);
 		
 		Button modePersonal = new Button(group1, SWT.RADIO);
+		modePersonal.setForeground(SWTResourceManager.getColor(51, 0, 102));
 		modePersonal.setLocation(10, 21);
 		modePersonal.setSize(88, 22);
 		modePersonal.setText("Personal");
 		
 		Button modeWork = new Button(group1, SWT.RADIO);
+		modeWork.setForeground(SWTResourceManager.getColor(51, 0, 102));
 		modeWork.setSelection(true);
 		modeWork.setLocation(10, 51);
 		modeWork.setSize(88, 22);
 		modeWork.setText("Work");
 		
 		textDir = new Text(contentsTab4, SWT.BORDER);
+		textDir.setBackground(SWTResourceManager.getColor(102, 153, 255));
+		textDir.setForeground(SWTResourceManager.getColor(51, 51, 153));
 		textDir.setEnabled(false);
 		textDir.setEditable(false);
 		textDir.setText("No file loaded");
 		textDir.setBounds(25, 31, 221, 30);
 				
 		Label hDivider = new Label(frame, SWT.SEPARATOR | SWT.HORIZONTAL);
+		hDivider.setBackground(SWTResourceManager.getColor(51, 255, 0));
 		hDivider.setBounds(5, 140, 415, 8);
 
 		// Set default tab
@@ -351,18 +398,18 @@ public class Main implements SelectionListener
 		 * Listener Hooks
 		 */
 
-		// topPane button listeners
+		// button listeners
 		plus.addSelectionListener(new SelectionAdapter() 
 		{
 			@Override
 			public void widgetSelected(SelectionEvent e) 
 			{
-				StopWatch.loadRecord(1);
+				StopWatch2.loadRecord(1);
 				status = false;
 	            resume.setEnabled(true);
 	            pause.setEnabled(false);
 	            
-	            debug("button:" + "plus");
+	            debug("plus");
 			}
 		});
 		
@@ -371,12 +418,12 @@ public class Main implements SelectionListener
 			@Override
 			public void widgetSelected(SelectionEvent e) 
 			{
-				StopWatch.loadRecord(0);
+				StopWatch2.loadRecord(0);
 				status = false;
 	            resume.setEnabled(true);
 	            pause.setEnabled(false);
 				
-				debug("button:" + "minus");
+				debug("minus");
 			}
 		});
 		
@@ -385,12 +432,7 @@ public class Main implements SelectionListener
 			@Override
 			public void widgetSelected(SelectionEvent e) 
 			{
-				StopWatch.loadRecord(0);
-				status = false;
-	            resume.setEnabled(true);
-	            pause.setEnabled(false);
-	    		bottomPane.setSelection(tab1);
-				debug("button:" + "new task");
+				debug("new task");
 			}
 		});
 		
@@ -400,10 +442,10 @@ public class Main implements SelectionListener
 			public void widgetSelected(SelectionEvent e) 
 			{
 				status = true;
-				StopWatch.resume();
+				StopWatch2.resume();
 				resume.setEnabled(false);
 	            pause.setEnabled(true);
-				debug("button:" + "resume");
+				debug("resume");
 			}
 		});
 		
@@ -415,7 +457,7 @@ public class Main implements SelectionListener
 				status = false;
 	            resume.setEnabled(true);
 	            pause.setEnabled(false);
-				debug("button:" + "pause");
+				debug("pause");
 			}
 		});
 		
@@ -425,128 +467,46 @@ public class Main implements SelectionListener
 	    {
 	      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 	      {
-	    	  debug("tab:" + bottomPane.getSelectionIndex());
+	    	  debug("tab" + bottomPane.getSelectionIndex());
 	      }
 	    });
 	    
-	    
-		// bottomPane button listeners
-		genReport.addSelectionListener(new SelectionAdapter() 
-		{
-			@Override
-			public void widgetSelected(SelectionEvent e) 
-			{
-				debug("button:" + "genReport");
-			}
-		});
-		
-		clearReport.addSelectionListener(new SelectionAdapter() 
-		{
-			@Override
-			public void widgetSelected(SelectionEvent e) 
-			{
-				debug("button:" + "clearReport");
-			}
-		});
-	    
-		favoriteTask.addSelectionListener(new SelectionAdapter() 
-		{
-			@Override
-			public void widgetSelected(SelectionEvent e) 
-			{
-				debug("button:" + "favoriteTask");
-			}
-		});
-	    
-		editNotes.addSelectionListener(new SelectionAdapter() 
-		{
-			@Override
-			public void widgetSelected(SelectionEvent e) 
-			{
-				debug("button:" + "editNotes");
-			}
-		});
-	    
-		editTime.addSelectionListener(new SelectionAdapter() 
-		{
-			@Override
-			public void widgetSelected(SelectionEvent e) 
-			{
-				debug("button:" + "editTime");
-			}
-		});
-	    
-		deleteTask.addSelectionListener(new SelectionAdapter() 
-		{
-			@Override
-			public void widgetSelected(SelectionEvent e) 
-			{
-				debug("button:" + "deleteTask");
-			}
-		});
-		
-		modePersonal.addSelectionListener(new SelectionAdapter() 
-		{
-			@Override
-			public void widgetSelected(SelectionEvent e) 
-			{
-				if(!radioToggle)
-				{
-					radioToggle = true;
-					debug("radio:" + "modePersonal");
-				}
-			}
-		});
-		
-		modeWork.addSelectionListener(new SelectionAdapter() 
-		{
-			@Override
-			public void widgetSelected(SelectionEvent e) 
-			{
-				if(radioToggle)
-				{
-					radioToggle = false;
-					debug("radio:" + "modeWork");
-				}
-			}
-		});
-		
         browseDir.addListener(SWT.Selection, new Listener() 
         {
-    	    DirectoryDialog browseDialog = new DirectoryDialog(frame);
+    	    String sb = new String("");
+    	    String selectedDir = "";
             public void handleEvent(Event event) 
             {
-                browseDialog.setFilterPath(selectedDir);
-                browseDialog.setMessage("Please select a directory and click OK");
-                
-                String dir = browseDialog.open();
+
+                directoryDialog.setFilterPath(selectedDir);
+                directoryDialog.setMessage("Please select a directory and click OK");
+
+                String dir = directoryDialog.open();
                 if (dir != null) 
                 {
-                	if (dir.equals(selectedDir))
-                	{
-                		System.out.println("dupe");
-                	}
-                	else
-                	{
-                		selectedDir = dir;
-                    	textDir.setEnabled(true);
-                    	textDir.setText(selectedDir);
-                    	// Check if file exists
-                    	// if file exists then load config
-                	}
+                    selectedDir = dir;
+                    int decide = 0;
+                    System.out.println(sb);
+                    String[] str = sb.split("\n");
+
+                    for (int i = 0; i < str.length; i++) 
+                    {
+                        if (dir.equals(str[i])) 
+                        {
+                            System.out.println("dup");
+                            decide = 1;
+                            break;
+                        }
+                    }
+                    if (decide == 0) 
+                    {
+                        sb = sb.concat(dir + "\n");
+                    }
+
                 }
-				debug("button:" + "browseDir");
             }
         });
 		
-		saveDir.addSelectionListener(new SelectionAdapter() 
-		{
-			@Override
-			public void widgetSelected(SelectionEvent e) 
-			{
-				debug("button:" + "saveDir");
-			}
-		});
 	    
 	    // Column listeners
 		col1.addListener(SWT.Selection, new Listener() 
@@ -573,7 +533,6 @@ public class Main implements SelectionListener
 		                 }
 		        	}
 		        }
-				debug("sort:" + "col1");
 		    }
 		});
 		
@@ -601,7 +560,6 @@ public class Main implements SelectionListener
 		                 }
 		        	}
 		        }
-				debug("sort:" + "col2");
 		    }
 		});
 		
@@ -629,7 +587,6 @@ public class Main implements SelectionListener
 		                 }
 		        	}
 		        }
-				debug("sort:" + "col3");
 		    }
 		});
 		
@@ -657,7 +614,6 @@ public class Main implements SelectionListener
 		                 }
 		        	}
 		        }
-				debug("sort:" + "col4");
 		    }
 		});
 	    
@@ -676,14 +632,14 @@ public class Main implements SelectionListener
 					bottomPane.setBounds(up);
 					collapse.setText(">>");
 					interfaceDown = false;
-					debug("panel:" + "collapse");
+					debug("collapse");
 				} 
 				else 
 				{
 					bottomPane.setBounds (down);
 					collapse.setText("<<");
 					interfaceDown = true;
-					debug("panel:" + "expand");
+					debug("expand");
 				}
 				frame.pack ();
 			}
