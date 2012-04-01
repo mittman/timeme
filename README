@@ -1,5 +1,15 @@
-Check in:
-(*) Kevin
-( ) Lucas
-( ) Mario
-( ) Jesse
+Import SWT into Eclipse
+
+    Eclipse->
+        Package Explorer
+            Select project folder
+                Right-click->
+                    Properties
+                        Java Build Path->
+                            Libraries->
+                                Add JARs...->
+                                    Select: swt-{platform}{arch}-3.7.2.jar
+                                    [OK] 
+                        Java Compiler->
+                            Compiler compliance level: 1.6 
+                        [OK] 
