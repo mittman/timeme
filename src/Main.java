@@ -200,21 +200,14 @@ public class Main implements SelectionListener
 		title = new Text(contentsTab1, SWT.BORDER);
 		title.setText("Title");
 		title.setBounds(5, 5, 393, 21);
-			
-		ScrolledComposite scrollNotes = new ScrolledComposite(contentsTab1, SWT.BORDER | SWT.V_SCROLL);
-		scrollNotes.setExpandVertical(true);
-		scrollNotes.setShowFocusedControl(true);
-		scrollNotes.setExpandHorizontal(true);
-		scrollNotes.setAlwaysShowScrollBars(true);
-		scrollNotes.setBounds(5, 32, 393, 142);
 		
-		StyledText textNotes = new StyledText(scrollNotes, SWT.BORDER | SWT.WRAP);
-		textNotes.setTopMargin(5);
-		textNotes.setLeftMargin(5);
-		textNotes.setText("Notes");
-		scrollNotes.setMinSize(new Point(341, 512));
-		textNotes.addListener(SWT.KeyUp, ctrlAListener);
-		scrollNotes.setContent(textNotes);
+		StyledText textNotes_1 = new StyledText(contentsTab1, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		textNotes_1.setLocation(5, 32);
+		textNotes_1.setSize(393, 147);
+		textNotes_1.setTopMargin(5);
+		textNotes_1.setLeftMargin(5);
+		textNotes_1.setText("Notes");
+		textNotes_1.addListener(SWT.KeyUp, ctrlAListener);
 		
 		//Task Manage Tab -------------------------------------------
 		final TabItem tab2 = new TabItem(bottomPane, SWT.NONE);
