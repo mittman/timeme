@@ -2,21 +2,28 @@
 public class StopWatch 
 {
 	   private static long begin = System.currentTimeMillis();
-	   private static long elapsed;
+	   private static long elapsed = 0;
+	   
+	   public static void newTask()
+	   {
+		   elapsed = 0;
+		   resume();
+	   }
 
 		public static void resume()
 		{
+			begin = System.currentTimeMillis() - elapsed;
 	        new Thread() 
 	        {
 	            public void run() 
 	            {
-	                while(Main.status) 
+	                while(Main.clockTicking) 
 	                {
 	                    Main.display.syncExec(new Runnable() 
 	                    {
 	                        public void run() 
 	                        {
-	                            Main.clock.setText(getElapsed());
+	                            Main.clock.setText(getFormatedElapsed());
 	                        }
 	                    });
 	                }
@@ -28,6 +35,7 @@ public class StopWatch
 	        .start();
 		}
 		
+
 		public static String timeFormat(int field)
 	    {
 	        if (field < 10)
@@ -40,7 +48,19 @@ public class StopWatch
 	        }
 	    }
 
-	    public static String getElapsed()
+		public static void setElapsed(long elapsed)
+		{
+			StopWatch.elapsed = elapsed;
+		}
+		
+		
+		
+	    public static long getElapsed()
+	    {
+			return elapsed;
+		}
+
+		public static String getFormatedElapsed()
 	    {
 			elapsed = (System.currentTimeMillis() - begin);
 	        String HH = timeFormat((int) ((elapsed / 1000) / 3600));
@@ -66,6 +86,6 @@ public class StopWatch
 			{
 				begin = System.currentTimeMillis();
 			}
-			Main.clock.setText(getElapsed());
+			Main.clock.setText(getFormatedElapsed());
 		}
 }

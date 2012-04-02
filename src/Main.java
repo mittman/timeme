@@ -1,4 +1,5 @@
 import java.text.Collator;
+import java.util.LinkedList;
 import java.util.Locale;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -32,6 +33,7 @@ import org.eclipse.swt.widgets.Group;
 public class Main implements SelectionListener
 {
 	private Text title;
+	private Text txtReport;
 	private Table allTasks;
     private String selectedDir = "";
     private boolean radioToggle = false;
@@ -40,11 +42,18 @@ public class Main implements SelectionListener
 	
 	public static Label clock;
 	public static Display display;
-	public static boolean status;
+	public static boolean clockTicking;
+	
+	private Button pauseResume;
+	LinkedList<TaskObject> taskList = new LinkedList<TaskObject>();
+	int maxTaskID = -1;
+	private LinkedList<Integer> recentTaskID = new LinkedList<Integer>();
+	List list;
+	StyledText textNotes;
 	
 
 	////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////Test//////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////
@@ -139,49 +148,50 @@ public class Main implements SelectionListener
 		collapse.setBounds(4, 93, 40, 35);
 		collapse.setText("<<");
 		
-		List list = new List(topPane, SWT.BORDER);
-		list.setBounds(0, 0, 130, 87);
-		list.setItems(new String[] {"Recent Item 1", "Recent Item 2", "Recent Item 3", "Recent Item 4"});
+		recentTaskID.add(new Integer(-1));
+		
+		list = new List(topPane, SWT.BORDER | SWT.V_SCROLL);
+		list.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.NORMAL));
+		list.setBounds(0, 0, 177, 87);
+		list.setItems(new String[] {"Recent Item 1", "Recent Item 2", "Recent Item 3", "Recent Item 4", "Recent Item 5", "Recent Item 6", "Recent Item 7"});
 		list.setSelection(0);
 		
 		clock = new Label(topPane, SWT.NONE);
 		clock.setFont(SWTResourceManager.getFont("Sans", 27, SWT.BOLD));
 		clock.setAlignment(SWT.CENTER);
-		clock.setBounds(177, 25, 229, 41);
-		clock.setText("00:00:00.0");
+		clock.setBounds(182, 25, 229, 41);
+		clock.setText("00:00:00");
 				
 		Button plus = new Button(topPane, SWT.NONE);
 		plus.addSelectionListener(this);
-		plus.setBounds(136, 10, 25, 25);
+		plus.setBounds(136, 97, 25, 25);
 		plus.setText("+");
 		
 		Button minus = new Button(topPane, SWT.NONE);
 		minus.addSelectionListener(this);
-		minus.setBounds(136, 51, 25, 25);
-		minus.setText("—");
-		
-		final Button resume = new Button(topPane, SWT.NONE);
-		resume.setFont(SWTResourceManager.getFont("Sans", 15, SWT.NORMAL));
-		resume.setBounds(177, 76, 100, 50);
-		resume.setText("Resume");
-		
-		final Button pause = new Button(topPane, SWT.NONE);
-		pause.setFont(SWTResourceManager.getFont("Sans", 15, SWT.NORMAL));
-		pause.setEnabled(false);
-		pause.setBounds(306, 76, 100, 50);
-		pause.setText("Pause");
+		minus.setBounds(105, 97, 25, 25);
+		minus.setText("-");
 		
 		Button newTask = new Button(topPane, SWT.NONE);
 		newTask.addSelectionListener(this);
-		newTask.setBounds(50, 93, 80, 35);
+		newTask.setBounds(182, 77, 112, 50);
 		newTask.setText("New Task");
 		
 		Label vDivider = new Label(topPane, SWT.SEPARATOR | SWT.VERTICAL);
-		vDivider.setBounds(167, 0, 4, 125);
+		vDivider.setBounds(177, 0, 4, 135);
+		
+		pauseResume = new Button(topPane, SWT.NONE);
+		
+		pauseResume.setBounds(299, 77, 112, 50);
+		pauseResume.setText("Pause");
+			
+		////
 		
 		final TabFolder bottomPane = new TabFolder(frame, SWT.BORDER);
 		bottomPane.setBounds(5, 156, 415, 216);
 		
+		
+		//Notes Tab -------------------------------------------------------
 		final TabItem tab1 = new TabItem(bottomPane, SWT.NONE);
 		tab1.setText("Description");	
 		final Composite contentsTab1 = new Composite(bottomPane, SWT.NONE);
@@ -189,14 +199,14 @@ public class Main implements SelectionListener
 	
 		title = new Text(contentsTab1, SWT.BORDER);
 		title.setText("Title");
-		title.setBounds(40, 10, 320, 21);
-		
+		title.setBounds(5, 5, 393, 21);
+			
 		ScrolledComposite scrollNotes = new ScrolledComposite(contentsTab1, SWT.BORDER | SWT.V_SCROLL);
 		scrollNotes.setExpandVertical(true);
 		scrollNotes.setShowFocusedControl(true);
 		scrollNotes.setExpandHorizontal(true);
 		scrollNotes.setAlwaysShowScrollBars(true);
-		scrollNotes.setBounds(40, 45, 341, 128);
+		scrollNotes.setBounds(5, 32, 393, 142);
 		
 		StyledText textNotes = new StyledText(scrollNotes, SWT.BORDER | SWT.WRAP);
 		textNotes.setTopMargin(5);
@@ -206,6 +216,7 @@ public class Main implements SelectionListener
 		textNotes.addListener(SWT.KeyUp, ctrlAListener);
 		scrollNotes.setContent(textNotes);
 		
+		//Task Manage Tab -------------------------------------------
 		final TabItem tab2 = new TabItem(bottomPane, SWT.NONE);
 		tab2.setText("Manage Tasks");	
 		Composite contentsTab2 = new Composite(bottomPane, SWT.NONE);
@@ -282,21 +293,49 @@ public class Main implements SelectionListener
 		scrolledComposite.setContent(allTasks);
 		scrolledComposite.setMinSize(allTasks.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
+		//Reports Tab -----------------------------------------------
+		
 		final TabItem tab3 = new TabItem(bottomPane, SWT.NONE);
 		tab3.setText("Reports");	
 		Composite contentsTab3 = new Composite(bottomPane, SWT.NONE);
 		tab3.setControl(contentsTab3);
 		
 		Button genReport = new Button(contentsTab3, SWT.NONE);
-		genReport.setBounds(291, 30, 108, 50);
+		genReport.setBounds(291, 73, 108, 50);
 		genReport.setText("Generate");
 		
 		Button clearReport = new Button(contentsTab3, SWT.NONE);
-		clearReport.setBounds(291, 105, 108, 50);
+		clearReport.setBounds(291, 129, 108, 50);
 		clearReport.setText("Clear");
 		
-		Scale scale = new Scale(contentsTab3, SWT.NONE);
-		scale.setBounds(34, 47, 224, 60);
+		txtReport = new Text(contentsTab3, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		txtReport.setLocation(5, 5);
+		txtReport.setSize(280, 175);
+		txtReport.setText("Report");
+		
+		Button btnReportByStart = new Button(contentsTab3, SWT.RADIO);
+		btnReportByStart.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+			}
+		});
+		btnReportByStart.setBounds(296, 28, 90, 16);
+		btnReportByStart.setText("Start Time");
+		
+		Label lblReportBy = new Label(contentsTab3, SWT.NONE);
+		lblReportBy.setBounds(291, 7, 55, 15);
+		lblReportBy.setText("Report By:");
+		
+		Button btnEndTime = new Button(contentsTab3, SWT.RADIO);
+		btnEndTime.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+			}
+		});
+		btnEndTime.setText("End Time");
+		btnEndTime.setBounds(296, 51, 90, 16);
+		
+		//Configuration Tab ----------------------------------------
 		
 		final TabItem tab4 = new TabItem(bottomPane, SWT.NONE);
 		tab4.setText("Configuration");
@@ -352,16 +391,24 @@ public class Main implements SelectionListener
 		 */
 
 		// topPane button listeners
+		
+		list.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0)
+			{
+				debug("List item: " + list.getSelectionIndex());
+			}
+		});
+		
 		plus.addSelectionListener(new SelectionAdapter() 
 		{
 			@Override
 			public void widgetSelected(SelectionEvent e) 
 			{
 				StopWatch.loadRecord(1);
-				status = false;
-	            resume.setEnabled(true);
-	            pause.setEnabled(false);
-	            
+				clockTicking = false;
+				pauseResume.setText("Pause");
+				
 	            debug("button:" + "plus");
 			}
 		});
@@ -372,9 +419,8 @@ public class Main implements SelectionListener
 			public void widgetSelected(SelectionEvent e) 
 			{
 				StopWatch.loadRecord(0);
-				status = false;
-	            resume.setEnabled(true);
-	            pause.setEnabled(false);
+				clockTicking = false;
+				pauseResume.setText("Pause");
 				
 				debug("button:" + "minus");
 			}
@@ -385,40 +431,50 @@ public class Main implements SelectionListener
 			@Override
 			public void widgetSelected(SelectionEvent e) 
 			{
-				StopWatch.loadRecord(0);
-				status = false;
-	            resume.setEnabled(true);
-	            pause.setEnabled(false);
-	    		bottomPane.setSelection(tab1);
-				debug("button:" + "new task");
+				if(maxTaskID != -1) //save task
+				{
+					//saveTasktoList(recentTaskID.getFirst());
+					list.add("privious task to go here", 0);
+					//list.add(taskList.get(recentTaskID.getFirst()).getSubject());
+				}
+				taskList.add(new TaskObject());
+				++maxTaskID;
+				recentTaskID.add(0,maxTaskID);
+				
+				clockTicking = true;
+				StopWatch.newTask();
+				taskList.get(maxTaskID).setStartTime(System.currentTimeMillis());
+				pauseResume.setText("Pause");
+				
+				debug("new task");
 			}
 		});
 		
-		resume.addSelectionListener(new SelectionAdapter() 
-		{			
-			@Override
-			public void widgetSelected(SelectionEvent e) 
-			{
-				status = true;
-				StopWatch.resume();
-				resume.setEnabled(false);
-	            pause.setEnabled(true);
-				debug("button:" + "resume");
+		pauseResume.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent arg0) {
+				//if(!(pauseResume.getText()=="Pause" && clockTicking == false)) //Dont do anything if there's no task loaded (only happens initially)
+				//{
+			
+					if(clockTicking)
+					{
+						//pause
+						clockTicking = false;
+						pauseResume.setText("Resume");
+						debug("pauseResume:pause");
+						
+					}
+					else
+					{
+						//resume
+						clockTicking = true;
+						StopWatch.resume();
+						pauseResume.setText("Pause");
+			           	debug("pauseResume:resume");
+					}
+				//}
 			}
 		});
-		
-		pause.addSelectionListener(new SelectionAdapter() 
-		{
-			@Override
-			public void widgetSelected(SelectionEvent e) 
-			{
-				status = false;
-	            resume.setEnabled(true);
-	            pause.setEnabled(false);
-				debug("button:" + "pause");
-			}
-		});
-		
+				
 		
 		// Tab listener
 	    bottomPane.addSelectionListener(new SelectionAdapter() 
@@ -705,4 +761,20 @@ public class Main implements SelectionListener
 	public void widgetSelected(SelectionEvent e) {}
 	@Override
 	public void widgetDefaultSelected(SelectionEvent e) {}
+	
+	/**
+	 * Functions
+	 */
+	
+	void saveTasktoList(int taskID)
+	{
+		taskList.get(taskID).setTitle(title.getText());
+		taskList.get(taskID).setNotes(textNotes.getText());
+		taskList.get(taskID).setTimeElapsed(StopWatch.getElapsed());
+		taskList.get(taskID).setEndTime(System.currentTimeMillis());
+	}
+	void refreshRecentTaskUI()
+	{
+		//needs filling		
+	}
 }
