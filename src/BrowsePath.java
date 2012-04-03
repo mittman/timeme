@@ -1,5 +1,6 @@
 /**
  * @name BrowsePath
+ * @project TimeMe
  * @author Team 0x00000001
  */
 
@@ -20,19 +21,22 @@ public class BrowsePath
 		    	  browseDialog.setMessage("Please select a directory and click OK");
 
 		    	  String dir = browseDialog.open();
-		    	  if (dir != null) 
+		    	  
+		    	  if(dir != null)
 		    	  {
+		    		  	//System.out.println(new File(dir).exists());
+		    		  
 		    	    	if (dir.equals(Main.selectedDir))
 		    	      	{
 		    	      		System.out.println("dupe");
 		    	      	}
 		    	      	else
-		    	      	{
+		    	      	{		    	      		
+		    	      		Main.load();		    	      		
 		    	      		Main.selectedDir = dir;
-		    	          	Main.textDir.setEnabled(true);
-		    	          	Main.textDir.setText(Main.selectedDir);
-		    	          	// Check if file exists
-		    	          	// if file exists then load config
+		    	          	Main.textDir.setText(Main.selectedDir + "/timeme.tsv");
+		    	          	// load config
+		    	          	Main.configLoaded = true;
 		    	      	}
 		    	  }
 		    	  Tools.debug("button:" + "browseDir");
@@ -44,12 +48,31 @@ public class BrowsePath
 	{
 	    Main.saveDir.addSelectionListener(new SelectionAdapter() 
 	    {
-	      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
-	      {
-				Tools.debug("button:" + "saveDir");
-	      }
+		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
+		      {
+					Tools.debug("button:" + "saveDir");
+		      }
 	    });
 	}
+	
+	public void unloadDir()
+	{
+	    Main.unloadDir.addSelectionListener(new SelectionAdapter() 
+	    {
+		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
+		      {
+					Main.clockTicking = false;
+  	          		// save config
+		    	  	StopWatch.loadRecord(0);
+  	          		Main.configLoaded = false;
+		          	Main.unload();
+		      		Main.selectedDir = null;
+		          	Main.textDir.setText("No file loaded");
+					Tools.debug("button:" + "unloadDir");
+		      }
+	    });
+	}
+	
 }
 	      
 

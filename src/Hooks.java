@@ -1,5 +1,6 @@
 /**
  * @name Hooks
+ * @project TimeMe
  * @author Team 0x00000001
  */
 
@@ -10,7 +11,7 @@ import org.eclipse.swt.events.SelectionEvent;
 public class Hooks 
 {
 	
-	public void tickTock()
+	public static void tickTock()
 	{
 		if(Main.clockTicking)
 		{
@@ -103,9 +104,13 @@ public class Hooks
 				Main.clockTicking = true;
 				StopWatch.newTask();
 				Main.taskList.get(Main.maxTaskID).setStartTime(System.currentTimeMillis());
+				
 				Main.pauseResume.setText("Pause");
 				Main.bottomPane.setSelection(Main.tab1);
-				
+				Main.newTask.setEnabled(false);
+				Main.title.setText("Title");
+				Main.textNotes.setText("Notes");
+
 				Tools.debug("button:" + "new task");
 			}
 		});

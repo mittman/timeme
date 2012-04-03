@@ -1,31 +1,32 @@
 /**
  * @name Main
+ * @project TimeMe
  * @author Team 0x00000001
  */
 
 import java.util.LinkedList;
-import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.widgets.Group;
 
 
 public class Main implements SelectionListener
@@ -33,6 +34,7 @@ public class Main implements SelectionListener
 	protected static Shell frame;
 	
 	public static boolean clockTicking;
+	public static boolean configLoaded;
 	public static boolean interfaceDown;
 	public static boolean reportToggle;
 	public static boolean taskToggle;
@@ -53,6 +55,7 @@ public class Main implements SelectionListener
 	public static Button pauseResume;
 	public static Button plus;
 	public static Button saveDir;
+	public static Button unloadDir;
 	public static Display display;
 	public static int maxTaskID;
 	public static Label clock;
@@ -83,6 +86,7 @@ public class Main implements SelectionListener
 	 */
 	protected void initialize() 
 	{
+		configLoaded = false;
 		taskList = new LinkedList<TaskObject>();
 		recentTaskID = new LinkedList<Integer>();
 		recentTaskID.add(new Integer(-1));
@@ -116,6 +120,36 @@ public class Main implements SelectionListener
 		      }
 		   }
 	};	
+	
+	void saveTasktoList(int taskID)
+	{
+		taskList.get(taskID).setTitle(title.getText());
+		taskList.get(taskID).setNotes(textNotes.getText());
+		taskList.get(taskID).setTimeElapsed(StopWatch.getElapsed());
+		taskList.get(taskID).setEndTime(System.currentTimeMillis());
+	}
+	void refreshRecentTaskUI()
+	{
+		//needs filling		
+	}
+	
+	public static void load()
+	{
+		pauseResume.setEnabled(true);
+		newTask.setEnabled(true);
+		saveDir.setEnabled(true);
+		unloadDir.setEnabled(true);
+      	textDir.setEnabled(true);
+	}
+	
+	public static void unload()
+	{
+		pauseResume.setEnabled(false);
+		newTask.setEnabled(false);
+		saveDir.setEnabled(false);
+		unloadDir.setEnabled(false);
+      	textDir.setEnabled(false);
+	}
 	
 	////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////
@@ -217,7 +251,7 @@ public class Main implements SelectionListener
 		
 		pauseResume = new Button(topPane, SWT.NONE);		
 		pauseResume.setBounds(299, 77, 112, 50);
-		pauseResume.setText("Pause");
+		pauseResume.setText("Resume");
 					
 		bottomPane = new TabFolder(frame, SWT.BORDER);
 		bottomPane.setBounds(5, 156, 415, 216);
@@ -336,7 +370,7 @@ public class Main implements SelectionListener
 		textReport = new Text(contentsTab3, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		textReport.setLocation(5, 5);
 		textReport.setSize(280, 175);
-		textReport.setText("Report\n");
+		textReport.setText("\nReport");
 		
 		Label sortReport = new Label(contentsTab3, SWT.NONE);
 		sortReport.setBounds(296, 5, 55, 15);
@@ -364,8 +398,12 @@ public class Main implements SelectionListener
 		browseDir.setText("Browse...");
 		
 		saveDir = new Button(contentsTab4, SWT.NONE);
-		saveDir.setBounds(270, 102, 108, 40);
+		saveDir.setBounds(270, 79, 108, 40);
 		saveDir.setText("Save default");
+		
+		unloadDir = new Button(contentsTab4, SWT.NONE);
+		unloadDir.setBounds(270, 131, 108, 40);
+		unloadDir.setText("Unload");
 				
 		Group group1 = new Group(contentsTab4, SWT.NONE);
 		group1.setText("Task Mode");
@@ -393,6 +431,8 @@ public class Main implements SelectionListener
 
 		// Set default tab
 		bottomPane.setSelection(tab4);
+		unload();
+
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////
@@ -424,6 +464,10 @@ public class Main implements SelectionListener
 		listeners.modePersonal();
 		listeners.modeWork();
 		
+		TextListener textHooks = new TextListener();
+		textHooks.title();
+		textHooks.textNotes();
+		
 		TableListener tableHooks = new TableListener();
 		tableHooks.col1();
 		tableHooks.col2();
@@ -433,6 +477,7 @@ public class Main implements SelectionListener
 		BrowsePath path = new BrowsePath();
 		path.browseDir();
 		path.saveDir();
+		path.unloadDir();
 		
 	}
 	
@@ -450,20 +495,4 @@ public class Main implements SelectionListener
 	public void widgetSelected(SelectionEvent e) {}
 	@Override
 	public void widgetDefaultSelected(SelectionEvent e) {}
-	
-	/**
-	 * Functions
-	 */
-	
-	void saveTasktoList(int taskID)
-	{
-		taskList.get(taskID).setTitle(title.getText());
-		taskList.get(taskID).setNotes(textNotes.getText());
-		taskList.get(taskID).setTimeElapsed(StopWatch.getElapsed());
-		taskList.get(taskID).setEndTime(System.currentTimeMillis());
-	}
-	void refreshRecentTaskUI()
-	{
-		//needs filling		
-	}
 }
