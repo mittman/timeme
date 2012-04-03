@@ -4,35 +4,46 @@
  * @author Team 0x00000001
  */
 
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 
 
 public class TextListener 
 {
 	public void title()
 	{
-	    Main.title.addVerifyListener(new VerifyListener()
+	    Main.title.addModifyListener(new ModifyListener()
 	    {
-			public void verifyText(VerifyEvent e) 
+			public void modifyText(ModifyEvent e) 
 			{
-	    	  	if(Main.title.getText() != "Title" && Main.configLoaded)
+//				if (Main.configLoaded)
+//				{
+//					if(Main.title.getText().equals("Title"))
+//					{
+//						Main.newTask.setEnabled(false);
+//					}
+//					else
+//					{
+//						Main.newTask.setEnabled(true);
+//					}
+//				}
+	    	  	if((!Main.title.getText().equals("Title")) && Main.configLoaded)
 	    	  	{
-	    	  		Main.newTask.setEnabled(true);
+    	  			Main.newTask.setEnabled(true);
 	    	  	}
-				Tools.debug("sort:" + "title");				
+				Tools.debug("input:" + "title");				
 			}
 	    });
 	}
 	
 	public void textNotes()
 	{
-	    Main.textNotes.addVerifyListener(new VerifyListener()
+	    Main.textNotes.addModifyListener(new ModifyListener()
 	    {
-			public void verifyText(VerifyEvent e) 
+			public void modifyText(ModifyEvent e) 
 			{
-
-				Tools.debug("sort:" + "textNotes");				
+	    	  	//if((!Main.textNotes.getText().equals("Notes")) && Main.configLoaded){}
+				Tools.debug("input:" + "textNotes");				
 			}
 	    });
 	}

@@ -222,7 +222,7 @@ public class Main implements SelectionListener
   		
 		list = new List(topPane, SWT.BORDER | SWT.V_SCROLL);
 		list.setBounds(0, 0, 177, 87);
-		list.setItems(new String[] {"Recent Item 1", "Recent Item 2", "Recent Item 3"});
+		list.setItems(new String[] {});
 		list.setSelection(0);
 		
 		clock = new Label(topPane, SWT.NONE);

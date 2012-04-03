@@ -91,12 +91,14 @@ public class Hooks
 		{
 			public void widgetSelected(SelectionEvent e) 
 			{			            
-				if(Main.maxTaskID != -1) //save task
-				{
-					//saveTasktoList(recentTaskID.getFirst());
-					Main.list.add("prev task", 0);
-					//list.add(taskList.get(recentTaskID.getFirst()).getSubject());
-				}
+//				if(Main.maxTaskID != -1) //save task
+//				{
+//					//saveTasktoList(recentTaskID.getFirst());
+//					Main.list.add("prev task", 0);
+//					//list.add(taskList.get(recentTaskID.getFirst()).getSubject());
+//				}
+				
+				Main.list.add(Main.title.getText(), 0);
 				Main.taskList.add(new TaskObject());
 				++Main.maxTaskID;
 				Main.recentTaskID.add(0,Main.maxTaskID);
@@ -107,9 +109,9 @@ public class Hooks
 				
 				Main.pauseResume.setText("Pause");
 				Main.bottomPane.setSelection(Main.tab1);
-				Main.newTask.setEnabled(false);
 				Main.title.setText("Title");
 				Main.textNotes.setText("Notes");
+				Main.newTask.setEnabled(false);
 
 				Tools.debug("button:" + "new task");
 			}
