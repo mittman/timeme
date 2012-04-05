@@ -45,16 +45,12 @@ public class Main implements SelectionListener
 	public static Button deleteTask;
 	public static Button editNotes;
 	public static Button editTime;
-	public static Button favoriteTask;
 	public static Button genReport;
 	public static Button modeEnd;
-	public static Button modePersonal;
 	public static Button modeStart;
-	public static Button modeWork;
 	public static Button newTask;
 	public static Button pauseResume;
 	public static Button saveDir;
-	public static Button unloadDir;
 	public static Display display;
 	public static int maxTaskID;
 	public static Label clock;
@@ -137,15 +133,7 @@ public class Main implements SelectionListener
 		pauseResume.setEnabled(true);
 		newTask.setEnabled(true);
 		saveDir.setEnabled(true);
-		unloadDir.setEnabled(true);
       	textDir.setEnabled(true);
-	}
-	
-	public static void unload()
-	{
-		saveDir.setEnabled(false);
-		unloadDir.setEnabled(false);
-      	textDir.setEnabled(false);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////
@@ -214,6 +202,7 @@ public class Main implements SelectionListener
 		
   		
 		list = new List(topPane, SWT.BORDER | SWT.V_SCROLL);
+		list.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		list.setBounds(0, 0, 177, 135);
 		list.setItems(new String[] {});
 		list.setSelection(0);
@@ -269,22 +258,18 @@ public class Main implements SelectionListener
 		Composite contentsTab2 = new Composite(bottomPane, SWT.NONE);
 		tab2.setControl(contentsTab2);
 		
-		favoriteTask = new Button(contentsTab2, SWT.NONE);
-		favoriteTask.setBounds(285, 23, 100, 30);
-		favoriteTask.setText("Favorite");
-		
 		editNotes = new Button(contentsTab2, SWT.NONE);
-		editNotes.setBounds(285, 63, 100, 30);
+		editNotes.setBounds(285, 39, 100, 30);
 		editNotes.setText("Edit Notes");
 		
 		editTime = new Button(contentsTab2, SWT.NONE);
 		editTime.addSelectionListener(this);
-		editTime.setBounds(285, 103, 100, 30);
+		editTime.setBounds(285, 75, 100, 30);
 		editTime.setText("Edit Time");
 		
 		deleteTask = new Button(contentsTab2, SWT.NONE);
 		deleteTask.addSelectionListener(this);
-		deleteTask.setBounds(285, 143, 100, 30);
+		deleteTask.setBounds(285, 111, 100, 30);
 		deleteTask.setText("Delete Task");
 				
 		ScrolledComposite scrolledComposite = new ScrolledComposite(contentsTab2, SWT.BORDER | SWT.V_SCROLL);
@@ -358,7 +343,7 @@ public class Main implements SelectionListener
 		textReport = new Text(contentsTab3, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		textReport.setLocation(5, 5);
 		textReport.setSize(280, 175);
-		textReport.setText("\nReport");
+		textReport.setText("Report");
 		
 		Label sortReport = new Label(contentsTab3, SWT.NONE);
 		sortReport.setBounds(296, 5, 55, 15);
@@ -383,37 +368,19 @@ public class Main implements SelectionListener
 		browseDir = new Button(contentsTab4, SWT.NONE);
 
 		browseDir.setEnabled(true);
-		browseDir.setBounds(270, 26, 108, 40);
+		browseDir.setBounds(285, 58, 108, 40);
 		browseDir.setText("Browse...");
 		
 		saveDir = new Button(contentsTab4, SWT.NONE);
-		saveDir.setBounds(270, 79, 108, 40);
+		saveDir.setBounds(171, 58, 108, 40);
 		saveDir.setText("Save default");
 		
-		unloadDir = new Button(contentsTab4, SWT.NONE);
-		unloadDir.setBounds(270, 131, 108, 40);
-		unloadDir.setText("Unload");
-				
-		Group group1 = new Group(contentsTab4, SWT.NONE);
-		group1.setText("Task Mode");
-		group1.setBounds(20, 90, 120, 83);
-		
-		modePersonal = new Button(group1, SWT.RADIO);
-		modePersonal.setLocation(10, 21);
-		modePersonal.setSize(88, 22);
-		modePersonal.setText("Personal");
-		
-		modeWork = new Button(group1, SWT.RADIO);
-		modeWork.setSelection(true);
-		modeWork.setLocation(10, 51);
-		modeWork.setSize(88, 22);
-		modeWork.setText("Work");
-		
 		textDir = new Text(contentsTab4, SWT.BORDER);
+		textDir.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.NORMAL));
 		textDir.setEnabled(false);
 		textDir.setEditable(false);
 		textDir.setText("No file loaded");
-		textDir.setBounds(25, 31, 221, 30);
+		textDir.setBounds(10, 25, 383, 27);
 				
 		Label hDivider = new Label(frame, SWT.SEPARATOR | SWT.HORIZONTAL);
 		hDivider.setBounds(5, 140, 415, 8);
@@ -446,12 +413,9 @@ public class Main implements SelectionListener
 		listeners.modeEnd();
 		listeners.genReport();
 		listeners.clearReport();
-		listeners.favoriteTask();
 		listeners.editNotes();
 		listeners.editTime();
 		listeners.deleteTask();
-		listeners.modePersonal();
-		listeners.modeWork();
 		
 		TextListener textHooks = new TextListener();
 		textHooks.title();
@@ -466,7 +430,6 @@ public class Main implements SelectionListener
 		BrowsePath path = new BrowsePath();
 		path.browseDir();
 		path.saveDir();
-		path.unloadDir();
 		
 	}
 	

@@ -56,24 +56,6 @@ public class BrowsePath
 	    });
 	}
 	
-	public void unloadDir()
-	{
-	    Main.unloadDir.addSelectionListener(new SelectionAdapter() 
-	    {
-		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
-		      {
-					Main.clockTicking = false;
-  	          		// save config
-		    	  	StopWatch.loadRecord(0);
-  	          		Main.configLoaded = false;
-		          	Main.unload();
-		      		Main.selectedDir = null;
-		          	Main.textDir.setText("No file loaded");
-					Tools.debug("button:" + "unloadDir");
-		      }
-	    });
-	}
-	
 }
 	      
 

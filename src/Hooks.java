@@ -36,32 +36,7 @@ public class Hooks
 	 */
 
 	// topPane button listeners
-	/*public void plus()
-	{
-		Main.plus.addSelectionListener(new SelectionAdapter() 
-		{
-			public void widgetSelected(SelectionEvent e) 
-			{
-				StopWatch.loadRecord(1);
-				tickTock();					            
-	            Tools.debug("button:" + "plus");
-			}
-		});
-	}
-	
-	public void minus()
-	{
-		Main.minus.addSelectionListener(new SelectionAdapter() 
-		{
-			public void widgetSelected(SelectionEvent e) 
-			{
-				StopWatch.loadRecord(0);			
-				tickTock();				
-				Tools.debug("button:" + "minus");
-			}
-		});
-	}
-	*/
+
 	public void pauseResume()
 	{
 		Main.pauseResume.addSelectionListener(new SelectionAdapter() 
@@ -155,17 +130,6 @@ public class Hooks
 	    });
 	}
 	
-	public void favoriteTask()
-	{
-	    Main.favoriteTask.addSelectionListener(new SelectionAdapter() 
-	    {
-	      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
-	      {
-				Tools.debug("button:" + "favoriteTask");
-	      }
-	    });
-	}
-	
 	public void editNotes()
 	{
 	    Main.editNotes.addSelectionListener(new SelectionAdapter() 
@@ -229,35 +193,6 @@ public class Hooks
 	    });
 	}
 	
-	public void modePersonal()
-	{
-	    Main.modePersonal.addSelectionListener(new SelectionAdapter() 
-	    {
-		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
-		      {
-					if(!Main.taskToggle)
-					{
-						Main.taskToggle = true;
-						Tools.debug("radio:" + "modePersonal");
-					}
-		      }
-	    });
-	}
-	
-	public void modeWork()
-	{
-	    Main.modeWork.addSelectionListener(new SelectionAdapter() 
-	    {
-		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
-		      {
-					if(Main.taskToggle)
-					{
-						Main.taskToggle = false;
-						Tools.debug("radio:" + "modeWork");
-					}
-		      }
-	    });
-	}
 	
 	// Collapse/Expand bottomPane
 	public void collapse()
