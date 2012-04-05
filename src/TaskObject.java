@@ -1,5 +1,6 @@
 /**
  * @name TaskObject
+ * @project TimeMe
  * @author Team 0x00000001
  */
 
@@ -14,6 +15,29 @@ public class TaskObject
 	
    // private long now = System.currentTimeMillis();
     
+ 	/**********************Do stuff***********************/
+	public static void createTask()
+	{
+		String taskName = "";
+		if(Main.title.getText().equals("Title"))
+		{
+			taskName = "Untitled-" + Main.untitled;
+			++Main.untitled;					
+		}
+		else
+		{
+			taskName = Main.title.getText();
+		}
+		
+		Main.list.add(taskName, 0);
+		Main.taskList.add(new TaskObject());
+		++Main.maxTaskID;
+		Main.recentTaskID.add(0,Main.maxTaskID);
+		
+		Main.clockTicking = true;
+		StopWatch.newTask();
+		Main.taskList.get(Main.maxTaskID).setStartTime(System.currentTimeMillis());
+	}
     
  	/**********************Generic getters and setters***********************/
     
