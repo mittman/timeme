@@ -27,7 +27,7 @@ public class TextListener
 //						Main.newTask.setEnabled(true);
 //					}
 //				}
-	    	  	if((!Main.title.getText().equals("Title")) && Main.configLoaded)
+	    	  	if((!Main.title.getText().equals("Title")) /*&& Main.configLoaded*/)
 	    	  	{
     	  			Main.newTask.setEnabled(true);
 	    	  	}

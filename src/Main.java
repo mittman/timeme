@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.events.SelectionAdapter;
 
 
 public class Main implements SelectionListener
@@ -46,14 +47,12 @@ public class Main implements SelectionListener
 	public static Button editTime;
 	public static Button favoriteTask;
 	public static Button genReport;
-	public static Button minus;
 	public static Button modeEnd;
 	public static Button modePersonal;
 	public static Button modeStart;
 	public static Button modeWork;
 	public static Button newTask;
 	public static Button pauseResume;
-	public static Button plus;
 	public static Button saveDir;
 	public static Button unloadDir;
 	public static Display display;
@@ -86,7 +85,7 @@ public class Main implements SelectionListener
 	 */
 	protected void initialize() 
 	{
-		configLoaded = false;
+		configLoaded = true;
 		taskList = new LinkedList<TaskObject>();
 		recentTaskID = new LinkedList<Integer>();
 		recentTaskID.add(new Integer(-1));
@@ -144,8 +143,6 @@ public class Main implements SelectionListener
 	
 	public static void unload()
 	{
-		pauseResume.setEnabled(false);
-		newTask.setEnabled(false);
 		saveDir.setEnabled(false);
 		unloadDir.setEnabled(false);
       	textDir.setEnabled(false);
@@ -213,45 +210,36 @@ public class Main implements SelectionListener
 		initialize();
 				
 		Composite topPane = new Composite(frame, SWT.NONE);
-		topPane.setBounds(5, 5, 424, 135);
-		
-		collapse = new Button(topPane, SWT.NONE);
-		collapse.setBounds(4, 93, 40, 35);
-		collapse.setText("<<");
+		topPane.setBounds(5, 5, 415, 135);
 		
   		
 		list = new List(topPane, SWT.BORDER | SWT.V_SCROLL);
-		list.setBounds(0, 0, 177, 87);
+		list.setBounds(0, 0, 177, 135);
 		list.setItems(new String[] {});
 		list.setSelection(0);
 		
 		clock = new Label(topPane, SWT.NONE);
-		clock.setFont(SWTResourceManager.getFont("Sans", 27, SWT.BOLD));
+		clock.setFont(SWTResourceManager.getFont("Sans", 34, SWT.BOLD));
 		clock.setAlignment(SWT.CENTER);
-		clock.setBounds(182, 25, 229, 41);
+		clock.setBounds(183, 56, 229, 55);
 		clock.setText("00:00:00");
-				
-		plus = new Button(topPane, SWT.NONE);
-		plus.addSelectionListener(this);
-		plus.setBounds(136, 97, 25, 25);
-		plus.setText("+");
-		
-		minus = new Button(topPane, SWT.NONE);
-		minus.addSelectionListener(this);
-		minus.setBounds(105, 97, 25, 25);
-		minus.setText("–");
 		
 		newTask = new Button(topPane, SWT.NONE);
 		newTask.addSelectionListener(this);
-		newTask.setBounds(182, 77, 112, 50);
+		newTask.setBounds(301, 0, 112, 50);
 		newTask.setText("New Task");
 		
 		Label vDivider = new Label(topPane, SWT.SEPARATOR | SWT.VERTICAL);
 		vDivider.setBounds(177, 0, 4, 135);
 		
-		pauseResume = new Button(topPane, SWT.NONE);		
-		pauseResume.setBounds(299, 77, 112, 50);
+		pauseResume = new Button(topPane, SWT.NONE);
+		pauseResume.setEnabled(false);
+		pauseResume.setBounds(183, 0, 112, 50);
 		pauseResume.setText("Resume");
+		
+		collapse = new Button(topPane, SWT.NONE);
+		collapse.setBounds(288, 117, 124, 18);
+		collapse.setText("<<");
 					
 		bottomPane = new TabFolder(frame, SWT.BORDER);
 		bottomPane.setBounds(5, 156, 415, 216);
@@ -390,10 +378,11 @@ public class Main implements SelectionListener
 		tab4 = new TabItem(bottomPane, SWT.NONE);
 		tab4.setText("Configuration");
 		Composite contentsTab4 = new Composite(bottomPane, SWT.NONE);
-		contentsTab4.setEnabled(false);
 		tab4.setControl(contentsTab4);
 		
 		browseDir = new Button(contentsTab4, SWT.NONE);
+
+		browseDir.setEnabled(true);
 		browseDir.setBounds(270, 26, 108, 40);
 		browseDir.setText("Browse...");
 		
@@ -430,8 +419,8 @@ public class Main implements SelectionListener
 		hDivider.setBounds(5, 140, 415, 8);
 
 		// Set default tab
-		bottomPane.setSelection(tab4);
-		unload();
+		//bottomPane.setSelection(tab4);
+		//unload();
 
 		
 		
@@ -447,8 +436,8 @@ public class Main implements SelectionListener
 		 */
 
 		Hooks listeners = new Hooks();
-		listeners.plus();
-		listeners.minus();
+		//listeners.plus();
+		//listeners.minus();
 		listeners.pauseResume();
 		listeners.newTask();
 		listeners.collapse();

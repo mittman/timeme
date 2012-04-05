@@ -20,6 +20,7 @@ public class BrowsePath
 		    	  browseDialog.setFilterPath(Main.selectedDir);
 		    	  browseDialog.setMessage("Please select a directory and click OK");
 
+		    	 // browseDialog.open();
 		    	  String dir = browseDialog.open();
 		    	  
 		    	  if(dir != null)

@@ -36,7 +36,7 @@ public class Hooks
 	 */
 
 	// topPane button listeners
-	public void plus()
+	/*public void plus()
 	{
 		Main.plus.addSelectionListener(new SelectionAdapter() 
 		{
@@ -61,7 +61,7 @@ public class Hooks
 			}
 		});
 	}
-	
+	*/
 	public void pauseResume()
 	{
 		Main.pauseResume.addSelectionListener(new SelectionAdapter() 
