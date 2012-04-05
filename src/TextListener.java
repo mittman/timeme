@@ -16,21 +16,7 @@ public class TextListener
 	    {
 			public void modifyText(ModifyEvent e) 
 			{
-//				if (Main.configLoaded)
-//				{
-//					if(Main.title.getText().equals("Title"))
-//					{
-//						Main.newTask.setEnabled(false);
-//					}
-//					else
-//					{
-//						Main.newTask.setEnabled(true);
-//					}
-//				}
-	    	  	if((!Main.title.getText().equals("Title")) /*&& Main.configLoaded*/)
-	    	  	{
-    	  			Main.newTask.setEnabled(true);
-	    	  	}
+	    	  	//if((!Main.title.getText().equals("Title")) && Main.configLoaded){}
 				Tools.debug("input:" + "title");				
 			}
 	    });

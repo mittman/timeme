@@ -15,7 +15,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
@@ -27,7 +26,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.events.SelectionAdapter;
 
 
 public class Main implements SelectionListener
@@ -38,8 +36,7 @@ public class Main implements SelectionListener
 	public static boolean configLoaded;
 	public static boolean interfaceDown;
 	public static boolean reportToggle;
-	public static boolean taskToggle;
-	public static Button browseDir;
+	public static Button browseDialog;
 	public static Button clearReport;
 	public static Button collapse;
 	public static Button deleteTask;
@@ -50,16 +47,18 @@ public class Main implements SelectionListener
 	public static Button modeStart;
 	public static Button newTask;
 	public static Button pauseResume;
-	public static Button saveDir;
+	public static Button saveDialog;
 	public static Display display;
 	public static int maxTaskID;
+	public static int untitled;
 	public static Label clock;
+	public static Label fileStatus;
 	public static LinkedList<Integer> recentTaskID;
 	public static LinkedList<TaskObject> taskList;
 	public static List list;
 	public static Rectangle down;
 	public static Rectangle up;
-	public static String selectedDir;  
+	public static String selectedFile;
 	public static StyledText textNotes;
 	public static TabFolder bottomPane;	
 	public static TabItem tab1; 
@@ -82,13 +81,13 @@ public class Main implements SelectionListener
 	protected void initialize() 
 	{
 		configLoaded = true;
+		untitled = 1;
 		taskList = new LinkedList<TaskObject>();
 		recentTaskID = new LinkedList<Integer>();
 		recentTaskID.add(new Integer(-1));
 		maxTaskID = -1;
 		reportToggle = false;
-		taskToggle = false;
-	    selectedDir = "";  	    
+	    selectedFile = "";
 		interfaceDown = true;
 		up = new Rectangle(0,0,0,0);
 		down = new Rectangle(0, 150, 424, 226);
@@ -130,10 +129,7 @@ public class Main implements SelectionListener
 	
 	public static void load()
 	{
-		pauseResume.setEnabled(true);
-		newTask.setEnabled(true);
-		saveDir.setEnabled(true);
-      	textDir.setEnabled(true);
+		textDir.setEnabled(true);		
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////
@@ -168,6 +164,7 @@ public class Main implements SelectionListener
 	public void open() 
 	{
 		display = Display.getDefault();
+		//display.setWarnings(false);
 		createContents();
 		frame.open();
 		frame.layout();
@@ -197,42 +194,40 @@ public class Main implements SelectionListener
 		frame.setLayout(null);
 		initialize();
 				
+		//topPane -------------------------------------------------------
 		Composite topPane = new Composite(frame, SWT.NONE);
-		topPane.setBounds(5, 5, 415, 135);
+		topPane.setBounds(5, 5, 424, 135);
 		
-  		
+		collapse = new Button(topPane, SWT.NONE);
+		collapse.setBounds(4, 93, 40, 35);
+		collapse.setText("<<");
+		  		
 		list = new List(topPane, SWT.BORDER | SWT.V_SCROLL);
-		list.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
-		list.setBounds(0, 0, 177, 135);
+		list.setBounds(0, 0, 177, 87);
 		list.setItems(new String[] {});
 		list.setSelection(0);
 		
 		clock = new Label(topPane, SWT.NONE);
-		clock.setFont(SWTResourceManager.getFont("Sans", 34, SWT.BOLD));
+		clock.setFont(SWTResourceManager.getFont("Sans", 27, SWT.BOLD));
 		clock.setAlignment(SWT.CENTER);
-		clock.setBounds(183, 56, 229, 55);
+		clock.setBounds(182, 25, 229, 41);
 		clock.setText("00:00:00");
-		
+						
 		newTask = new Button(topPane, SWT.NONE);
-		newTask.addSelectionListener(this);
-		newTask.setBounds(301, 0, 112, 50);
+		newTask.setBounds(182, 77, 112, 50);
 		newTask.setText("New Task");
 		
 		Label vDivider = new Label(topPane, SWT.SEPARATOR | SWT.VERTICAL);
 		vDivider.setBounds(177, 0, 4, 135);
 		
-		pauseResume = new Button(topPane, SWT.NONE);
-		pauseResume.setEnabled(false);
-		pauseResume.setBounds(183, 0, 112, 50);
+		pauseResume = new Button(topPane, SWT.NONE);		
+		pauseResume.setBounds(299, 77, 112, 50);
 		pauseResume.setText("Resume");
+				
 		
-		collapse = new Button(topPane, SWT.NONE);
-		collapse.setBounds(288, 117, 124, 18);
-		collapse.setText("<<");
-					
+		//bottomPane -------------------------------------------------------
 		bottomPane = new TabFolder(frame, SWT.BORDER);
 		bottomPane.setBounds(5, 156, 415, 216);
-		
 		
 		//Notes Tab -------------------------------------------------------
 		tab1 = new TabItem(bottomPane, SWT.NONE);
@@ -259,17 +254,15 @@ public class Main implements SelectionListener
 		tab2.setControl(contentsTab2);
 		
 		editNotes = new Button(contentsTab2, SWT.NONE);
-		editNotes.setBounds(285, 39, 100, 30);
+		editNotes.setBounds(295, 23, 100, 30);
 		editNotes.setText("Edit Notes");
 		
 		editTime = new Button(contentsTab2, SWT.NONE);
-		editTime.addSelectionListener(this);
-		editTime.setBounds(285, 75, 100, 30);
+		editTime.setBounds(295, 77, 100, 30);
 		editTime.setText("Edit Time");
 		
 		deleteTask = new Button(contentsTab2, SWT.NONE);
-		deleteTask.addSelectionListener(this);
-		deleteTask.setBounds(285, 111, 100, 30);
+		deleteTask.setBounds(295, 131, 100, 30);
 		deleteTask.setText("Delete Task");
 				
 		ScrolledComposite scrolledComposite = new ScrolledComposite(contentsTab2, SWT.BORDER | SWT.V_SCROLL);
@@ -343,7 +336,7 @@ public class Main implements SelectionListener
 		textReport = new Text(contentsTab3, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		textReport.setLocation(5, 5);
 		textReport.setSize(280, 175);
-		textReport.setText("Report");
+		textReport.setText("\nReport");
 		
 		Label sortReport = new Label(contentsTab3, SWT.NONE);
 		sortReport.setBounds(296, 5, 55, 15);
@@ -365,30 +358,26 @@ public class Main implements SelectionListener
 		Composite contentsTab4 = new Composite(bottomPane, SWT.NONE);
 		tab4.setControl(contentsTab4);
 		
-		browseDir = new Button(contentsTab4, SWT.NONE);
-
-		browseDir.setEnabled(true);
-		browseDir.setBounds(285, 58, 108, 40);
-		browseDir.setText("Browse...");
+		browseDialog = new Button(contentsTab4, SWT.NONE);
+		browseDialog.setBounds(270, 26, 108, 40);
+		browseDialog.setText("Browse...");
 		
-		saveDir = new Button(contentsTab4, SWT.NONE);
-		saveDir.setBounds(171, 58, 108, 40);
-		saveDir.setText("Save default");
+		saveDialog = new Button(contentsTab4, SWT.NONE);
+		saveDialog.setBounds(270, 80, 108, 40);
+		saveDialog.setText("Save as...");
 		
 		textDir = new Text(contentsTab4, SWT.BORDER);
-		textDir.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.NORMAL));
 		textDir.setEnabled(false);
 		textDir.setEditable(false);
-		textDir.setText("No file loaded");
-		textDir.setBounds(10, 25, 383, 27);
+		textDir.setText("");
+		textDir.setBounds(25, 58, 221, 30);
+		
+		fileStatus = new Label(contentsTab4, SWT.NONE);
+		fileStatus.setBounds(25, 140, 221, 15);
+		fileStatus.setText("No file loaded");
 				
 		Label hDivider = new Label(frame, SWT.SEPARATOR | SWT.HORIZONTAL);
 		hDivider.setBounds(5, 140, 415, 8);
-
-		// Set default tab
-		//bottomPane.setSelection(tab4);
-		//unload();
-
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////
@@ -403,8 +392,6 @@ public class Main implements SelectionListener
 		 */
 
 		Hooks listeners = new Hooks();
-		//listeners.plus();
-		//listeners.minus();
 		listeners.pauseResume();
 		listeners.newTask();
 		listeners.collapse();
@@ -428,9 +415,8 @@ public class Main implements SelectionListener
 		tableHooks.col4();
 
 		BrowsePath path = new BrowsePath();
-		path.browseDir();
-		path.saveDir();
-		
+		path.browseDialog();
+		path.saveDialog();		
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////

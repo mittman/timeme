@@ -36,7 +36,7 @@ public class Hooks
 	 */
 
 	// topPane button listeners
-
+	
 	public void pauseResume()
 	{
 		Main.pauseResume.addSelectionListener(new SelectionAdapter() 
@@ -73,20 +73,12 @@ public class Hooks
 //					//list.add(taskList.get(recentTaskID.getFirst()).getSubject());
 //				}
 				
-				Main.list.add(Main.title.getText(), 0);
-				Main.taskList.add(new TaskObject());
-				++Main.maxTaskID;
-				Main.recentTaskID.add(0,Main.maxTaskID);
-				
-				Main.clockTicking = true;
-				StopWatch.newTask();
-				Main.taskList.get(Main.maxTaskID).setStartTime(System.currentTimeMillis());
+				TaskObject.createTask();
 				
 				Main.pauseResume.setText("Pause");
 				Main.bottomPane.setSelection(Main.tab1);
 				Main.title.setText("Title");
 				Main.textNotes.setText("Notes");
-				Main.newTask.setEnabled(false);
 
 				Tools.debug("button:" + "new task");
 			}
@@ -192,7 +184,7 @@ public class Hooks
 		      }			
 	    });
 	}
-	
+
 	
 	// Collapse/Expand bottomPane
 	public void collapse()
