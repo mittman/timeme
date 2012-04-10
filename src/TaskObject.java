@@ -18,25 +18,15 @@ public class TaskObject
  	/**********************Do stuff***********************/
 	public static void createTask()
 	{
-		String taskName = "";
-		if(Main.title.getText().equals("Title"))
-		{
-			taskName = "Untitled-" + Main.untitled;
-			++Main.untitled;					
-		}
-		else
-		{
-			taskName = Main.title.getText();
-		}
 		
-		Main.list.add(taskName, 0);
-		Main.taskList.add(new TaskObject());
+		Main.list.add(Main.currentTask.getTitle(), 0);
 		++Main.maxTaskID;
+		Main.currentTask.setTaskID(Main.maxTaskID);
+		Main.taskList.add(Main.currentTask);
 		Main.recentTaskID.add(0,Main.maxTaskID);
-		
+			
 		Main.clockTicking = true;
 		StopWatch.newTask();
-		Main.taskList.get(Main.maxTaskID).setStartTime(System.currentTimeMillis());
 	}
     
  	/**********************Generic getters and setters***********************/

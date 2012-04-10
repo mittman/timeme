@@ -12,6 +12,7 @@ public class StopWatch
 	   public static void newTask()
 	   {
 		   elapsed = 0;
+		   Main.currentTask.setStartTime(System.currentTimeMillis());
 		   resume();
 	   }
 

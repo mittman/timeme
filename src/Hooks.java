@@ -4,6 +4,8 @@
  * @author Team 0x00000001
  */
 
+import java.util.Iterator;
+
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
@@ -52,10 +54,24 @@ public class Hooks
 	{
 		Main.list.addSelectionListener(new SelectionAdapter() 
 		{
-			public void widgetSelected(SelectionEvent e) 
+			public void widgetSelected(SelectionEvent e) //The current implementation requires unique task names but doesnt check for them...
 			{
-			            
-				Tools.debug("List item: " + Main.list.getSelectionIndex());
+				gatherToCurrentTask();
+				//saveToList();
+				String selected = Main.list.getItem(Main.list.getSelectionIndex());
+				Iterator itr = Main.taskList.iterator(); 
+				while(itr.hasNext()) {
+					TaskObject element = (TaskObject) itr.next(); 
+					if(selected == element.getTitle())
+					{
+						//loadTask
+					}
+
+				    System.out.print(element + " ");
+
+				} 
+				//Main.list.getItem(Main.list.getSelectionIndex())
+				Tools.debug("List item: " + selected);
 			}
 		});
 	}
@@ -66,13 +82,7 @@ public class Hooks
 		{
 			public void widgetSelected(SelectionEvent e) 
 			{			            
-//				if(Main.maxTaskID != -1) //save task
-//				{
-//					//saveTasktoList(recentTaskID.getFirst());
-//					Main.list.add("prev task", 0);
-//					//list.add(taskList.get(recentTaskID.getFirst()).getSubject());
-//				}
-				
+				gatherToCurrentTask();
 				TaskObject.createTask();
 				
 				Main.pauseResume.setText("Pause");
@@ -82,6 +92,7 @@ public class Hooks
 
 				Tools.debug("button:" + "new task");
 			}
+
 		});
 	}
 	
@@ -213,6 +224,28 @@ public class Hooks
 	}
 	
 ////////////////////////////////////////////////////////
+	
+	//Utility Functions
+	
+	private void gatherToCurrentTask() {
+		Main.currentTask.setNotes(Main.textNotes.getText());
+		
+		String taskName = "";
+		if(Main.title.getText().equals("Title"))
+		{
+			taskName = "Untitled-" + Main.untitled;
+			++Main.untitled;
+			Main.title.setText(taskName);
+		}
+		else
+		{
+			taskName = Main.title.getText();
+		}
+		Main.currentTask.setTitle(Main.title.getText());
+		Main.currentTask.setTimeElapsed(StopWatch.getElapsed());
+		Main.currentTask.setEndTime(System.currentTimeMillis());
+	}
+
 		
 
 

@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.events.SelectionAdapter;
 
 
 public class Main implements SelectionListener
@@ -55,6 +56,7 @@ public class Main implements SelectionListener
 	public static Label fileStatus;
 	public static LinkedList<Integer> recentTaskID;
 	public static LinkedList<TaskObject> taskList;
+	public static TaskObject currentTask = new TaskObject();
 	public static List list;
 	public static Rectangle down;
 	public static Rectangle up;
@@ -203,6 +205,7 @@ public class Main implements SelectionListener
 		collapse.setText("<<");
 		  		
 		list = new List(topPane, SWT.BORDER | SWT.V_SCROLL);
+
 		list.setBounds(0, 0, 177, 87);
 		list.setItems(new String[] {});
 		list.setSelection(0);
@@ -222,7 +225,7 @@ public class Main implements SelectionListener
 		
 		pauseResume = new Button(topPane, SWT.NONE);		
 		pauseResume.setBounds(299, 77, 112, 50);
-		pauseResume.setText("Resume");
+		pauseResume.setText("Start Timeing");
 				
 		
 		//bottomPane -------------------------------------------------------
@@ -403,6 +406,7 @@ public class Main implements SelectionListener
 		listeners.editNotes();
 		listeners.editTime();
 		listeners.deleteTask();
+		listeners.list();
 		
 		TextListener textHooks = new TextListener();
 		textHooks.title();
