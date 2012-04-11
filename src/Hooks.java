@@ -5,10 +5,12 @@
  */
 
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.ListIterator;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.TableItem;
+//import java.util.LinkedList;
 
 
 public class Hooks 
@@ -51,31 +53,53 @@ public class Hooks
 		});
 	}
 	
-	public void list()
-	{
-		Main.list.addSelectionListener(new SelectionAdapter() 
-		{
-			public void widgetSelected(SelectionEvent e) //The current implementation requires unique task names but doesnt check for them...
-			{
-				gatherToCurrentTask();
-				//saveToList();
-				String selected = Main.list.getItem(Main.list.getSelectionIndex());
-
-				Main.currentTask = returnByTaskTitle(selected);
-				unpackFromCurrentTask();
-				//Main.list.getItem(Main.list.getSelectionIndex())
-				Tools.debug("List item: " + selected);
-			}
-		});
-	}
-	
+//	public void list()
+//	{
+//		Main.list.addSelectionListener(new SelectionAdapter() 
+//		{
+//			public void widgetSelected(SelectionEvent e) //The current implementation requires unique task names but doesnt check for them...
+//			{
+//				SaveObject.collectCurrentTask();
+//				//saveToList();
+//				String selected = Main.list.getItem(Main.list.getSelectionIndex());
+//				Main.currentTask = SaveObject.returnByTaskTitle(selected);			
+//				SaveObject.unpackFromCurrentTask();
+//	
+//				Main.currentTask.setTaskID(Main.list.getSelectionIndex());
+//				TaskObject element = Main.taskList.peekLast();
+//				if(selected != element.getTitle())
+//				{
+//					Tools.debug("Current: " + element.getTitle() + " " + "List: " + selected);
+//					Main.title.setText(selected);
+//				}
+//					
+//				
+////				String selected = Main.list.getItem(Main.list.getSelectionIndex());
+////				ListIterator<TaskObject> itr = Main.taskList.listIterator();
+////				while(itr.hasNext()) 
+////				{
+////					TaskObject element = (TaskObject) itr.next(); 
+////					Tools.debug("selected: " + selected + "element: " + element.getTitle());
+////					if(selected == element.getTitle())
+////					{
+////						//loadTask
+////						itr.set(element);
+////					}
+////					selected = Main.list.getItem(Main.list.getSelectionIndex());
+////				} 		
+//				
+//			
+//			}
+//		});
+//	}
+		
 	public void newTask()
 	{
 		Main.newTask.addSelectionListener(new SelectionAdapter() 
 		{
 			public void widgetSelected(SelectionEvent e) 
 			{			            
-				gatherToCurrentTask();
+				SaveObject.collectCurrentTask();
 				TaskObject.createTask();
 				
 				Main.pauseResume.setText("Pause");
@@ -95,10 +119,10 @@ public class Hooks
 	{
 	    Main.bottomPane.addSelectionListener(new SelectionAdapter() 
 	    {
-	      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
-	      {
-	    	  Tools.debug("tab:" + (Main.bottomPane.getSelectionIndex() + 1));
-	      }
+		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
+		      {
+		    	  Tools.debug("tab:" + (Main.bottomPane.getSelectionIndex() + 1));
+		      }
 	    });
 	}
 	
@@ -153,8 +177,12 @@ public class Hooks
 	    Main.deleteTask.addSelectionListener(new SelectionAdapter() 
 	    {
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
-		      {
-					Tools.debug("button:" + "deleteTask");
+		      {		    	  	
+		    	  if(Main.allTasks.getSelectionIndex() != -1)
+		    	  {
+		    		  TaskObject.removeTask();
+		    		  Tools.debug("button:" + "deleteTask:" + (TaskObject.getRow()+1));
+		    	  }
 		      }
 	    });
 	}
@@ -215,72 +243,5 @@ public class Hooks
 		    }
 	    });
 	}
-	
-////////////////////////////////////////////////////////
-	
-	//Utility Functions
-	
-	private void gatherToCurrentTask() {
-		Main.currentTask.setNotes(Main.textNotes.getText());
 		
-		String taskName = "";
-		if(Main.title.getText().equals("Title"))
-		{
-			taskName = "Untitled-" + Main.untitled;
-			++Main.untitled;
-			Main.title.setText(taskName);
-		}
-		else
-		{
-			taskName = Main.title.getText();
-		}
-		Main.currentTask.setTitle(Main.title.getText());
-		Main.currentTask.setTimeElapsed(StopWatch.getElapsed());
-		Main.currentTask.setEndTime(System.currentTimeMillis());
-	}
-	
-	private void unpackFromCurrentTask()
-	{
-		Main.textNotes.setText(Main.currentTask.getNotes());
-		Main.title.setText(Main.currentTask.getTitle());
-		StopWatch.setElapsed(Main.currentTask.getTimeElapsed());
-	}
-	
-	private TaskObject returnByTaskID(int id)
-	{
-		Iterator<TaskObject> itr = Main.taskList.iterator();
-		while(itr.hasNext()) {
-			TaskObject element = (TaskObject) itr.next(); 
-			if(id == element.getTaskID())
-			{
-				return element;
-			}
-
-		    System.out.print("element " + id + " returned");
-
-		} 
-		
-		return null; //Element not found
-	}
-	
-	private TaskObject returnByTaskTitle(String title)
-	{
-		Iterator<TaskObject> itr = Main.taskList.iterator();
-		
-		while(itr.hasNext()) {
-			TaskObject element = itr.next(); 
-			if(title == element.getTitle())
-			{
-				System.out.print("element " + title + " returned");
-				return element;
-			}
-
-		} 
-
-		return null;
-	}
-
-		
-
-
 }

@@ -12,7 +12,7 @@ public class StopWatch
 	   public static void newTask()
 	   {
 		   elapsed = 0;
-		   Main.currentTask.setStartTime(System.currentTimeMillis());
+		   Main.currentTask.setStartTime(begin);
 		   resume();
 	   }
 
@@ -66,9 +66,14 @@ public class StopWatch
 			return elapsed;
 		}
 
-		public static String getFormatedElapsed()
+	    public static String getFormatedElapsed()
 	    {
-			elapsed = (System.currentTimeMillis() - begin);
+	    	elapsed = (System.currentTimeMillis() - begin);
+	    	return clockFormat(elapsed);
+	    }
+	    
+		public static String clockFormat(long elapsed)
+	    {
 	        String HH = timeFormat((int) ((elapsed / 1000) / 3600));
 	        String MM = timeFormat((int) ((elapsed / 1000) % 3600) / 60);
 	        String SS = timeFormat((int) ((elapsed / 1000) % 60));

@@ -23,10 +23,8 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.events.SelectionAdapter;
 
 
 public class Main implements SelectionListener
@@ -51,12 +49,14 @@ public class Main implements SelectionListener
 	public static Button saveDialog;
 	public static Display display;
 	public static int maxTaskID;
+	public static int uniqueID;
 	public static int untitled;
 	public static Label clock;
 	public static Label fileStatus;
 	public static LinkedList<Integer> recentTaskID;
 	public static LinkedList<TaskObject> taskList;
-	public static TaskObject currentTask = new TaskObject();
+	public static TaskObject currentTask;
+	public static Table tableList;
 	public static List list;
 	public static Rectangle down;
 	public static Rectangle up;
@@ -72,6 +72,10 @@ public class Main implements SelectionListener
 	public static TableColumn col2;
 	public static TableColumn col3;
 	public static TableColumn col4;
+	public static TableColumn col5;
+	public static TableColumn col6;
+	public static TableColumn col7;
+	public static TableColumn col8;
 	public static Text textDir;
 	public static Text textReport;
 	public static Text title;
@@ -84,6 +88,7 @@ public class Main implements SelectionListener
 	{
 		configLoaded = true;
 		untitled = 1;
+		currentTask = new TaskObject();
 		taskList = new LinkedList<TaskObject>();
 		recentTaskID = new LinkedList<Integer>();
 		recentTaskID.add(new Integer(-1));
@@ -197,35 +202,46 @@ public class Main implements SelectionListener
 		initialize();
 				
 		//topPane -------------------------------------------------------
-		Composite topPane = new Composite(frame, SWT.NONE);
+		Composite topPane = new Composite(frame, 0);
 		topPane.setBounds(5, 5, 424, 135);
 		
-		collapse = new Button(topPane, SWT.NONE);
-		collapse.setBounds(4, 93, 40, 35);
+		collapse = new Button(topPane, 0);
+		collapse.setBounds(0, 94, 47, 41);
 		collapse.setText("<<");
 		  		
-		list = new List(topPane, SWT.BORDER | SWT.V_SCROLL);
+//		list = new List(topPane, SWT.BORDER | SWT.V_SCROLL);
+//		list.setBounds(0, 0, 282, 88);
+//		list.setItems(new String[] {});
+//		list.setSelection(0);
 
-		list.setBounds(0, 0, 177, 87);
-		list.setItems(new String[] {});
-		list.setSelection(0);
+		tableList = new Table(topPane, SWT.BORDER | SWT.V_SCROLL);
+		tableList.setBounds(0, 0, 282, 88);
+		tableList.setHeaderVisible(false);
+		tableList.setSelection(0);
 		
-		clock = new Label(topPane, SWT.NONE);
+		TableColumn tL1 = new TableColumn(tableList, 0);
+		tL1.setWidth(190);		
+		TableColumn tL2 = new TableColumn(tableList, 0);
+		tL2.setWidth(20);	
+		TableColumn tL3 = new TableColumn(tableList, 0);
+		tL3.setWidth(0);	
+		
+		clock = new Label(topPane, 0);
 		clock.setFont(SWTResourceManager.getFont("Sans", 27, SWT.BOLD));
 		clock.setAlignment(SWT.CENTER);
-		clock.setBounds(182, 25, 229, 41);
+		clock.setBounds(53, 94, 229, 41);
 		clock.setText("00:00:00");
 						
-		newTask = new Button(topPane, SWT.NONE);
-		newTask.setBounds(182, 77, 112, 50);
+		newTask = new Button(topPane, 0);
+		newTask.setBounds(302, 10, 112, 50);
 		newTask.setText("New Task");
 		
 		Label vDivider = new Label(topPane, SWT.SEPARATOR | SWT.VERTICAL);
-		vDivider.setBounds(177, 0, 4, 135);
+		vDivider.setBounds(292, 0, 4, 135);
 		
-		pauseResume = new Button(topPane, SWT.NONE);		
-		pauseResume.setBounds(299, 77, 112, 50);
-		pauseResume.setText("Start Timeing");
+		pauseResume = new Button(topPane, 0);		
+		pauseResume.setBounds(302, 85, 112, 50);
+		pauseResume.setText("Resume");
 				
 		
 		//bottomPane -------------------------------------------------------
@@ -233,9 +249,9 @@ public class Main implements SelectionListener
 		bottomPane.setBounds(5, 156, 415, 216);
 		
 		//Notes Tab -------------------------------------------------------
-		tab1 = new TabItem(bottomPane, SWT.NONE);
+		tab1 = new TabItem(bottomPane, 0);
 		tab1.setText("Description");	
-		final Composite contentsTab1 = new Composite(bottomPane, SWT.NONE);
+		final Composite contentsTab1 = new Composite(bottomPane, 0);
 		tab1.setControl(contentsTab1);
 	
 		title = new Text(contentsTab1, SWT.BORDER);
@@ -251,88 +267,73 @@ public class Main implements SelectionListener
 		textNotes.addListener(SWT.KeyUp, ctrlAListener);
 		
 		//Task Manage Tab -------------------------------------------
-		tab2 = new TabItem(bottomPane, SWT.NONE);
+		tab2 = new TabItem(bottomPane, 0);
 		tab2.setText("Manage Tasks");	
-		Composite contentsTab2 = new Composite(bottomPane, SWT.NONE);
+		Composite contentsTab2 = new Composite(bottomPane, 0);
 		tab2.setControl(contentsTab2);
 		
-		editNotes = new Button(contentsTab2, SWT.NONE);
+		editNotes = new Button(contentsTab2, 0);
 		editNotes.setBounds(295, 23, 100, 30);
 		editNotes.setText("Edit Notes");
 		
-		editTime = new Button(contentsTab2, SWT.NONE);
+		editTime = new Button(contentsTab2, 0);
 		editTime.setBounds(295, 77, 100, 30);
 		editTime.setText("Edit Time");
 		
-		deleteTask = new Button(contentsTab2, SWT.NONE);
+		deleteTask = new Button(contentsTab2, 0);
 		deleteTask.setBounds(295, 131, 100, 30);
 		deleteTask.setText("Delete Task");
 				
 		ScrolledComposite scrolledComposite = new ScrolledComposite(contentsTab2, SWT.BORDER | SWT.V_SCROLL);
-		scrolledComposite.setAlwaysShowScrollBars(true);
 		scrolledComposite.setBounds(0, 0, 279, 183);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 		
-		allTasks = new Table(scrolledComposite, SWT.BORDER | SWT.FULL_SELECTION);
+		allTasks = new Table(scrolledComposite, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
 		allTasks.setHeaderVisible(true);
 		allTasks.setLinesVisible(true);
 		
-		col1 = new TableColumn(allTasks, SWT.NONE);
+		col1 = new TableColumn(allTasks, 0);
 		col1.setWidth(30);
 		col1.setText("##");
 		
-		col2 = new TableColumn(allTasks, SWT.NONE);
+		col2 = new TableColumn(allTasks, 0);
 		col2.setWidth(130);
 		col2.setText("Title");
 		
-		col3 = new TableColumn(allTasks, SWT.NONE);
+		col3 = new TableColumn(allTasks, 0);
 		col3.setWidth(70);
 		col3.setText("Total");
 		
-		col4 = new TableColumn(allTasks, SWT.NONE);
+		col4 = new TableColumn(allTasks, 0);
 		col4.setWidth(3);
 		col4.setText("*");
 		
-		TableItem row01 = new TableItem(allTasks, SWT.NONE);
-		row01.setText(new String[] {"05", "Programming", "03:00:00", "x"});
-		
-		TableItem row02 = new TableItem(allTasks, SWT.NONE);
-		row02.setText(new String[] {"02", "Studying", "02:00:00", "o"});
+		col5 = new TableColumn(allTasks, 0);
+		col5.setWidth(0);
+		col6 = new TableColumn(allTasks, 0);
+		col6.setWidth(0);
+		col7 = new TableColumn(allTasks, 0);
+		col7.setWidth(0);
+		col8 = new TableColumn(allTasks, 0);
+		col8.setWidth(0);
 
-		TableItem row03 = new TableItem(allTasks, SWT.NONE);
-		row03.setText(new String[] {"03", "Reading", "01:00:00", "x"});
-
-		TableItem row04 = new TableItem(allTasks, SWT.NONE);
-		row04.setText(new String[] {"04", "Coding", "07:00:00", "x"});
-
-		TableItem row05 = new TableItem(allTasks, SWT.NONE);
-		row05.setText(new String[] {"01", "Scripting", "05:00:00", "o"});
-
-		TableItem row06 = new TableItem(allTasks, SWT.NONE);
-		row06.setText(new String[] {"06", "Sleeping", "06:00:00", "x"});
-		
-		TableItem row07 = new TableItem(allTasks, SWT.NONE);
-		row07.setText(new String[] {"07", "Eating", "04:00:00", "o"});
-		
-		TableItem row08 = new TableItem(allTasks, SWT.NONE);
-		row08.setText(new String[] {"08", "Pokemon", "08:00:00", "x"});
-				
+						
 		scrolledComposite.setContent(allTasks);
 		scrolledComposite.setMinSize(allTasks.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
 		//Reports Tab -----------------------------------------------
 		
-		tab3 = new TabItem(bottomPane, SWT.NONE);
+		tab3 = new TabItem(bottomPane, 0);
 		tab3.setText("Reports");	
-		Composite contentsTab3 = new Composite(bottomPane, SWT.NONE);
+		Composite contentsTab3 = new Composite(bottomPane, 0);
 		tab3.setControl(contentsTab3);
 		
-		genReport = new Button(contentsTab3, SWT.NONE);
+		genReport = new Button(contentsTab3, 0);
 		genReport.setBounds(291, 73, 108, 50);
 		genReport.setText("Generate");
 		
-		clearReport = new Button(contentsTab3, SWT.NONE);
+		clearReport = new Button(contentsTab3, 0);
 		clearReport.setBounds(291, 129, 108, 50);
 		clearReport.setText("Clear");
 		
@@ -341,7 +342,7 @@ public class Main implements SelectionListener
 		textReport.setSize(280, 175);
 		textReport.setText("\nReport");
 		
-		Label sortReport = new Label(contentsTab3, SWT.NONE);
+		Label sortReport = new Label(contentsTab3, 0);
 		sortReport.setBounds(296, 5, 55, 15);
 		sortReport.setText("Sort:");
 		
@@ -356,16 +357,16 @@ public class Main implements SelectionListener
 		
 		//Configuration Tab ----------------------------------------
 		
-		tab4 = new TabItem(bottomPane, SWT.NONE);
+		tab4 = new TabItem(bottomPane, 0);
 		tab4.setText("Configuration");
-		Composite contentsTab4 = new Composite(bottomPane, SWT.NONE);
+		Composite contentsTab4 = new Composite(bottomPane, 0);
 		tab4.setControl(contentsTab4);
 		
-		browseDialog = new Button(contentsTab4, SWT.NONE);
+		browseDialog = new Button(contentsTab4, 0);
 		browseDialog.setBounds(270, 26, 108, 40);
 		browseDialog.setText("Browse...");
 		
-		saveDialog = new Button(contentsTab4, SWT.NONE);
+		saveDialog = new Button(contentsTab4, 0);
 		saveDialog.setBounds(270, 80, 108, 40);
 		saveDialog.setText("Save as...");
 		
@@ -375,7 +376,7 @@ public class Main implements SelectionListener
 		textDir.setText("");
 		textDir.setBounds(25, 58, 221, 30);
 		
-		fileStatus = new Label(contentsTab4, SWT.NONE);
+		fileStatus = new Label(contentsTab4, 0);
 		fileStatus.setBounds(25, 140, 221, 15);
 		fileStatus.setText("No file loaded");
 				
@@ -406,13 +407,15 @@ public class Main implements SelectionListener
 		listeners.editNotes();
 		listeners.editTime();
 		listeners.deleteTask();
-		listeners.list();
+		//listeners.list();
 		
 		TextListener textHooks = new TextListener();
 		textHooks.title();
 		textHooks.textNotes();
 		
 		TableListener tableHooks = new TableListener();
+		tableHooks.tableList();
+		tableHooks.row();
 		tableHooks.col1();
 		tableHooks.col2();
 		tableHooks.col3();

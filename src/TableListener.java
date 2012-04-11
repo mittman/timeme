@@ -8,11 +8,53 @@ import java.text.Collator;
 import java.util.Locale;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.TableItem;
 
 
 public class TableListener 
 {
+	public void tableList()
+	{
+		Main.tableList.addSelectionListener(new SelectionAdapter() 
+		{
+			public void widgetSelected(SelectionEvent e)
+			{
+				SaveObject.collectCurrentTask();
+				//saveToList();
+				int selectedID = Integer.valueOf(Main.tableList.getItem(Main.tableList.getSelectionIndex()).getText(2));
+				
+				int i = 0;
+				while(!Main.allTasks.getItem(i).getText(4).equals(selectedID + ""))
+				{
+					i++;
+				}
+				String selectedTitle = Main.allTasks.getItem(i).getText(1);
+				String selectedNotes = Main.allTasks.getItem(i).getText(5);
+				Main.title.setText(selectedTitle);
+				Main.textNotes.setText(selectedNotes);		
+			}
+		});
+	}
+	
+	public static String getRow()
+	{
+	  	String[] getRow = Main.allTasks.getSelection()[0].toString().split("[{}]");
+		return getRow[1];
+	}
+	
+	// Row listener
+	public void row()
+	{
+	    Main.allTasks.addSelectionListener(new SelectionAdapter() 
+	    {
+		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
+		      {
+					Tools.debug("row:" + getRow());
+		      }
+	    });
+	}
+	
     // Column listeners
 	public void col1()
 	{

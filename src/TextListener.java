@@ -16,8 +16,10 @@ public class TextListener
 	    {
 			public void modifyText(ModifyEvent e) 
 			{
-	    	  	//if((!Main.title.getText().equals("Title")) && Main.configLoaded){}
-				Tools.debug("input:" + "title");				
+	    	  	if((!Main.title.getText().equals("Title")) && Main.title.isFocusControl())
+	    	  	{
+	    	  		Tools.debug("input:" + "title");
+	    	  	}
 			}
 	    });
 	}
@@ -28,8 +30,10 @@ public class TextListener
 	    {
 			public void modifyText(ModifyEvent e) 
 			{
-	    	  	//if((!Main.textNotes.getText().equals("Notes")) && Main.configLoaded){}
-				Tools.debug("input:" + "textNotes");				
+	    	  	if((!Main.textNotes.getText().equals("Notes")) && Main.textNotes.isFocusControl())
+	    	  	{
+	    	  		Tools.debug("input:" + "textNotes");
+	    	  	}								
 			}
 	    });
 	}
