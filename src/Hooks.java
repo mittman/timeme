@@ -5,6 +5,7 @@
  */
 
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -59,17 +60,9 @@ public class Hooks
 				gatherToCurrentTask();
 				//saveToList();
 				String selected = Main.list.getItem(Main.list.getSelectionIndex());
-				Iterator itr = Main.taskList.iterator(); 
-				while(itr.hasNext()) {
-					TaskObject element = (TaskObject) itr.next(); 
-					if(selected == element.getTitle())
-					{
-						//loadTask
-					}
 
-				    System.out.print(element + " ");
-
-				} 
+				Main.currentTask = returnByTaskTitle(selected);
+				unpackFromCurrentTask();
 				//Main.list.getItem(Main.list.getSelectionIndex())
 				Tools.debug("List item: " + selected);
 			}
@@ -244,6 +237,47 @@ public class Hooks
 		Main.currentTask.setTitle(Main.title.getText());
 		Main.currentTask.setTimeElapsed(StopWatch.getElapsed());
 		Main.currentTask.setEndTime(System.currentTimeMillis());
+	}
+	
+	private void unpackFromCurrentTask()
+	{
+		Main.textNotes.setText(Main.currentTask.getNotes());
+		Main.title.setText(Main.currentTask.getTitle());
+		StopWatch.setElapsed(Main.currentTask.getTimeElapsed());
+	}
+	
+	private TaskObject returnByTaskID(int id)
+	{
+		Iterator<TaskObject> itr = Main.taskList.iterator();
+		while(itr.hasNext()) {
+			TaskObject element = (TaskObject) itr.next(); 
+			if(id == element.getTaskID())
+			{
+				return element;
+			}
+
+		    System.out.print("element " + id + " returned");
+
+		} 
+		
+		return null; //Element not found
+	}
+	
+	private TaskObject returnByTaskTitle(String title)
+	{
+		Iterator<TaskObject> itr = Main.taskList.iterator();
+		
+		while(itr.hasNext()) {
+			TaskObject element = itr.next(); 
+			if(title == element.getTitle())
+			{
+				System.out.print("element " + title + " returned");
+				return element;
+			}
+
+		} 
+
+		return null;
 	}
 
 		

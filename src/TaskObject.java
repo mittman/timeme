@@ -23,6 +23,7 @@ public class TaskObject
 		++Main.maxTaskID;
 		Main.currentTask.setTaskID(Main.maxTaskID);
 		Main.taskList.add(Main.currentTask);
+		Main.currentTask = new TaskObject();
 		Main.recentTaskID.add(0,Main.maxTaskID);
 			
 		Main.clockTicking = true;
