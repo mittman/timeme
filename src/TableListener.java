@@ -149,9 +149,9 @@ public class TableListener
 	    });
 	}
 	
-	public void col4()
+	public void col5()
 	{
-	    Main.col4.addSelectionListener(new SelectionAdapter() 
+	    Main.col5.addSelectionListener(new SelectionAdapter() 
 	    {
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 		      {
@@ -175,7 +175,7 @@ public class TableListener
 			                 }
 			        	}
 			        }
-					Tools.debug("sort:" + "col4");
+					Tools.debug("sort:" + "col5");
 		      }
 	    });
 	}

@@ -60,6 +60,13 @@ public class TaskObject
 		new TableItem(Main.tableList, 0, 0).setText(new String[] { title, elapsed, taskID });
 		if(Main.tableList.getItemCount() > 4)
 		{
+	  		for (int i = 0; i < Main.allTasks.getItemCount(); i++)
+	  		{
+	  			if(Main.tableList.getItem(4).getText(2).equals(Main.allTasks.getItem(i).getText(4)))
+	  			{
+	  				Main.allTasks.getItem(i).setText(3, "o");
+	  			}
+	  		}
 			Main.tableList.remove(4);
 		}
 

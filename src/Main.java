@@ -214,15 +214,15 @@ public class Main implements SelectionListener
 //		list.setItems(new String[] {});
 //		list.setSelection(0);
 
-		tableList = new Table(topPane, SWT.BORDER | SWT.V_SCROLL);
+		tableList = new Table(topPane, SWT.BORDER | SWT.FULL_SELECTION);
 		tableList.setBounds(0, 0, 282, 88);
 		tableList.setHeaderVisible(false);
 		tableList.setSelection(0);
 		
 		TableColumn tL1 = new TableColumn(tableList, 0);
-		tL1.setWidth(190);		
+		tL1.setWidth(160);		
 		TableColumn tL2 = new TableColumn(tableList, 0);
-		tL2.setWidth(20);	
+		tL2.setWidth(80);	
 		TableColumn tL3 = new TableColumn(tableList, 0);
 		tL3.setWidth(0);	
 		
@@ -302,15 +302,15 @@ public class Main implements SelectionListener
 		col2.setText("Title");
 		
 		col3 = new TableColumn(allTasks, 0);
-		col3.setWidth(70);
+		col3.setWidth(68);
 		col3.setText("Total");
 		
-		col4 = new TableColumn(allTasks, 0);
-		col4.setWidth(3);
-		col4.setText("*");
-		
 		col5 = new TableColumn(allTasks, 0);
-		col5.setWidth(0);
+		col5.setWidth(22);
+		col5.setText("*");
+		
+		col4 = new TableColumn(allTasks, 0);
+		col4.setWidth(0);
 		col6 = new TableColumn(allTasks, 0);
 		col6.setWidth(0);
 		col7 = new TableColumn(allTasks, 0);
@@ -419,7 +419,7 @@ public class Main implements SelectionListener
 		tableHooks.col1();
 		tableHooks.col2();
 		tableHooks.col3();
-		tableHooks.col4();
+		tableHooks.col5();
 
 		BrowsePath path = new BrowsePath();
 		path.browseDialog();
