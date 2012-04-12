@@ -76,6 +76,7 @@ public class Main implements SelectionListener
 	public static TableColumn col6;
 	public static TableColumn col7;
 	public static TableColumn col8;
+	public static TableColumn col9;
 	public static Text textDir;
 	public static Text textReport;
 	public static Text title;
@@ -219,6 +220,7 @@ public class Main implements SelectionListener
 		tableList.setHeaderVisible(false);
 		tableList.setSelection(0);
 		
+		//{ title, elapsed(human readable), taskID}
 		TableColumn tL1 = new TableColumn(tableList, 0);
 		tL1.setWidth(160);		
 		TableColumn tL2 = new TableColumn(tableList, 0);
@@ -293,31 +295,35 @@ public class Main implements SelectionListener
 		allTasks.setHeaderVisible(true);
 		allTasks.setLinesVisible(true);
 		
+		//{ #, title, elapsed(human readable),
+		//{ row #, title, elapsed(human readable), recent, taskID, notes, start, end, totalelapsed }
 		col1 = new TableColumn(allTasks, 0);
 		col1.setWidth(30);
 		col1.setText("##");
 		
 		col2 = new TableColumn(allTasks, 0);
-		col2.setWidth(130);
+		col2.setWidth(130);//130
 		col2.setText("Title");
 		
 		col3 = new TableColumn(allTasks, 0);
-		col3.setWidth(68);
+		col3.setWidth(68);//68
 		col3.setText("Total");
+		
+		col4 = new TableColumn(allTasks, 0); //
+		col4.setWidth(0);
 		
 		col5 = new TableColumn(allTasks, 0);
 		col5.setWidth(22);
 		col5.setText("*");
-		
-		col4 = new TableColumn(allTasks, 0);
-		col4.setWidth(0);
+				
 		col6 = new TableColumn(allTasks, 0);
 		col6.setWidth(0);
 		col7 = new TableColumn(allTasks, 0);
 		col7.setWidth(0);
 		col8 = new TableColumn(allTasks, 0);
 		col8.setWidth(0);
-
+		col9 = new TableColumn(allTasks, 0);
+		col9.setWidth(0);
 						
 		scrolledComposite.setContent(allTasks);
 		scrolledComposite.setMinSize(allTasks.computeSize(SWT.DEFAULT, SWT.DEFAULT));

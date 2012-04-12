@@ -31,8 +31,14 @@ public class TableListener
 				}
 				String selectedTitle = Main.allTasks.getItem(i).getText(1);
 				String selectedNotes = Main.allTasks.getItem(i).getText(5);
+				long elapsedTime = new Long( Main.allTasks.getItem(i).getText(8) );
 				Main.title.setText(selectedTitle);
-				Main.textNotes.setText(selectedNotes);		
+				Main.textNotes.setText(selectedNotes);
+				Hooks.tickTock();
+				StopWatch.setElapsed(elapsedTime);
+				Hooks.tickTock();
+
+				
 			}
 		});
 	}
