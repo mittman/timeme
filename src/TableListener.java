@@ -21,8 +21,22 @@ public class TableListener
 			public void widgetSelected(SelectionEvent e)
 			{
 				SaveObject.collectCurrentTask();
-				//saveToList();
+				
+
 				int selectedID = Integer.valueOf(Main.tableList.getItem(Main.tableList.getSelectionIndex()).getText(2));
+				boolean found = false;
+				for(int i = 0; i<Main.allTasks.getItemCount(); ++i)
+				{
+					if(Main.allTasks.getItem(i).getText(4).equals(selectedID + "")) found = true;
+				}
+				
+				Main.currentTask.setTaskID(Main.maxTaskID);
+				if(!found)
+				{
+					TaskObject.createTask();
+				}
+				
+				//saveToList();
 				
 				int i = 0;
 				while(!Main.allTasks.getItem(i).getText(4).equals(selectedID + ""))
@@ -37,7 +51,6 @@ public class TableListener
 				Hooks.tickTock();
 				StopWatch.setElapsed(elapsedTime);
 				Hooks.tickTock();
-
 				
 			}
 		});

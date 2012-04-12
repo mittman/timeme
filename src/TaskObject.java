@@ -21,6 +21,7 @@ public class TaskObject
 	{		
 		++Main.maxTaskID;
 		
+//		SaveObject.saveCurrentToTable(Main.maxTaskID);
 		int newID = Main.maxTaskID;
 		int rowID = 0;
 		if(newID > 1)

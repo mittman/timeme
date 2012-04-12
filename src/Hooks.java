@@ -139,17 +139,7 @@ public class Hooks
 	    });
 	}
 	
-	public void clearReport()
-	{
-	    Main.clearReport.addSelectionListener(new SelectionAdapter() 
-	    {
-	      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
-	      {
-				Tools.debug("button:" + "clearReport");
-	      }
-	    });
-	}
-	
+
 	public void editNotes()
 	{
 	    Main.editNotes.addSelectionListener(new SelectionAdapter() 

@@ -1,5 +1,7 @@
 import java.util.Iterator;
 
+import org.eclipse.swt.widgets.TableItem;
+
 /**
  * @name SaveObject
  * @project TimeMe
@@ -8,6 +10,55 @@ import java.util.Iterator;
 
 public class SaveObject 
 {
+	
+	public static void saveCurrentToTable(int taskID)
+	{
+		int rowID;
+		if(taskID > 1)
+			rowID = Integer.parseInt(Main.allTasks.getItem(taskID).toString().split("[{}]")[1]) + 1;
+		else
+			rowID = taskID + 1;
+
+		
+		Main.currentTask.setTaskID(taskID);
+		
+		// Add to recent list
+		Main.taskList.add(Main.currentTask);
+		//Main.currentTask = new TaskObject();
+		Main.recentTaskID.add(0,taskID);
+		
+		// Add to table
+		String newRow = StopWatch.timeFormat(rowID);
+		String[] newElapsed = StopWatch.clockFormat(Main.currentTask.getTimeElapsed()).split("[.]");
+		
+		String title = Main.currentTask.getTitle();
+		String elapsed = newElapsed[0];
+		String recent = "x";
+		String taskIDs = taskID + "";
+		String start = Main.currentTask.getStartTime() + "";
+		String end = Main.currentTask.getEndTime() + "";
+		String total = Main.currentTask.getTimeElapsed() + "";
+		String notes = Main.currentTask.getNotes();
+		
+		String[] row = new String[] { newRow, title, elapsed, recent, taskIDs, notes, start, end, total };
+		new TableItem(Main.allTasks, 0, taskID-1).setText(row);
+		Main.allTasks.setSelection(taskID);
+		
+		// Add to tableList
+		new TableItem(Main.tableList, 0, 0).setText(new String[] { title, elapsed, taskIDs });
+		if(Main.tableList.getItemCount() > 4)
+		{
+	  		for (int i = 0; i < Main.allTasks.getItemCount(); i++)
+	  		{
+	  			if(Main.tableList.getItem(4).getText(2).equals(Main.allTasks.getItem(i).getText(4)))
+	  			{
+	  				Main.allTasks.getItem(i).setText(3, "o");
+	  			}
+	  		}
+			Main.tableList.remove(4);
+		}
+	}
+	
 	public static void collectCurrentTask() 
 	{		
 		String taskName = "";

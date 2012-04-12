@@ -36,7 +36,6 @@ public class Main implements SelectionListener
 	public static boolean interfaceDown;
 	public static boolean reportToggle;
 	public static Button browseDialog;
-	public static Button clearReport;
 	public static Button collapse;
 	public static Button deleteTask;
 	public static Button editNotes;
@@ -336,12 +335,8 @@ public class Main implements SelectionListener
 		tab3.setControl(contentsTab3);
 		
 		genReport = new Button(contentsTab3, 0);
-		genReport.setBounds(291, 73, 108, 50);
+		genReport.setBounds(291, 102, 108, 72);
 		genReport.setText("Generate");
-		
-		clearReport = new Button(contentsTab3, 0);
-		clearReport.setBounds(291, 129, 108, 50);
-		clearReport.setText("Clear");
 		
 		textReport = new Text(contentsTab3, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		textReport.setLocation(5, 5);
@@ -353,13 +348,15 @@ public class Main implements SelectionListener
 		sortReport.setText("Sort:");
 		
 		modeStart = new Button(contentsTab3, SWT.RADIO);
-		modeStart.setBounds(296, 28, 90, 16);
+		modeStart.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
+		modeStart.setBounds(291, 26, 90, 16);
 		modeStart.setSelection(true);
 		modeStart.setText("Start Time");
 		
 		modeEnd = new Button(contentsTab3, SWT.RADIO);
+		modeEnd.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		modeEnd.setText("End Time");
-		modeEnd.setBounds(296, 51, 90, 16);
+		modeEnd.setBounds(291, 58, 90, 16);
 		
 		//Configuration Tab ----------------------------------------
 		
@@ -409,7 +406,6 @@ public class Main implements SelectionListener
 		listeners.modeStart();
 		listeners.modeEnd();
 		listeners.genReport();
-		listeners.clearReport();
 		listeners.editNotes();
 		listeners.editTime();
 		listeners.deleteTask();
