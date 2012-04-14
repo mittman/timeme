@@ -20,10 +20,8 @@ public class TableListener
 		{
 			public void widgetSelected(SelectionEvent e)
 			{
-				SaveObject.collectCurrentTask();
-				
-
 				int selectedID = Integer.valueOf(Main.tableList.getItem(Main.tableList.getSelectionIndex()).getText(2));
+				
 				boolean found = false;
 				for(int i = 0; i<Main.allTasks.getItemCount(); ++i)
 				{
@@ -31,10 +29,9 @@ public class TableListener
 				}
 				
 				Main.currentTask.setTaskID(Main.maxTaskID);
-				if(!found)
-				{
-					TaskObject.createTask();
-				}
+				if(!found) TaskObject.createTask();
+				else SaveObject.saveCurrentToTable(Main.currentTask.getTaskID());
+					
 				
 				//saveToList();
 				

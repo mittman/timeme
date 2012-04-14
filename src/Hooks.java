@@ -99,7 +99,7 @@ public class Hooks
 		{
 			public void widgetSelected(SelectionEvent e) 
 			{			            
-				SaveObject.collectCurrentTask();
+				//SaveObject.collectCurrentTask();
 				TaskObject.createTask();
 				
 				Main.pauseResume.setText("Pause");

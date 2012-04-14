@@ -227,6 +227,7 @@ public class Main implements SelectionListener
 		TableColumn tL3 = new TableColumn(tableList, 0);
 		tL3.setWidth(0);	
 		
+		
 		clock = new Label(topPane, 0);
 		clock.setFont(SWTResourceManager.getFont("Sans", 27, SWT.BOLD));
 		clock.setAlignment(SWT.CENTER);

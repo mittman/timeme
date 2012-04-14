@@ -13,46 +13,85 @@ public class SaveObject
 	
 	public static void saveCurrentToTable(int taskID)
 	{
-		int rowID;
-		if(taskID > 1)
-			rowID = Integer.parseInt(Main.allTasks.getItem(taskID).toString().split("[{}]")[1]) + 1;
-		else
-			rowID = taskID + 1;
-
-		
+		collectCurrentTask();
 		Main.currentTask.setTaskID(taskID);
+
+		/********** is this an entirely new item?*******/ 
+		boolean found = false;
+		int foundRow = 0;
+		for(int i = 0; i<Main.allTasks.getItemCount(); ++i)
+		{
+			if(Main.allTasks.getItem(i).getText(4).equals(taskID + ""))
+				{
+					found = true;
+					foundRow = i;
+				}
+		}
+		/***********************************************/
+		
+		/*** setup entirely aesthetic rowID for field 1 in the table.***/
+		int rowID = 0;
+		if(taskID > 1)
+		{
+			rowID = Integer.parseInt(Main.allTasks.getItem(taskID-1).toString().split("[{}]")[1]) + 1;
+		}
+		else
+		{
+			rowID = taskID + 1;
+		}
+		/**************************************************************/
 		
 		// Add to recent list
-		Main.taskList.add(Main.currentTask);
+		//Main.taskList.add(Main.currentTask); //still necessary?
 		//Main.currentTask = new TaskObject();
-		Main.recentTaskID.add(0,taskID);
+		//Main.recentTaskID.add(0,taskID); //depricated
 		
 		// Add to table
-		String newRow = StopWatch.timeFormat(rowID);
-		String[] newElapsed = StopWatch.clockFormat(Main.currentTask.getTimeElapsed()).split("[.]");
+		
+		/***********Gen table String**********/
+		String newRow = StopWatch.timeFormat(rowID); //add leading 0 if less than 10
+		String[] newElapsed = StopWatch.clockFormat(Main.currentTask.getTimeElapsed()).split("[.]"); //divide off tenth's
 		
 		String title = Main.currentTask.getTitle();
 		String elapsed = newElapsed[0];
-		String recent = "x";
-		String taskIDs = taskID + "";
+		String recent = "R"; //recent by default
+		String taskIDString = taskID + "";
 		String start = Main.currentTask.getStartTime() + "";
 		String end = Main.currentTask.getEndTime() + "";
 		String total = Main.currentTask.getTimeElapsed() + "";
 		String notes = Main.currentTask.getNotes();
 		
-		String[] row = new String[] { newRow, title, elapsed, recent, taskIDs, notes, start, end, total };
-		new TableItem(Main.allTasks, 0, taskID-1).setText(row);
+		String[] row = new String[] { newRow, title, elapsed, recent, taskIDString, notes, start, end, total };
+		/*************************************/
+		
+		if(!found) new TableItem(Main.allTasks, 0, taskID).setText(row);
+		else Main.allTasks.getItem(foundRow).setText(row);
+		
 		Main.allTasks.setSelection(taskID);
 		
 		// Add to tableList
-		new TableItem(Main.tableList, 0, 0).setText(new String[] { title, elapsed, taskIDs });
+		/**If this task was already in the recent list, Deleted it**/		//needs debugging recentRow always =0
+		boolean foundRecent = false;
+		int recentRow = 0;
+		for(int i = 0; i<Main.tableList.getItemCount(); ++i)
+		{
+			if(Main.tableList.getItem(i).getText(2).equals(taskID + ""))
+				{
+					foundRecent = true;
+					recentRow = i;
+				}
+		}
+		if(foundRecent)	Main.tableList.remove(recentRow);
+		
+		/***********************************************************/
+		new TableItem(Main.tableList, 0, 0).setText(new String[] { title, elapsed, taskIDString });
 		if(Main.tableList.getItemCount() > 4)
 		{
 	  		for (int i = 0; i < Main.allTasks.getItemCount(); i++)
 	  		{
 	  			if(Main.tableList.getItem(4).getText(2).equals(Main.allTasks.getItem(i).getText(4)))
 	  			{
-	  				Main.allTasks.getItem(i).setText(3, "o");
+	  				Main.allTasks.getItem(i).setText(3, "");//not recent
 	  			}
 	  		}
 			Main.tableList.remove(4);

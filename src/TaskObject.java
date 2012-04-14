@@ -21,55 +21,56 @@ public class TaskObject
 	{		
 		++Main.maxTaskID;
 		
-//		SaveObject.saveCurrentToTable(Main.maxTaskID);
 		int newID = Main.maxTaskID;
-		int rowID = 0;
-		if(newID > 1)
-		{
-			rowID = Integer.parseInt(Main.allTasks.getItem(newID-1).toString().split("[{}]")[1]) + 1;
-		}
-		else
-		{
-			rowID = newID + 1;
-		}
+//		int rowID = 0;
+//		if(newID > 1)
+//		{
+//			rowID = Integer.parseInt(Main.allTasks.getItem(newID-1).toString().split("[{}]")[1]) + 1;
+//		}
+//		else
+//		{
+//			rowID = newID + 1;
+//		}
 		
-		Main.currentTask.setTaskID(newID);
+		SaveObject.saveCurrentToTable(newID);
 		
-		// Add to recent list
-		Main.taskList.add(Main.currentTask);
-		//Main.currentTask = new TaskObject();
-		Main.recentTaskID.add(0,newID);
-		
-		// Add to table
-		String newRow = StopWatch.timeFormat(rowID);
-		String[] newElapsed = StopWatch.clockFormat(Main.currentTask.getTimeElapsed()).split("[.]");
-		
-		String title = Main.currentTask.getTitle();
-		String elapsed = newElapsed[0];
-		String recent = "x";
-		String taskID = Main.currentTask.getTaskID() + "";
-		String start = Main.currentTask.getStartTime() + "";
-		String end = Main.currentTask.getEndTime() + "";
-		String total = Main.currentTask.getTimeElapsed() + "";
-		String notes = Main.currentTask.getNotes();
-		
-		String[] row = new String[] { newRow, title, elapsed, recent, taskID, notes, start, end, total };
-		new TableItem(Main.allTasks, 0, newID).setText(row);
-		Main.allTasks.setSelection(newID);
-		
-		// Add to tableList
-		new TableItem(Main.tableList, 0, 0).setText(new String[] { title, elapsed, taskID });
-		if(Main.tableList.getItemCount() > 4)
-		{
-	  		for (int i = 0; i < Main.allTasks.getItemCount(); i++)
-	  		{
-	  			if(Main.tableList.getItem(4).getText(2).equals(Main.allTasks.getItem(i).getText(4)))
-	  			{
-	  				Main.allTasks.getItem(i).setText(3, "o");
-	  			}
-	  		}
-			Main.tableList.remove(4);
-		}
+//		Main.currentTask.setTaskID(newID);
+//		
+//		// Add to recent list
+//		Main.taskList.add(Main.currentTask);
+//		//Main.currentTask = new TaskObject();
+//		Main.recentTaskID.add(0,newID);
+//		
+//		// Add to table
+//		String newRow = StopWatch.timeFormat(rowID);
+//		String[] newElapsed = StopWatch.clockFormat(Main.currentTask.getTimeElapsed()).split("[.]");
+//		
+//		String title = Main.currentTask.getTitle();
+//		String elapsed = newElapsed[0];
+//		String recent = "x";
+//		String taskID = Main.currentTask.getTaskID() + "";
+//		String start = Main.currentTask.getStartTime() + "";
+//		String end = Main.currentTask.getEndTime() + "";
+//		String total = Main.currentTask.getTimeElapsed() + "";
+//		String notes = Main.currentTask.getNotes();
+//		
+//		String[] row = new String[] { newRow, title, elapsed, recent, taskID, notes, start, end, total };
+//		new TableItem(Main.allTasks, 0, newID).setText(row);
+//		Main.allTasks.setSelection(newID);
+//		
+//		// Add to tableList
+//		new TableItem(Main.tableList, 0, 0).setText(new String[] { title, elapsed, taskID });
+//		if(Main.tableList.getItemCount() > 4)
+//		{
+//	  		for (int i = 0; i < Main.allTasks.getItemCount(); i++)
+//	  		{
+//	  			if(Main.tableList.getItem(4).getText(2).equals(Main.allTasks.getItem(i).getText(4)))
+//	  			{
+//	  				Main.allTasks.getItem(i).setText(3, "o");
+//	  			}
+//	  		}
+//			Main.tableList.remove(4);
+//		}
 
 		
 		Main.clockTicking = true;
