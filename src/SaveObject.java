@@ -1,16 +1,15 @@
-import java.util.Iterator;
-
-import org.eclipse.swt.widgets.TableItem;
-
 /**
  * @name SaveObject
  * @project TimeMe
  * @author Team 0x00000001
  */
 
+import java.util.Iterator;
+import org.eclipse.swt.widgets.TableItem;
+
+
 public class SaveObject 
 {
-	
 	public static void saveCurrentToTable(int taskID)
 	{
 		collectCurrentTask();
@@ -97,7 +96,13 @@ public class SaveObject
 			Main.tableList.remove(4);
 		}
 	}
-	
+
+		/***********************************************/
+		/***********************************************/
+		/***********************************************/
+		/***********************************************/
+
+
 	public static void collectCurrentTask() 
 	{		
 		String taskName = "";

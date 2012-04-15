@@ -20,20 +20,10 @@ public class TableListener
 		{
 			public void widgetSelected(SelectionEvent e)
 			{
-				int selectedID = Integer.valueOf(Main.tableList.getItem(Main.tableList.getSelectionIndex()).getText(2));
-				
-				boolean found = false;
-				for(int i = 0; i<Main.allTasks.getItemCount(); ++i)
-				{
-					if(Main.allTasks.getItem(i).getText(4).equals(selectedID + "")) found = true;
-				}
-				
-				Main.currentTask.setTaskID(Main.maxTaskID);
-				if(!found) TaskObject.createTask();
-				else SaveObject.saveCurrentToTable(Main.currentTask.getTaskID());
-					
-				
+//				SaveObject.collectCurrentTask();
+//lucas				SaveObject.saveCurrentToTable(Main.currentTask.getTaskID());
 				//saveToList();
+				int selectedID = Integer.valueOf(Main.tableList.getItem(Main.tableList.getSelectionIndex()).getText(2));
 				
 				int i = 0;
 				while(!Main.allTasks.getItem(i).getText(4).equals(selectedID + ""))
@@ -42,13 +32,8 @@ public class TableListener
 				}
 				String selectedTitle = Main.allTasks.getItem(i).getText(1);
 				String selectedNotes = Main.allTasks.getItem(i).getText(5);
-				long elapsedTime = new Long( Main.allTasks.getItem(i).getText(8) );
 				Main.title.setText(selectedTitle);
-				Main.textNotes.setText(selectedNotes);
-				Hooks.tickTock();
-				StopWatch.setElapsed(elapsedTime);
-				Hooks.tickTock();
-				
+				Main.textNotes.setText(selectedNotes);		
 			}
 		});
 	}
@@ -72,22 +57,23 @@ public class TableListener
 	}
 	
     // Column listeners
-	public void col1()
+	public void column0()
 	{
-	    Main.col1.addSelectionListener(new SelectionAdapter() 
-	    {
+	    Main.column0.addSelectionListener(new SelectionAdapter() 
+	    {	    	 
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 		      {
-					int colInt = 0;
+					int colInt = 0;					
 					TableItem[] items = Main.allTasks.getItems();
 			        Collator collator = Collator.getInstance(Locale.getDefault());
 			        for (int i = 1; i < items.length; i++) 
 			        {
-			        	String value1 = items[i].getText(colInt);
+			        	String v1 = items[i].getText(colInt);
 			        	for (int j = 0; j < i; j++) 
 			        	{
-			        		String value2 = items[j].getText(colInt);
-			        		if (collator.compare(value1, value2) < 0) 
+			        		String v2 = items[j].getText(colInt);
+			        		
+			        		if ((collator.compare(v1, v2) < 0 && Main.sort0) || (collator.compare(v1, v2) > 0 && !Main.sort0))  
 			        		{
 			        			String[] values = { items[i].getText(0),items[i].getText(1),items[i].getText(2),items[i].getText(3) };
 			        			items[i].dispose();
@@ -95,30 +81,39 @@ public class TableListener
 			                    item.setText(values);
 			                    items = Main.allTasks.getItems();
 			                    break;
-			                 }
+			                }
 			        	}
 			        }
-					Tools.debug("sort:" + "col1");
+			        if(!Main.sort0)
+			        {
+			        	Main.sort0 = true;
+			        }
+			        else
+			        {
+			        	Main.sort0 = false;
+			        }
+					Tools.debug("sort:" + "column0");
 		      }
 	    });
 	}
 	
-	public void col2()
+	public void column1()
 	{
-	    Main.col2.addSelectionListener(new SelectionAdapter() 
-	    {
+	    Main.column1.addSelectionListener(new SelectionAdapter() 
+	    {	    	 
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 		      {
-					int colInt = 1;
+					int colInt = 1;					
 					TableItem[] items = Main.allTasks.getItems();
 			        Collator collator = Collator.getInstance(Locale.getDefault());
 			        for (int i = 1; i < items.length; i++) 
 			        {
-			        	String value1 = items[i].getText(colInt);
+			        	String v1 = items[i].getText(colInt);
 			        	for (int j = 0; j < i; j++) 
 			        	{
-			        		String value2 = items[j].getText(colInt);
-			        		if (collator.compare(value1, value2) < 0) 
+			        		String v2 = items[j].getText(colInt);
+			        		
+			        		if ((collator.compare(v1, v2) < 0 && Main.sort1) || (collator.compare(v1, v2) > 0 && !Main.sort1))  
 			        		{
 			        			String[] values = { items[i].getText(0),items[i].getText(1),items[i].getText(2),items[i].getText(3) };
 			        			items[i].dispose();
@@ -126,30 +121,39 @@ public class TableListener
 			                    item.setText(values);
 			                    items = Main.allTasks.getItems();
 			                    break;
-			                 }
+			                }
 			        	}
 			        }
-					Tools.debug("sort:" + "col2");
+			        if(!Main.sort1)
+			        {
+			        	Main.sort1 = true;
+			        }
+			        else
+			        {
+			        	Main.sort1 = false;
+			        }
+					Tools.debug("sort:" + "column1");
 		      }
 	    });
 	}
 	
-	public void col3()
+	public void column2()
 	{
-	    Main.col3.addSelectionListener(new SelectionAdapter() 
-	    {
+	    Main.column2.addSelectionListener(new SelectionAdapter() 
+	    {	    	 
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 		      {
-					int colInt = 2;
+					int colInt = 2;					
 					TableItem[] items = Main.allTasks.getItems();
 			        Collator collator = Collator.getInstance(Locale.getDefault());
 			        for (int i = 1; i < items.length; i++) 
 			        {
-			        	String value1 = items[i].getText(colInt);
+			        	String v1 = items[i].getText(colInt);
 			        	for (int j = 0; j < i; j++) 
 			        	{
-			        		String value2 = items[j].getText(colInt);
-			        		if (collator.compare(value1, value2) < 0) 
+			        		String v2 = items[j].getText(colInt);
+			        		
+			        		if ((collator.compare(v1, v2) < 0 && Main.sort2) || (collator.compare(v1, v2) > 0 && !Main.sort2))  
 			        		{
 			        			String[] values = { items[i].getText(0),items[i].getText(1),items[i].getText(2),items[i].getText(3) };
 			        			items[i].dispose();
@@ -157,30 +161,39 @@ public class TableListener
 			                    item.setText(values);
 			                    items = Main.allTasks.getItems();
 			                    break;
-			                 }
+			                }
 			        	}
 			        }
-					Tools.debug("sort:" + "col3");
+			        if(!Main.sort2)
+			        {
+			        	Main.sort2 = true;
+			        }
+			        else
+			        {
+			        	Main.sort2 = false;
+			        }
+					Tools.debug("sort:" + "column2");
 		      }
 	    });
 	}
 	
-	public void col5()
+	public void column3()
 	{
-	    Main.col5.addSelectionListener(new SelectionAdapter() 
-	    {
+	    Main.column3.addSelectionListener(new SelectionAdapter() 
+	    {	    	 
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 		      {
-					int colInt = 3;
+					int colInt = 3;					
 					TableItem[] items = Main.allTasks.getItems();
 			        Collator collator = Collator.getInstance(Locale.getDefault());
 			        for (int i = 1; i < items.length; i++) 
 			        {
-			        	String value1 = items[i].getText(colInt);
+			        	String v1 = items[i].getText(colInt);
 			        	for (int j = 0; j < i; j++) 
 			        	{
-			        		String value2 = items[j].getText(colInt);
-			        		if (collator.compare(value1, value2) < 0) 
+			        		String v2 = items[j].getText(colInt);
+			        		
+			        		if ((collator.compare(v1, v2) < 0 && Main.sort3) || (collator.compare(v1, v2) > 0 && !Main.sort3))  
 			        		{
 			        			String[] values = { items[i].getText(0),items[i].getText(1),items[i].getText(2),items[i].getText(3) };
 			        			items[i].dispose();
@@ -188,10 +201,18 @@ public class TableListener
 			                    item.setText(values);
 			                    items = Main.allTasks.getItems();
 			                    break;
-			                 }
+			                }
 			        	}
 			        }
-					Tools.debug("sort:" + "col5");
+			        if(!Main.sort3)
+			        {
+			        	Main.sort3 = true;
+			        }
+			        else
+			        {
+			        	Main.sort3 = false;
+			        }
+					Tools.debug("sort:" + "column3");
 		      }
 	    });
 	}

@@ -32,10 +32,15 @@ public class Main implements SelectionListener
 	protected static Shell frame;
 	
 	public static boolean clockTicking;
+	public static boolean sort0;
+	public static boolean sort1;
+	public static boolean sort2;
+	public static boolean sort3;
 	public static boolean configLoaded;
 	public static boolean interfaceDown;
 	public static boolean reportToggle;
 	public static Button browseDialog;
+	public static Button clearReport;
 	public static Button collapse;
 	public static Button deleteTask;
 	public static Button editNotes;
@@ -67,15 +72,14 @@ public class Main implements SelectionListener
 	public static TabItem tab3; 
 	public static TabItem tab4;
 	public static Table allTasks;
-	public static TableColumn col1;
-	public static TableColumn col2;
-	public static TableColumn col3;
-	public static TableColumn col4;
-	public static TableColumn col5;
-	public static TableColumn col6;
-	public static TableColumn col7;
-	public static TableColumn col8;
-	public static TableColumn col9;
+	public static TableColumn column0;
+	public static TableColumn column1;
+	public static TableColumn column2;
+	public static TableColumn column3;
+	public static TableColumn column4;
+	public static TableColumn column5;
+	public static TableColumn column6;
+	public static TableColumn column7;
 	public static Text textDir;
 	public static Text textReport;
 	public static Text title;
@@ -128,10 +132,6 @@ public class Main implements SelectionListener
 		taskList.get(taskID).setNotes(textNotes.getText());
 		taskList.get(taskID).setTimeElapsed(StopWatch.getElapsed());
 		taskList.get(taskID).setEndTime(System.currentTimeMillis());
-	}
-	void refreshRecentTaskUI()
-	{
-		//needs filling		
 	}
 	
 	public static void load()
@@ -208,18 +208,13 @@ public class Main implements SelectionListener
 		collapse = new Button(topPane, 0);
 		collapse.setBounds(0, 94, 47, 41);
 		collapse.setText("<<");
-		  		
-//		list = new List(topPane, SWT.BORDER | SWT.V_SCROLL);
-//		list.setBounds(0, 0, 282, 88);
-//		list.setItems(new String[] {});
-//		list.setSelection(0);
 
 		tableList = new Table(topPane, SWT.BORDER | SWT.FULL_SELECTION);
 		tableList.setBounds(0, 0, 282, 88);
 		tableList.setHeaderVisible(false);
 		tableList.setSelection(0);
 		
-		//{ title, elapsed(human readable), taskID}
+		//{ title, elapsed, taskID }
 		TableColumn tL1 = new TableColumn(tableList, 0);
 		tL1.setWidth(160);		
 		TableColumn tL2 = new TableColumn(tableList, 0);
@@ -227,12 +222,11 @@ public class Main implements SelectionListener
 		TableColumn tL3 = new TableColumn(tableList, 0);
 		tL3.setWidth(0);	
 		
-		
 		clock = new Label(topPane, 0);
 		clock.setFont(SWTResourceManager.getFont("Sans", 27, SWT.BOLD));
 		clock.setAlignment(SWT.CENTER);
 		clock.setBounds(53, 94, 229, 41);
-		clock.setText("00:00:00");
+		clock.setText("00:00:00.0");
 						
 		newTask = new Button(topPane, 0);
 		newTask.setBounds(302, 10, 112, 50);
@@ -295,35 +289,31 @@ public class Main implements SelectionListener
 		allTasks.setHeaderVisible(true);
 		allTasks.setLinesVisible(true);
 		
-		//{ #, title, elapsed(human readable),
-		//{ row #, title, elapsed(human readable), recent, taskID, notes, start, end, totalelapsed }
-		col1 = new TableColumn(allTasks, 0);
-		col1.setWidth(30);
-		col1.setText("##");
+		//{ row#, title, elapsed, recent, taskID, notes, start, end, total }
+		column0 = new TableColumn(allTasks, 0);
+		column0.setWidth(30);
+		column0.setText("#");
 		
-		col2 = new TableColumn(allTasks, 0);
-		col2.setWidth(130);//130
-		col2.setText("Title");
+		column1 = new TableColumn(allTasks, 0);
+		column1.setWidth(130);
+		column1.setText("Title");
 		
-		col3 = new TableColumn(allTasks, 0);
-		col3.setWidth(68);//68
-		col3.setText("Total");
+		column2 = new TableColumn(allTasks, 0);
+		column2.setWidth(68);
+		column2.setText("Total");
 		
-		col4 = new TableColumn(allTasks, 0); //
-		col4.setWidth(0);
+		column3 = new TableColumn(allTasks, 0);
+		column3.setWidth(22);
+		column3.setText("*");
 		
-		col5 = new TableColumn(allTasks, 0);
-		col5.setWidth(22);
-		col5.setText("*");
-				
-		col6 = new TableColumn(allTasks, 0);
-		col6.setWidth(0);
-		col7 = new TableColumn(allTasks, 0);
-		col7.setWidth(0);
-		col8 = new TableColumn(allTasks, 0);
-		col8.setWidth(0);
-		col9 = new TableColumn(allTasks, 0);
-		col9.setWidth(0);
+		column4 = new TableColumn(allTasks, 0);
+		column4.setWidth(0);
+		column5 = new TableColumn(allTasks, 0);
+		column5.setWidth(0);
+		column6 = new TableColumn(allTasks, 0);
+		column6.setWidth(0);
+		column7 = new TableColumn(allTasks, 0);
+		column7.setWidth(0);
 						
 		scrolledComposite.setContent(allTasks);
 		scrolledComposite.setMinSize(allTasks.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -336,8 +326,12 @@ public class Main implements SelectionListener
 		tab3.setControl(contentsTab3);
 		
 		genReport = new Button(contentsTab3, 0);
-		genReport.setBounds(291, 102, 108, 72);
+		genReport.setBounds(291, 73, 108, 50);
 		genReport.setText("Generate");
+		
+		clearReport = new Button(contentsTab3, 0);
+		clearReport.setBounds(291, 129, 108, 50);
+		clearReport.setText("Clear");
 		
 		textReport = new Text(contentsTab3, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		textReport.setLocation(5, 5);
@@ -349,15 +343,13 @@ public class Main implements SelectionListener
 		sortReport.setText("Sort:");
 		
 		modeStart = new Button(contentsTab3, SWT.RADIO);
-		modeStart.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
-		modeStart.setBounds(291, 26, 90, 16);
+		modeStart.setBounds(296, 28, 90, 16);
 		modeStart.setSelection(true);
 		modeStart.setText("Start Time");
 		
 		modeEnd = new Button(contentsTab3, SWT.RADIO);
-		modeEnd.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
 		modeEnd.setText("End Time");
-		modeEnd.setBounds(291, 58, 90, 16);
+		modeEnd.setBounds(296, 51, 90, 16);
 		
 		//Configuration Tab ----------------------------------------
 		
@@ -407,10 +399,10 @@ public class Main implements SelectionListener
 		listeners.modeStart();
 		listeners.modeEnd();
 		listeners.genReport();
+		listeners.clearReport();
 		listeners.editNotes();
 		listeners.editTime();
 		listeners.deleteTask();
-		//listeners.list();
 		
 		TextListener textHooks = new TextListener();
 		textHooks.title();
@@ -419,10 +411,10 @@ public class Main implements SelectionListener
 		TableListener tableHooks = new TableListener();
 		tableHooks.tableList();
 		tableHooks.row();
-		tableHooks.col1();
-		tableHooks.col2();
-		tableHooks.col3();
-		tableHooks.col5();
+		tableHooks.column0();
+		tableHooks.column1();
+		tableHooks.column2();
+		tableHooks.column3();
 
 		BrowsePath path = new BrowsePath();
 		path.browseDialog();

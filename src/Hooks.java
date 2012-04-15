@@ -4,17 +4,17 @@
  * @author Team 0x00000001
  */
 
-import java.util.Iterator;
-import java.util.ListIterator;
-
+import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.TableItem;
-//import java.util.LinkedList;
+import org.eclipse.swt.widgets.Text;
 
 
 public class Hooks 
 {
+	public static boolean clearToggle;
 	
 	public static void tickTock()
 	{
@@ -40,8 +40,7 @@ public class Hooks
 	 * Listener Hooks
 	 */
 
-	// topPane button listeners
-	
+	// topPane button listeners	
 	public void pauseResume()
 	{
 		Main.pauseResume.addSelectionListener(new SelectionAdapter() 
@@ -52,54 +51,14 @@ public class Hooks
 			}
 		});
 	}
-	
-//	public void list()
-//	{
-//		Main.list.addSelectionListener(new SelectionAdapter() 
-//		{
-//			public void widgetSelected(SelectionEvent e) //The current implementation requires unique task names but doesnt check for them...
-//			{
-//				SaveObject.collectCurrentTask();
-//				//saveToList();
-//				String selected = Main.list.getItem(Main.list.getSelectionIndex());
-//				Main.currentTask = SaveObject.returnByTaskTitle(selected);			
-//				SaveObject.unpackFromCurrentTask();
-//	
-//				Main.currentTask.setTaskID(Main.list.getSelectionIndex());
-//				TaskObject element = Main.taskList.peekLast();
-//				if(selected != element.getTitle())
-//				{
-//					Tools.debug("Current: " + element.getTitle() + " " + "List: " + selected);
-//					Main.title.setText(selected);
-//				}
-//					
-//				
-////				String selected = Main.list.getItem(Main.list.getSelectionIndex());
-////				ListIterator<TaskObject> itr = Main.taskList.listIterator();
-////				while(itr.hasNext()) 
-////				{
-////					TaskObject element = (TaskObject) itr.next(); 
-////					Tools.debug("selected: " + selected + "element: " + element.getTitle());
-////					if(selected == element.getTitle())
-////					{
-////						//loadTask
-////						itr.set(element);
-////					}
-////					selected = Main.list.getItem(Main.list.getSelectionIndex());
-////				} 		
-//				
-//			
-//			}
-//		});
-//	}
-		
+			
 	public void newTask()
 	{
 		Main.newTask.addSelectionListener(new SelectionAdapter() 
 		{
 			public void widgetSelected(SelectionEvent e) 
 			{			            
-				//SaveObject.collectCurrentTask();
+				SaveObject.collectCurrentTask();
 				TaskObject.createTask();
 				
 				Main.pauseResume.setText("Pause");
@@ -139,14 +98,42 @@ public class Hooks
 	    });
 	}
 	
-
+	public void clearReport()
+	{
+	    Main.clearReport.addSelectionListener(new SelectionAdapter() 
+	    {
+		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
+		      {
+		    	  Main.textReport.setText("");
+		    	  if(!clearToggle)
+		    	  {
+		    		  clearToggle = true;
+		    	  }
+		    	  else
+		    	  {
+		    		  clearToggle = false;
+		    	  }
+		    	  Tools.debug("button:" + "clearReport");
+		      }
+	    });
+	}
+	
 	public void editNotes()
 	{
 	    Main.editNotes.addSelectionListener(new SelectionAdapter() 
 	    {
 	      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 	      {
-				Tools.debug("button:" + "editNotes");
+	    	  if(Main.allTasks.getSelectionIndex() != -1)
+	    	  {
+	    		  int selected = Main.allTasks.getSelectionIndex();
+	    		  String title = Main.allTasks.getItem(selected).getText(1);
+	    		  String notes = Main.allTasks.getItem(selected).getText(5);
+	    		  Main.title.setText(title);
+	    		  Main.textNotes.setText(notes);
+	    		  Main.bottomPane.setSelection(Main.tab1);
+	    	  }	    	
+	    	  Tools.debug("button:" + "editNotes");
 	      }
 	    });
 	}
@@ -157,7 +144,39 @@ public class Hooks
 	    {
 	      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 	      {
-				Tools.debug("button:" + "editTime");
+	    	  final int column = 2;
+	    	  final int selected = Main.allTasks.getSelectionIndex();
+	    	  if(selected != -1)
+	    	  {
+	    		  final TableEditor cell = new TableEditor(Main.allTasks);
+	    		  cell.grabHorizontal = true;
+	    		  Text inline = new Text(Main.allTasks, 0);
+	    		  cell.setEditor(inline, Main.allTasks.getItem(selected), column);
+	    		  inline.setText(Main.allTasks.getItem(selected).getText(column));
+	    		  inline.selectAll();
+	    		  inline.setFocus();
+	    		  inline.addModifyListener(new ModifyListener() 
+	    		  {
+		    		  	public void modifyText(ModifyEvent edit) 
+		    		  	{		    		  		
+		    		  		if(Main.allTasks.getSelectionIndex() == selected)
+			    		 	{
+		    		  			Text text = (Text) cell.getEditor();
+		    		  			if(text.getText().matches("\\d{2}:\\d{2}:\\d{2}"))
+		    		  			{
+		    		  				cell.getItem().setText(column, text.getText());
+		    		  				int recent = TaskObject.checkRecent(selected);
+		    		  				if(recent != -1)
+		    		  				{
+		    		  					Main.tableList.getItem(recent).setText(1, text.getText());
+		    		  				}
+		    		  			}
+			    		 	}
+		    		  		cell.grabHorizontal = false;
+		    		  	}
+	    		  });
+	    	  }	    	
+	    	  Tools.debug("button:" + "editTime");
 	      }
 	    });
 	}

@@ -3,7 +3,7 @@ So I found a suitable container, BoxLayout.
 Description of containers here:
 http://java.sun.com/products/jfc/tsc/articles/containers/#swing_containers
 
-"Repurporsed" the example code:
+"Re-purposed" the example code:
 http://docs.oracle.com/javase/tutorial/uiswing/examples/layout/BoxAlignmentDemoProject/src/layout/BoxAlignmentDemo.java
 
 Which is described here:
@@ -78,3 +78,9 @@ http://stackoverflow.com/questions/483173/how-can-i-get-my-basic-swt-application
 
 SWT filechooser:
 http://stackoverflow.com/questions/6872141/selecting-multiple-files-in-filechooser
+
+SWT edit table:
+http://git.eclipse.org/c/platform/eclipse.platform.swt.git/tree/examples/org.eclipse.swt.snippets/src/org/eclipse/swt/snippets/Snippet88.java
+
+string regex:
+http://www.deitel.com/articles/java_tutorials/20060218/index.html

@@ -11,6 +11,9 @@ public class Tools
 	public static void debug(String output)
 	{
 		System.out.println(output);
-		Main.textReport.setText(output + "\n" + Main.textReport.getText());
+		if(!Hooks.clearToggle)
+		{
+			Main.textReport.setText(output + "\n" + Main.textReport.getText());			
+		}
 	}
 }
