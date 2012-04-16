@@ -58,9 +58,7 @@ public class StopWatch
 		{
 			StopWatch.elapsed = elapsed;
 		}
-		
-		
-		
+						
 	    public static long getElapsed()
 	    {
 			return elapsed;
@@ -79,24 +77,5 @@ public class StopWatch
 	        String SS = timeFormat((int) ((elapsed / 1000) % 60));
 	        String MS =  ""+((int) ((elapsed % 1000) / 100));
 	        return (HH + ":" + MM + ":" + SS + "." + MS);
-	    }
-	    
-		public static void saveRecord(int taskID)
-		{
-			new WriteFile(taskID, elapsed);
-		}
-		
-		public static void loadRecord(int taskID)
-		{
-			LoadFile foo = new LoadFile(taskID);
-			if (taskID == 1)
-			{
-				begin = System.currentTimeMillis() - foo.getTotal();
-			}
-			else
-			{
-				begin = System.currentTimeMillis();
-			}
-			Main.clock.setText(getFormatedElapsed());
-		}
+	    }		
 }

@@ -4,7 +4,6 @@
  * @author Team 0x00000001
  */
 
-import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -148,34 +147,58 @@ public class Hooks
 	    	  final int selected = Main.allTasks.getSelectionIndex();
 	    	  if(selected != -1)
 	    	  {
-	    		  final TableEditor cell = new TableEditor(Main.allTasks);
-	    		  cell.grabHorizontal = true;
-	    		  Text inline = new Text(Main.allTasks, 0);
-	    		  cell.setEditor(inline, Main.allTasks.getItem(selected), column);
-	    		  inline.setText(Main.allTasks.getItem(selected).getText(column));
-	    		  inline.selectAll();
-	    		  inline.setFocus();
-	    		  inline.addModifyListener(new ModifyListener() 
+	    		  Main.inline = new Text(Main.allTasks, 0);
+	    		  Main.cell.grabHorizontal = true;
+	    		  Main.cell.setEditor(Main.inline, Main.allTasks.getItem(selected), column);
+	    		  Main.inline.setText(Main.allTasks.getItem(selected).getText(column));
+	    		  Main.inline.selectAll();
+	    		  Main.inline.setFocus();
+	    		  Main.inline.addModifyListener(new ModifyListener() 
 	    		  {
 		    		  	public void modifyText(ModifyEvent edit) 
-		    		  	{		    		  		
+		    		  	{	
 		    		  		if(Main.allTasks.getSelectionIndex() == selected)
 			    		 	{
-		    		  			Text text = (Text) cell.getEditor();
-		    		  			if(text.getText().matches("\\d{2}:\\d{2}:\\d{2}"))
+		    		  			Text cellText = (Text) Main.cell.getEditor();
+		    		  			
+		    		  			boolean clockFormat = false;
+		    		  			if(cellText.getText().matches("\\d{2}:\\d{2}:\\d{2}"))
 		    		  			{
-		    		  				cell.getItem().setText(column, text.getText());
+			    		  			clockFormat = true;
+			    		  			for (int i = 0; i < 3; i++)
+			    		  			{
+			    		  				int ddigit = -1;
+			    		  				if(cellText.getText().split(":", 3)[i].matches("\\d{2}"))
+			    		  				{
+			    		  					try
+			    		  					{
+			    		  						ddigit = Integer.parseInt(cellText.getText().split(":", 3)[i]);
+			    		  					}
+			    		  					catch (Exception e) 
+			    		  					{
+			    		  						e.printStackTrace();
+			    		  					}
+			    		  				}
+		    		  					if(!(ddigit >= 0 && ddigit < 60))
+		    		  					{
+		    		  						clockFormat = false;
+		    		  					}
+			    		  			}
+		    		  			}
+		    		  			
+		    		  			if(clockFormat)
+		    		  			{
+		    		  				Main.cell.getItem().setText(column, cellText.getText());
 		    		  				int recent = TaskObject.checkRecent(selected);
 		    		  				if(recent != -1)
 		    		  				{
-		    		  					Main.tableList.getItem(recent).setText(1, text.getText());
+		    		  					Main.tableList.getItem(recent).setText(1, cellText.getText());
 		    		  				}
 		    		  			}
 			    		 	}
-		    		  		cell.grabHorizontal = false;
 		    		  	}
 	    		  });
-	    	  }	    	
+	    	  }
 	    	  Tools.debug("button:" + "editTime");
 	      }
 	    });
@@ -189,8 +212,9 @@ public class Hooks
 		      {		    	  	
 		    	  if(Main.allTasks.getSelectionIndex() != -1)
 		    	  {
-		    		  TaskObject.removeTask();
-		    		  Tools.debug("button:" + "deleteTask:" + (TaskObject.getRow()+1));
+		    		  int row = TableListener.getRow();
+		    		  TaskObject.removeTask(row);
+		    		  Tools.debug("button:" + "deleteTask:" + row);
 		    	  }
 		      }
 	    });

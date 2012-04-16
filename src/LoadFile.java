@@ -14,55 +14,60 @@ import java.io.InputStreamReader;
 
 
 public class LoadFile 
-{
-	private long elapsed;
-	
-	protected LoadFile(File pathToFile) throws IOException
+{	
+	protected LoadFile(String pathToFile) throws IOException
 	{
-		String fileName = pathToFile+"/timeme.tsv";
+		String fileName = pathToFile+"";		
+		boolean fileExists = new File(fileName).isFile();
 		
-		boolean configExists = new File(fileName).isFile();
-		
-		if(!configExists)
+		// Create new file
+		if(!fileExists)
 		{
-			//FileWriter fwrite = new FileWriter(fileName,true); // Append
-			FileWriter fwrite = new FileWriter(fileName);
-			BufferedWriter out = new BufferedWriter(fwrite);
-			out.write("### TimeMe ###\n");
-			out.close();
+			FileWriter fileWrite = new FileWriter(fileName, false);
+			BufferedWriter output = new BufferedWriter(fileWrite);
+			output.write("### TimeMe ###\n");
+			output.close();
 		}
 		
+		// Empty existing table
+		while(Main.tableList.getItemCount() > 0)
+		{
+			Main.tableList.remove(0);
+		}
+		while(Main.allTasks.getItemCount() > 0)
+		{
+			Main.allTasks.remove(0);
+		}
+		
+		// Load existing file
 		try
 		{
-			  FileInputStream fstream = new FileInputStream(fileName);
-			  
-			  // Get the object of DataInputStream
-			  DataInputStream in = new DataInputStream(fstream);
-			  BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			  String strLine;
+			  FileInputStream fileRead = new FileInputStream(fileName);
+			  DataInputStream input = new DataInputStream(fileRead);
+			  BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
 			  
 			  //Read File Line By Line
-			  while ((strLine = br.readLine()) != null)   
-			  {
-				  System.out.println (strLine);
+			  String thisLine = buffer.readLine();
+			  while (thisLine != null)   
+			  {				 
+				  String[] col = thisLine.split("\\t");
+				  String[] row = { col[0], col[1], col[2], col[3], col[4], col[5], col[6], col[7] };
+
+				  TaskObject.addRow(0, row);
+				  if(col[3].equals("+"))
+				  {
+					  String[] list = { col[1], col[2], col[4] };
+					  TaskObject.addRecent(0, list);
+				  }
+				  thisLine = buffer.readLine();
 			  }
-			  
-			  in.close();
+			  TableListener.sort(true, 0);			  
+			  input.close();
 		}
 		
 		catch (Exception e)
 		{
 			System.err.println("Error: " + e.getMessage());			
 		}
-	}
-	
-	public LoadFile(int taskID)
-	{
-		elapsed = 25000L;
-	}
-	
-	public long getTotal()
-	{
-		return elapsed;
 	}
 }

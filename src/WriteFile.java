@@ -3,45 +3,55 @@
  * @author Team 0x00000001
  */
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+
 public class WriteFile 
 {
-	private static long begin;
-	
-	public WriteFile(int taskID, long elapsed) 
+	protected WriteFile(File pathToConfig, File pathToFile) throws IOException
 	{
-		// TODO Auto-generated constructor stub
+		String fileName = pathToConfig+"/timeme.conf";
+		//String dataDir = pathToFile+"";
+		
+		boolean configExists = new File(fileName).isFile();
+		
+		if(!configExists)
+		{
+			FileWriter fwrite = new FileWriter(fileName);
+			BufferedWriter out = new BufferedWriter(fwrite);
+			out.write("### TimeMe ###\n");
+			out.close();
+		}
+		
+		try
+		{
+			  FileInputStream fstream = new FileInputStream(fileName);
+			  
+			  // Get the object of DataInputStream
+			  DataInputStream in = new DataInputStream(fstream);
+			  BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			  String strLine;
+			  
+			  //Read File Line By Line
+			  while ((strLine = br.readLine()) != null)   
+			  {
+				  System.out.println (strLine);
+			  }
+			  
+			  //Close the input stream
+			  in.close();
+		}
+		
+		catch (Exception e)
+		{
+			System.err.println("Error: " + e.getMessage());			
+		}
 	}
-
-	public static void saveRecord(int taskID, long totalTime)
-	{
-		begin = System.currentTimeMillis() - totalTime;
-		System.out.println(getElapsed());
-	}
-	
-	public static String timeFormat(int field)
-    {
-        if (field < 10)
-        {
-        	return "0" + field;
-        }
-        else
-        {
-        	return "" + field;
-        }
-    }
-	
-    public static String getElapsed()
-    {
-		long elapsed = (System.currentTimeMillis() - begin);
-        String HH = timeFormat((int) ((elapsed / 1000) / 3600));
-        String MM = timeFormat((int) ((elapsed / 1000) % 3600) / 60);
-        String SS = timeFormat((int) ((elapsed / 1000) % 60));
-        String MS =  ""+((int) ((elapsed % 1000) / 100));
-        return (HH + ":" + MM + ":" + SS + "." + MS);
-    }
-    
-	public static void main(String[] args) 
-	{
-		saveRecord(10, 250000L);
-	}
-}
+}	

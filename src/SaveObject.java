@@ -9,7 +9,38 @@ import org.eclipse.swt.widgets.TableItem;
 
 
 public class SaveObject 
-{
+{	
+	public static void collectCurrentTask() 
+	{		
+		String taskName = "";
+		if(Main.title.getText().equals("Title"))
+		{
+			taskName = "Untitled-" + Main.untitled;
+			++Main.untitled;
+			Main.title.setText(taskName);
+		}
+		else if(Main.title.getText().startsWith("Untitled-", 0))
+		{
+			taskName = "Untitled-" + Main.untitled;
+			++Main.untitled;
+			Main.title.setText(taskName);			
+		}	
+		else
+		{
+			taskName = Main.title.getText();
+		}
+		Main.currentTask.setTitle(Main.title.getText());
+		Main.currentTask.setNotes(Main.textNotes.getText());
+		Main.currentTask.setTimeElapsed(StopWatch.getElapsed());
+		Main.currentTask.setEndTime(System.currentTimeMillis());
+	}
+	
+	/***********************************************/
+	/***********************************************/
+	/************** Below code is unused ***********/
+	/***********************************************/
+	/***********************************************/
+	
 	public static void saveCurrentToTable(int taskID)
 	{
 		collectCurrentTask();
@@ -96,39 +127,6 @@ public class SaveObject
 			Main.tableList.remove(4);
 		}
 	}
-
-		/***********************************************/
-		/***********************************************/
-		/***********************************************/
-		/***********************************************/
-
-
-	public static void collectCurrentTask() 
-	{		
-		String taskName = "";
-		if(Main.title.getText().equals("Title"))
-		{
-			taskName = "Untitled-" + Main.untitled;
-			++Main.untitled;
-			Main.title.setText(taskName);
-		}
-		else if(Main.title.getText().startsWith("Untitled-", 0))
-		{
-			taskName = "Untitled-" + Main.untitled;
-			++Main.untitled;
-			Main.title.setText(taskName);			
-		}	
-		else
-		{
-			taskName = Main.title.getText();
-		}
-		Main.currentTask.setTitle(Main.title.getText());
-		Main.currentTask.setNotes(Main.textNotes.getText());
-		Main.currentTask.setTimeElapsed(StopWatch.getElapsed());
-		Main.currentTask.setEndTime(System.currentTimeMillis());
-	}
-	
-	/////////////////////////////////////////////////////////
 	
 	public static void unpackFromCurrentTask()
 	{

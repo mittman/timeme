@@ -7,6 +7,7 @@
 import java.util.LinkedList;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Rectangle;
@@ -66,6 +67,7 @@ public class Main implements SelectionListener
 	public static Rectangle up;
 	public static String selectedFile;
 	public static StyledText textNotes;
+	public static TableEditor cell;
 	public static TabFolder bottomPane;	
 	public static TabItem tab1; 
 	public static TabItem tab2; 
@@ -80,6 +82,7 @@ public class Main implements SelectionListener
 	public static TableColumn column5;
 	public static TableColumn column6;
 	public static TableColumn column7;
+	public static Text inline;
 	public static Text textDir;
 	public static Text textReport;
 	public static Text title;
@@ -195,7 +198,7 @@ public class Main implements SelectionListener
 	 */
 	protected void createContents() 
 	{
-		frame = new Shell();
+		frame = new Shell(SWT.CLOSE | SWT.TITLE | SWT.MIN);
 		frame.setSize(435, 403);
 		frame.setText("TimeMe");
 		frame.setLayout(null);
@@ -314,6 +317,9 @@ public class Main implements SelectionListener
 		column6.setWidth(0);
 		column7 = new TableColumn(allTasks, 0);
 		column7.setWidth(0);
+		
+		cell = new TableEditor(Main.allTasks);
+		inline = new Text(Main.allTasks, 0);
 						
 		scrolledComposite.setContent(allTasks);
 		scrolledComposite.setMinSize(allTasks.computeSize(SWT.DEFAULT, SWT.DEFAULT));

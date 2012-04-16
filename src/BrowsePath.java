@@ -5,6 +5,7 @@
  */
 
 import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -38,9 +39,19 @@ public class BrowsePath
 		    	      		Main.load();		    	      		
 		    	      		Main.selectedFile = file;
 		    	          	Main.textDir.setText(Main.selectedFile);
-		    	          	// load config
-		    	          	Main.fileStatus.setText("Loaded file");
-		    	          	Main.configLoaded = true;
+		    	          	// load config		    	          	
+		    	          	try 
+		    	          	{
+								new LoadFile(Main.selectedFile);
+			    	          	Main.fileStatus.setText("Loaded file");
+			    	          	Main.configLoaded = true;
+							} 
+		    	          	catch (IOException e) 
+		    	          	{
+								e.printStackTrace();
+			    	          	Main.fileStatus.setText("Invalid file");
+			    	          	Main.configLoaded = false;
+							}
 		    	      	}
 		    	  }
 		    	  Tools.debug("button:" + "browseDialog");
