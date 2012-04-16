@@ -39,7 +39,7 @@ public class BrowsePath
 		    	      		Main.load();		    	      		
 		    	      		Main.selectedFile = file;
 		    	          	Main.textDir.setText(Main.selectedFile);
-		    	          	// load config		    	          	
+		    	          	// load table		    	          	
 		    	          	try 
 		    	          	{
 								new LoadFile(Main.selectedFile);
@@ -73,13 +73,22 @@ public class BrowsePath
 
 		    	  if(file != null)
 		    	  {
-		    		  	System.out.println(new File(file).exists());		    		  
 	    	      		Main.load();		    	      		
 	    	      		Main.selectedFile = file;
 	    	          	Main.textDir.setText(Main.selectedFile);
-	    	          	// load config
-	    	          	Main.fileStatus.setText("Save file set");
-	    	          	Main.configLoaded = true;
+	    	          	// save table	    	          	
+	    	          	try 
+	    	          	{
+							new WriteFile(Main.selectedFile);
+		    	          	Main.fileStatus.setText("Saved file");
+		    	          	Main.configLoaded = true;
+						} 
+	    	          	catch (IOException e) 
+	    	          	{
+							e.printStackTrace();
+		    	          	Main.fileStatus.setText("Invalid file");
+		    	          	Main.configLoaded = false;
+						}
 		    	  }
 		    	  Tools.debug("button:" + "saveDialog");
 		      }

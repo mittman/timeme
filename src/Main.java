@@ -82,6 +82,7 @@ public class Main implements SelectionListener
 	public static TableColumn column5;
 	public static TableColumn column6;
 	public static TableColumn column7;
+	public static TableColumn column8;
 	public static Text inline;
 	public static Text textDir;
 	public static Text textReport;
@@ -317,6 +318,8 @@ public class Main implements SelectionListener
 		column6.setWidth(0);
 		column7 = new TableColumn(allTasks, 0);
 		column7.setWidth(0);
+		column8 = new TableColumn(allTasks, 0);
+		column8.setWidth(0);
 		
 		cell = new TableEditor(Main.allTasks);
 		inline = new Text(Main.allTasks, 0);
