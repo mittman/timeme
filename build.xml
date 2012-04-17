@@ -7,6 +7,9 @@
 			
 		  <!-- Application Classes -->
 		  <fileset dir="./bin/" includes="**/*.class" />
+		
+		  <!-- Include Resources -->
+		  <fileset dir="./" includes="timeme-icon.png" />
 		  
 		  <!-- SWT Jars -->
 		  <fileset dir="./gui" includes="swt-*-3.7.2.jar" />
