@@ -82,11 +82,9 @@ public class TaskObject
 		Main.recentTaskID.add(0,newID);
 		
 		// Add to table
-		String[] newElapsed = StopWatch.clockFormat(Main.currentTask.getTimeElapsed()).split("[.]");
-
 		String newRow = StopWatch.timeFormat(rowID);		
 		String title = Main.currentTask.getTitle();
-		String elapsed = newElapsed[0];
+		String elapsed = StopWatch.minFormat(Main.currentTask.getTimeElapsed());
 		String recent = "+";
 		String taskID = Main.currentTask.getTaskID() + "";
 		String notes = Main.currentTask.getNotes();

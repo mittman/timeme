@@ -8,11 +8,14 @@ public class StopWatch
 {
 	   private static long begin = System.currentTimeMillis();
 	   private static long elapsed = 0;
+	   private static long change = 0;
 	   
 	   public static void newTask()
 	   {
 		   elapsed = 0;
 		   Main.currentTask.setStartTime(begin);
+		   change = 0;
+		   Main.frame.setText("TimeMe " + minFormat(elapsed));
 		   resume();
 	   }
 
@@ -29,7 +32,8 @@ public class StopWatch
 	                    {
 	                        public void run() 
 	                        {
-	                            Main.clock.setText(getFormatedElapsed());
+	                            Main.clock.setText(getFormattedElapsed());
+	                            countChange();
 	                        }
 	                    });
 	                }
@@ -64,7 +68,7 @@ public class StopWatch
 			return elapsed;
 		}
 
-	    public static String getFormatedElapsed()
+	    public static String getFormattedElapsed()
 	    {
 	    	elapsed = (System.currentTimeMillis() - begin);
 	    	return clockFormat(elapsed);
@@ -77,5 +81,20 @@ public class StopWatch
 	        String SS = timeFormat((int) ((elapsed / 1000) % 60));
 	        String MS =  ""+((int) ((elapsed % 1000) / 100));
 	        return (HH + ":" + MM + ":" + SS + "." + MS);
-	    }		
+	    }
+		
+		public static String minFormat(long elapsed)
+		{
+			return clockFormat(elapsed).split("[.]")[0];
+		}
+		
+		public static void countChange()
+		{
+			
+			if(change+1000 < elapsed)
+			{
+				Main.frame.setText("TimeMe " + minFormat(elapsed));
+				change += 1000;
+			}
+		}
 }
