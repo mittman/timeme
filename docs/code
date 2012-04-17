@@ -84,3 +84,9 @@ http://git.eclipse.org/c/platform/eclipse.platform.swt.git/tree/examples/org.ecl
 
 string regex:
 http://www.deitel.com/articles/java_tutorials/20060218/index.html
+
+calendar date:
+http://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
+
+icon fix:
+http://stackoverflow.com/questions/4521973/how-do-i-add-an-icon-as-a-classpath-resource-to-an-swt-window-created-with-windo

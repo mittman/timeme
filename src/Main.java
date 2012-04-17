@@ -199,7 +199,8 @@ public class Main implements SelectionListener
 	 */
 	protected void createContents() 
 	{
-		frame = new Shell(SWT.CLOSE | SWT.TITLE | SWT.MIN);
+		//frame = new Shell(SWT.CLOSE | SWT.TITLE | SWT.MIN);
+		frame = new Shell();
 		frame.setImage(SWTResourceManager.getImage(Main.class, "timeme-icon.png"));
 		frame.setSize(435, 403);
 		frame.setText("TimeMe");
