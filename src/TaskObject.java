@@ -108,8 +108,13 @@ public class TaskObject
 	
 	public static void removeTask(int row)
 	{
-		Main.inline.dispose();
-	  	row = TableListener.getRow();
+		try
+		{
+			Main.inline.dispose();
+		}
+		catch(Exception unedit){}
+		
+		row = TableListener.getRow();
 	  	int i = checkRecent(row);
 	  	if(i != -1)
 	  	{

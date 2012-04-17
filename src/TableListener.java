@@ -51,7 +51,11 @@ public class TableListener
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 		      {
   		  			Main.cell.grabHorizontal = false;
-		    		Main.inline.dispose();
+  		  			try
+  		  			{
+  		  				Main.inline.dispose();
+  		  			}
+  		  			catch(Exception unedit){}
 					Tools.debug("row:" + getRow());
 		      }
 	    });

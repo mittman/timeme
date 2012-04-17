@@ -90,10 +90,13 @@ public class Hooks
 	{
 	    Main.genReport.addSelectionListener(new SelectionAdapter() 
 	    {
-	      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
-	      {
-				Tools.debug("button:" + "genReport");
-	      }
+		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
+		      {
+		    	  Main.textReport.setText("");
+		    	  clearToggle = true;
+		    	  ReportObject.newReport();
+		    	  Tools.debug("button:" + "genReport");
+		      }
 	    });
 	}
 	

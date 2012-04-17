@@ -200,6 +200,7 @@ public class Main implements SelectionListener
 	protected void createContents() 
 	{
 		frame = new Shell(SWT.CLOSE | SWT.TITLE | SWT.MIN);
+		frame.setImage(SWTResourceManager.getImage(Main.class, "/includes/timeme-icon.png"));
 		frame.setSize(435, 403);
 		frame.setText("TimeMe");
 		frame.setLayout(null);
@@ -322,7 +323,6 @@ public class Main implements SelectionListener
 		column8.setWidth(0);
 		
 		cell = new TableEditor(Main.allTasks);
-		inline = new Text(Main.allTasks, 0);
 						
 		scrolledComposite.setContent(allTasks);
 		scrolledComposite.setMinSize(allTasks.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -335,7 +335,7 @@ public class Main implements SelectionListener
 		tab3.setControl(contentsTab3);
 		
 		genReport = new Button(contentsTab3, 0);
-		genReport.setBounds(291, 73, 108, 50);
+		genReport.setBounds(171, 129, 108, 50);
 		genReport.setText("Generate");
 		
 		clearReport = new Button(contentsTab3, 0);
@@ -343,22 +343,22 @@ public class Main implements SelectionListener
 		clearReport.setText("Clear");
 		
 		textReport = new Text(contentsTab3, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
-		textReport.setLocation(5, 5);
-		textReport.setSize(280, 175);
+		textReport.setLocation(10, 10);
+		textReport.setSize(389, 113);
 		textReport.setText("\nReport");
 		
 		Label sortReport = new Label(contentsTab3, 0);
-		sortReport.setBounds(296, 5, 55, 15);
+		sortReport.setBounds(10, 145, 35, 15);
 		sortReport.setText("Sort:");
 		
 		modeStart = new Button(contentsTab3, SWT.RADIO);
-		modeStart.setBounds(296, 28, 90, 16);
+		modeStart.setBounds(50, 135, 90, 16);
 		modeStart.setSelection(true);
 		modeStart.setText("Start Time");
 		
 		modeEnd = new Button(contentsTab3, SWT.RADIO);
 		modeEnd.setText("End Time");
-		modeEnd.setBounds(296, 51, 90, 16);
+		modeEnd.setBounds(50, 155, 90, 16);
 		
 		//Configuration Tab ----------------------------------------
 		
