@@ -22,6 +22,7 @@ public class Hooks
 			//pause
 			Main.clockTicking = false;
 			Main.pauseResume.setText("Resume");
+			Main.frame.setText("TimeMe [paused]");
 			Tools.debug("button:" + "pause");
 			
 		}
@@ -31,6 +32,7 @@ public class Hooks
 			Main.clockTicking = true;
 			StopWatch.resume();
 			Main.pauseResume.setText("Pause");
+			Main.frame.setText("TimeMe " + StopWatch.minFormat(StopWatch.elapsed));
 			Tools.debug("button:" + "resume");
 		}
 	}
@@ -92,6 +94,7 @@ public class Hooks
 	    {
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 		      {
+		    	  Main.textReport.setEnabled(true);
 		    	  Main.textReport.setText("");
 		    	  clearToggle = true;
 		    	  ReportObject.newReport();
@@ -107,6 +110,7 @@ public class Hooks
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 		      {
 		    	  Main.textReport.setText("");
+		    	  Main.textReport.setEnabled(false);
 		    	  if(!clearToggle)
 		    	  {
 		    		  clearToggle = true;

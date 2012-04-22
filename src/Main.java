@@ -346,7 +346,8 @@ public class Main implements SelectionListener
 		textReport = new Text(contentsTab3, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		textReport.setLocation(10, 10);
 		textReport.setSize(389, 113);
-		textReport.setText("\nReport");
+		//textReport.setText("\nReport");
+		textReport.setEnabled(false);
 		
 		Label sortReport = new Label(contentsTab3, 0);
 		sortReport.setBounds(10, 145, 35, 15);

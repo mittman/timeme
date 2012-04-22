@@ -13,7 +13,7 @@ public class Tools
 		System.out.println(output);
 		if(!Hooks.clearToggle)
 		{
-			Main.textReport.setText(output + "\n" + Main.textReport.getText());			
+			//Main.textReport.setText(output + "\n" + Main.textReport.getText());			
 		}
 	}
 }
