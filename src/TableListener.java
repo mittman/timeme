@@ -20,9 +20,18 @@ public class TableListener
 			public void widgetSelected(SelectionEvent e)
 			{
 // Lucas' code				
-//SaveObject.collectCurrentTask();
-//SaveObject.saveCurrentToTable(Main.currentTask.getTaskID());
-//saveToList();
+				SaveObject.collectCurrentTask();
+				int currentTaskRow = TaskObject.searchTableByID(Main.currentTask.getTaskID());
+				if(currentTaskRow == -1)
+				{
+					//save the task as new
+					TaskObject.createTask();
+				}
+				else
+				{
+					//save to the previously created task
+					TaskObject.saveTaskToRow(currentTaskRow);
+				}
 				
 				int selected = Main.tableList.getSelectionIndex();				
 				int i = TaskObject.checkTable(selected);				
@@ -32,6 +41,11 @@ public class TableListener
 					String selectedNotes = Main.allTasks.getItem(i).getText(5);
 					Main.title.setText(selectedTitle);
 					Main.textNotes.setText(selectedNotes);
+					//to add
+					StopWatch.setElapsed(Long.valueOf(Main.allTasks.getItem(i).getText(8)));
+					Main.currentTask.setTaskID(Integer.valueOf(Main.allTasks.getItem(i).getText(4)));
+					Main.currentTask.setStartTime(Long.valueOf(Main.allTasks.getItem(i).getText(6)));
+					Main.currentTask.setEndTime(Long.valueOf(Main.allTasks.getItem(i).getText(7)));			
 				}
 			}
 		});

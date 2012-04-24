@@ -26,11 +26,35 @@ public class TaskObject
   		return -1;
 	}
 	
-	public static int checkTable(int selected)
+	public static int searchRecentbyID(int ID)
+	{  		
+  		for (int i = 0; i < Main.tableList.getItemCount(); i++)
+  		{
+  			if(Main.tableList.getItem(i).getText(2).equals(ID + ""))
+  			{
+  				return i;
+  			}
+  		}
+  		return -1;
+	}
+	
+	public static int checkTable(int selected) // searches for an event from the recent list 
 	{
   		for (int i = 0; i < Main.allTasks.getItemCount(); i++)
   		{
   			if(Main.tableList.getItem(selected).getText(2).equals(Main.allTasks.getItem(i).getText(4)))
+  			{
+  				return i;
+  			}
+  		}
+  		return -1;
+	}
+	
+	public static int searchTableByID(int ID) // searches for an event from the recent list 
+	{
+  		for (int i = 0; i < Main.allTasks.getItemCount(); i++)
+  		{
+  			if(Main.allTasks.getItem(i).getText(4).equals(ID + ""))
   			{
   				return i;
   			}
@@ -102,6 +126,31 @@ public class TaskObject
 		
 		Main.clockTicking = true;
 		StopWatch.newTask();
+	}
+	
+	public static void saveTaskToRow(int ID)
+	{
+		// Add to table
+				String newRow = StopWatch.timeFormat(ID);		
+				String title = Main.currentTask.getTitle();
+				String elapsed = StopWatch.minFormat(Main.currentTask.getTimeElapsed());
+				String recent = "+";
+				String taskID = Main.currentTask.getTaskID() + "";
+				String notes = Main.currentTask.getNotes();
+				String start = Main.currentTask.getStartTime() + "";
+				String end = Main.currentTask.getEndTime() + "";
+				String total = Main.currentTask.getTimeElapsed() + "";
+				
+				// Add to allTasks
+				String[] row = { newRow, title, elapsed, recent, taskID, notes, start, end, total };
+				addRow(ID, row);
+				
+				// Add to tableList
+				String[] list = { title, elapsed, taskID };
+				addRecent(0, list);
+				
+				Main.clockTicking = true;
+				StopWatch.newTask();
 	}
 	
 	public static void removeTask(int row)
