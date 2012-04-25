@@ -33,7 +33,9 @@ public class TableListener
 					TaskObject.saveTaskToRow(currentTaskRow);
 				}
 				
-				int selected = Main.tableList.getSelectionIndex();				
+				int selected = Main.tableList.getSelectionIndex();
+				if (selected == -1) selected = 4; //ugly code to correct wierd outputs from getSelectionIndex
+				selected -= 1;
 				int i = TaskObject.checkTable(selected);				
 				if (i != -1)
 				{
