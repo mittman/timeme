@@ -37,12 +37,17 @@ public class StopWatch
 	                            countChange();
 	                        }
 	                    });
+	                	try 
+                    	{
+							Thread.sleep(100);
+						} 
+                    	catch (InterruptedException e) 
+                    	{
+                    		e.printStackTrace();
+						}
 	                }
-
-	                Main.display.wake();
 	            }
 	        }
-
 	        .start();
 		}
 		
