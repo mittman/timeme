@@ -132,8 +132,12 @@ public class TaskObject
 	
 	public static void addRecent(int newID, String[] list)
 	{
-		// Add to tableList
-		new TableItem(Main.tableList, 0, newID).setText(list);
+		if(searchRecentbyID(Integer.valueOf(list[2])) != -1) //remove from list if already present
+		{
+			Main.tableList.remove(searchRecentbyID(Integer.valueOf(list[2])));
+		}
+		
+		new TableItem(Main.tableList, 0, newID).setText(list); // Add to top of tableList
 		
 		if(Main.tableList.getItemCount() > 4)
 		{
