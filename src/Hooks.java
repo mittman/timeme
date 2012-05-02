@@ -60,13 +60,14 @@ public class Hooks
 			public void widgetSelected(SelectionEvent e) 
 			{			            
 				SaveObject.collectCurrentTask();
-				TaskObject.createTask();
-				
+				//TaskObject.createTask();
+				TaskObject.saveTask(Main.currentTask);
 				Main.pauseResume.setText("Pause");
 				Main.bottomPane.setSelection(Main.tab1);
 				Main.title.setText("Title");
 				Main.textNotes.setText("Notes");
-
+				Main.currentTask.setTaskID(-1);
+				
 				Tools.debug("button:" + "new task");
 			}
 

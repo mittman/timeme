@@ -16,35 +16,37 @@ public class TaskObject
  	/**********************Do stuff***********************/
 	public static void saveTask(TaskObject taskToSave)
 	{  		
+		boolean newTask = false;
 		int saveToRowIndex = searchTableByID(taskToSave.getTaskID());
 		if(saveToRowIndex == -1)
 		{
-			TaskObject.createTask(); //would like to refactor this method to take a taskobject passed dirrectly.
-			Tools.debug("saveCurrentTask: " + "No match. Creating new task.");
+			++Main.maxTaskID;
+			taskToSave.setTaskID(Main.maxTaskID);
+			saveToRowIndex = Main.maxTaskID;
+			newTask = true;
 		}
-		else
-		{
-			// Add to allTasks
-			String newRow = StopWatch.timeFormat(saveToRowIndex);		
-			String title = taskToSave.getTitle();
-			String elapsed = StopWatch.minFormat(taskToSave.getTimeElapsed());
-			String recent = "+";
-			String taskID = taskToSave.getTaskID() + "";
-			String notes = taskToSave.getNotes();
-			String start = taskToSave.getStartTime() + "";
-			String end = taskToSave.getEndTime() + "";
-			String total = taskToSave.getTimeElapsed() + "";
-			
-			String[] row = { newRow, title, elapsed, recent, taskID, notes, start, end, total };
-			Main.allTasks.getItem(saveToRowIndex).setText(row);
-			Main.allTasks.setSelection(saveToRowIndex);
-			
-			// Add to tableList
-			String[] list = { title, elapsed, taskID };
-			addRecent(0, list);
-			
-			Tools.debug("saveCurrentTask: " + "Match found. Saving to row index");
-		}
+		
+		// Add to allTasks
+		String newRow = StopWatch.timeFormat(saveToRowIndex);		
+		String title = taskToSave.getTitle();
+		String elapsed = StopWatch.minFormat(taskToSave.getTimeElapsed());
+		String recent = "+";
+		String taskID = taskToSave.getTaskID() + "";
+		String notes = taskToSave.getNotes();
+		String start = taskToSave.getStartTime() + "";
+		String end = taskToSave.getEndTime() + "";
+		String total = taskToSave.getTimeElapsed() + "";
+		String[] row = { newRow, title, elapsed, recent, taskID, notes, start, end, total };
+		
+		if(newTask) new TableItem(Main.allTasks, 0, saveToRowIndex).setText(row);
+		else Main.allTasks.getItem(saveToRowIndex).setText(row);
+		Main.allTasks.setSelection(saveToRowIndex);
+		
+		// Add to tableList
+		String[] list = { title, elapsed, taskID };
+		addRecent(0, list);
+		
+		Tools.debug("saveCurrentTask: " + "Match found. Saving to row index");
 	}
 	
 	public static void unpackFromCurrentTasktoFields(TaskObject taskToUnpack)
@@ -152,9 +154,6 @@ public class TaskObject
 				
 		int newID = Main.maxTaskID;
 
-// Lucas' code		
-//SaveObject.saveCurrentToTable(newID);
-		
 		int rowID = 0;
 		if(newID > 1)
 		{
@@ -166,10 +165,6 @@ public class TaskObject
 		}
 		
 		Main.currentTask.setTaskID(newID);
-		
-		// Add to recent list
-		Main.taskList.add(Main.currentTask);
-		Main.recentTaskID.add(0,newID);
 		
 		// Add to table
 		String newRow = StopWatch.timeFormat(rowID);		
