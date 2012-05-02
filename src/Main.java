@@ -313,7 +313,7 @@ public class Main implements SelectionListener
 		column3.setText("*");
 		
 		column4 = new TableColumn(allTasks, 0);
-		column4.setWidth(20);
+		column4.setWidth(0);
 		column5 = new TableColumn(allTasks, 0);
 		column5.setWidth(0);
 		column6 = new TableColumn(allTasks, 0);

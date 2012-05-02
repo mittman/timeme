@@ -115,7 +115,6 @@ public class TaskObject
 	{
   		for (int i = 0; i < Main.allTasks.getItemCount(); i++)
   		{
-  			String IDString = ID + "";
   			
   			if(Main.allTasks.getItem(i).getText(4).equals(ID + ""))
   			{
