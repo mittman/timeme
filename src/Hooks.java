@@ -133,10 +133,16 @@ public class Hooks
 	    	  if(Main.allTasks.getSelectionIndex() != -1)
 	    	  {
 	    		  int selected = Main.allTasks.getSelectionIndex();
-	    		  String title = Main.allTasks.getItem(selected).getText(1);
-	    		  String notes = Main.allTasks.getItem(selected).getText(5);
-	    		  Main.title.setText(title);
-	    		  Main.textNotes.setText(notes);
+
+	    		  SaveObject.collectCurrentTask();
+	    		  TaskObject tempTask = TaskObject.returnTaskFromIndex(selected);
+	    		  TaskObject.saveTask(Main.currentTask);
+	    		  Main.currentTask = tempTask;
+	    		  TaskObject.unpackFromCurrentTasktoFields(Main.currentTask);
+	    		  Hooks.tickTock();
+	    		  StopWatch.setElapsed(Main.currentTask.getTimeElapsed());
+	    		  Hooks.tickTock();
+	    		  
 	    		  Main.bottomPane.setSelection(Main.tab1);
 	    	  }	    	
 	    	  Tools.debug("button:" + "editNotes");
