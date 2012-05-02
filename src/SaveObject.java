@@ -19,12 +19,12 @@ public class SaveObject
 			++Main.untitled;
 			Main.title.setText(taskName);
 		}
-		else if(Main.title.getText().startsWith("Untitled-", 0))
+		/*else if(Main.title.getText().startsWith("Untitled-", 0))
 		{
 			taskName = "Untitled-" + Main.untitled;
 			++Main.untitled;
 			Main.title.setText(taskName);			
-		}	
+		}	*/
 		else
 		{
 			taskName = Main.title.getText();

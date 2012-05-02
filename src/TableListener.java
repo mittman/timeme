@@ -19,36 +19,17 @@ public class TableListener
 		{
 			public void widgetSelected(SelectionEvent e)
 			{
-// Lucas' code				
 				SaveObject.collectCurrentTask();
-				int currentTaskRow = TaskObject.searchTableByID(Main.currentTask.getTaskID());
-				if(currentTaskRow == -1)
-				{
-					//save the task as new
-					TaskObject.createTask();
-				}
-				else
-				{
-					//save to the previously created task
-					TaskObject.saveTaskToRow(currentTaskRow);
-				}
-				
 				int selected = Main.tableList.getSelectionIndex();
-				if (selected == -1) selected = 4; //ugly code to correct wierd outputs from getSelectionIndex
-				selected -= 1;
-				int i = TaskObject.checkTable(selected);				
-				if (i != -1)
-				{
-					String selectedTitle = Main.allTasks.getItem(i).getText(1);
-					String selectedNotes = Main.allTasks.getItem(i).getText(5);
-					Main.title.setText(selectedTitle);
-					Main.textNotes.setText(selectedNotes);
-					//to add
-					StopWatch.setElapsed(Long.valueOf(Main.allTasks.getItem(i).getText(8)));
-					Main.currentTask.setTaskID(Integer.valueOf(Main.allTasks.getItem(i).getText(4)));
-					Main.currentTask.setStartTime(Long.valueOf(Main.allTasks.getItem(i).getText(6)));
-					Main.currentTask.setEndTime(Long.valueOf(Main.allTasks.getItem(i).getText(7)));			
-				}
+				int index = TaskObject.checkTable(selected);
+				TaskObject tempTask = TaskObject.returnTaskFromIndex(index);
+				TaskObject.saveTask(Main.currentTask);
+				Main.currentTask = tempTask;
+				TaskObject.unpackFromCurrentTasktoFields(Main.currentTask);
+				Hooks.tickTock();
+				StopWatch.setElapsed(Main.currentTask.getTimeElapsed());
+				Hooks.tickTock();
+				//add to top of recent list
 			}
 		});
 	}

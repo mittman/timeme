@@ -14,6 +14,67 @@ public class TaskObject
 	private int taskID;
 	    
  	/**********************Do stuff***********************/
+	public static void saveTask(TaskObject taskToSave)
+	{  		
+		int saveToRowIndex = searchTableByID(taskToSave.getTaskID());
+		if(saveToRowIndex == -1)
+		{
+			TaskObject.createTask(); //would like to refactor this method to take a taskobject passed dirrectly.
+			Tools.debug("saveCurrentTask: " + "No match. Creating new task.");
+		}
+		else
+		{
+			// Add to allTasks
+			String newRow = StopWatch.timeFormat(saveToRowIndex);		
+			String title = taskToSave.getTitle();
+			String elapsed = StopWatch.minFormat(taskToSave.getTimeElapsed());
+			String recent = "+";
+			String taskID = taskToSave.getTaskID() + "";
+			String notes = taskToSave.getNotes();
+			String start = taskToSave.getStartTime() + "";
+			String end = taskToSave.getEndTime() + "";
+			String total = taskToSave.getTimeElapsed() + "";
+			
+			String[] row = { newRow, title, elapsed, recent, taskID, notes, start, end, total };
+			Main.allTasks.getItem(saveToRowIndex).setText(row);
+			Main.allTasks.setSelection(saveToRowIndex);
+			
+			// Add to tableList
+			String[] list = { title, elapsed, taskID };
+			addRecent(0, list);
+			
+			Tools.debug("saveCurrentTask: " + "Match found. Saving to row index");
+		}
+	}
+	
+	public static void unpackFromCurrentTasktoFields(TaskObject taskToUnpack)
+	{
+		Main.title.setText(taskToUnpack.getTitle());
+		Main.textNotes.setText(taskToUnpack.getNotes());
+		StopWatch.setElapsed(taskToUnpack.getTimeElapsed());
+	}
+	
+	public static TaskObject returnTaskFromIndex(int rowIndex)
+	{
+		TaskObject returnable = new TaskObject();
+		//unpack the row
+		String selectedTitle = Main.allTasks.getItem(rowIndex).getText(1);
+		String selectedNotes = Main.allTasks.getItem(rowIndex).getText(5);
+		long elapsed = Long.valueOf(Main.allTasks.getItem(rowIndex).getText(8));
+		int taskID = Integer.valueOf(Main.allTasks.getItem(rowIndex).getText(4));
+		long startTime = Long.valueOf(Main.allTasks.getItem(rowIndex).getText(6));
+		long endTime = Long.valueOf(Main.allTasks.getItem(rowIndex).getText(7));
+		
+		returnable.setTitle(selectedTitle);
+		returnable.setNotes(selectedNotes);
+		returnable.setTimeElapsed(elapsed); //StopWatch.setElapsed(elapsed); needs to be done outside when unpacking the task
+		returnable.setTaskID(taskID);
+		returnable.setStartTime(startTime);
+		returnable.setEndTime(endTime);
+		
+		return returnable;
+	}
+	
 	public static int checkRecent(int selected)
 	{  		
   		for (int i = 0; i < Main.tableList.getItemCount(); i++)
@@ -54,6 +115,8 @@ public class TaskObject
 	{
   		for (int i = 0; i < Main.allTasks.getItemCount(); i++)
   		{
+  			String IDString = ID + "";
+  			
   			if(Main.allTasks.getItem(i).getText(4).equals(ID + ""))
   			{
   				return i;
@@ -92,7 +155,7 @@ public class TaskObject
 		int rowID = 0;
 		if(newID > 1)
 		{
-			rowID = Integer.parseInt(Main.allTasks.getItem(newID-1).toString().split("[{}]")[1]) + 1;
+			rowID = Integer.parseInt(Main.allTasks.getItem(newID-1).toString().split("[{}]")[1]) + 1; //what is going on here???
 		}
 		else
 		{
