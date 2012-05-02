@@ -29,7 +29,6 @@ public class TableListener
 				Hooks.tickTock();
 				StopWatch.setElapsed(Main.currentTask.getTimeElapsed());
 				Hooks.tickTock();
-				//add to top of recent list
 			}
 		});
 	}

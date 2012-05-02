@@ -201,11 +201,27 @@ public class Hooks
 		    		  			
 		    		  			if(clockFormat)
 		    		  			{
-		    		  				Main.cell.getItem().setText(column, cellText.getText());
+		    		  				Main.cell.getItem().setText(column, cellText.getText());  //update the recent list
 		    		  				int recent = TaskObject.checkRecent(selected);
 		    		  				if(recent != -1)
 		    		  				{
 		    		  					Main.tableList.getItem(recent).setText(1, cellText.getText());
+		    		  				}
+		    		  				
+		    		  				//update the actual elapsed time
+		    		  				int[] timeInts = new int[3];
+		    		  				for (int i = 0; i < 3; i++)
+		    		  				{
+		    		  					timeInts[i] = Integer.parseInt(cellText.getText().split(":", 3)[i]);
+		    		  				}
+		    		  				
+		    		  				long milliseconds = (timeInts[0]*60*60*1000)+(timeInts[1]*60*1000)+(timeInts[2]*1000);
+		    		  				Main.allTasks.getItem(selected).setText(8, milliseconds+"");
+		    		  				if(Integer.parseInt(Main.allTasks.getItem(selected).getText()) == Main.currentTask.getTaskID())
+		    		  				{
+		    		  					Hooks.tickTock();
+		    		  					StopWatch.setElapsed(milliseconds);
+		    		  					Hooks.tickTock();
 		    		  				}
 		    		  			}
 			    		 	}
