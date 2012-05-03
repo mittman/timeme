@@ -68,6 +68,8 @@ public class Hooks
 				Main.textNotes.setText("Notes");
 				Main.currentTask.setTaskID(-1);
 				
+				if(Main.clockTicking == false) tickTock();
+				
 				Tools.debug("button:" + "new task");
 			}
 
