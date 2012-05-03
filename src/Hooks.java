@@ -69,6 +69,7 @@ public class Hooks
 				Main.currentTask.setTaskID(-1);
 				
 				if(Main.clockTicking == false) tickTock();
+				StopWatch.newTask();
 				
 				Tools.debug("button:" + "new task");
 			}
