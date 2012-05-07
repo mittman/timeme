@@ -57,15 +57,15 @@ public class ReportObject
 	private static void printReport(String[][] reports)
 	{
 	  	  String output = "";
-	  	  String newline = "\n\n";
+	  	  String newline = "\r\n\r\n";
 	  	  
 	  	  for (int array = 0; array < reports.length; array++)
 	  	  {
 	  		  String title = "Task: " + reports[array][0];
-	  		  String elapsed = "\n \tElapsed:  " + reports[array][1];
-	  		  String start = "\n \tStart:      " + dateFormat(reports[array][2]);
-	  		  String end = "\n \tEnd:        " + dateFormat(reports[array][3]);
-	  		  String notes = "\n \tNotes:     " + reports[array][4];
+	  		  String elapsed = "\r\n \tElapsed:  " + reports[array][1];
+	  		  String start = "\r\n \tStart:      " + dateFormat(reports[array][2]);
+	  		  String end = "\r\n \tEnd:        " + dateFormat(reports[array][3]);
+	  		  String notes = "\r\n \tNotes:     " + reports[array][4];
 	  		  
 	  		  if(array == reports.length - 1)
 	  		  {
