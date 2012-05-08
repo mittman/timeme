@@ -295,31 +295,43 @@ public class Main implements SelectionListener
 		allTasks.setHeaderVisible(true);
 		allTasks.setLinesVisible(true);
 		
-		//{ row#, title, elapsed, recent, taskID, notes, start, end, total }
+		// row#
 		column0 = new TableColumn(allTasks, 0);
 		column0.setWidth(30);
 		column0.setText("#");
 		
+		// title
 		column1 = new TableColumn(allTasks, 0);
 		column1.setWidth(130);
 		column1.setText("Title");
 		
+		// elapsed
 		column2 = new TableColumn(allTasks, 0);
 		column2.setWidth(68);
 		column2.setText("Total");
 		
+		// recent
 		column3 = new TableColumn(allTasks, 0);
 		column3.setWidth(22);
 		column3.setText("*");
 		
+		// taskID
 		column4 = new TableColumn(allTasks, 0);
 		column4.setWidth(0);
+		
+		// notes
 		column5 = new TableColumn(allTasks, 0);
 		column5.setWidth(0);
+		
+		// start
 		column6 = new TableColumn(allTasks, 0);
 		column6.setWidth(0);
+		
+		// end
 		column7 = new TableColumn(allTasks, 0);
 		column7.setWidth(0);
+		
+		// total
 		column8 = new TableColumn(allTasks, 0);
 		column8.setWidth(0);
 		

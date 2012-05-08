@@ -6,7 +6,7 @@
 
 public class StopWatch 
 {
-	   private static long begin = System.currentTimeMillis();
+	   public static long begin = System.currentTimeMillis();
 	   private static long change = 0;
 	   public static long elapsed = 0;
 
