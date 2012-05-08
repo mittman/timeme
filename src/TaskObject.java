@@ -42,7 +42,7 @@ public class TaskObject
 		else Main.allTasks.getItem(saveToRowIndex).setText(row);
 		Main.allTasks.setSelection(saveToRowIndex);
 		
-		// Add to tableList
+		// Add to recentTasks
 		String[] list = { title, elapsed, taskID };
 		addRecent(0, list);
 		
@@ -79,9 +79,9 @@ public class TaskObject
 	
 	public static int checkRecent(int selected)
 	{  		
-  		for (int i = 0; i < Main.tableList.getItemCount(); i++)
+  		for (int i = 0; i < Main.recentTasks.getItemCount(); i++)
   		{
-  			if(Main.tableList.getItem(i).getText(2).equals(Main.allTasks.getItem(selected).getText(4)))
+  			if(Main.recentTasks.getItem(i).getText(2).equals(Main.allTasks.getItem(selected).getText(4)))
   			{
   				return i;
   			}
@@ -91,9 +91,9 @@ public class TaskObject
 	
 	public static int searchRecentbyID(int ID)
 	{  		
-  		for (int i = 0; i < Main.tableList.getItemCount(); i++)
+  		for (int i = 0; i < Main.recentTasks.getItemCount(); i++)
   		{
-  			if(Main.tableList.getItem(i).getText(2).equals(ID + ""))
+  			if(Main.recentTasks.getItem(i).getText(2).equals(ID + ""))
   			{
   				return i;
   			}
@@ -105,7 +105,7 @@ public class TaskObject
 	{
   		for (int i = 0; i < Main.allTasks.getItemCount(); i++)
   		{
-  			if(Main.tableList.getItem(selected).getText(2).equals(Main.allTasks.getItem(i).getText(4)))
+  			if(Main.recentTasks.getItem(selected).getText(2).equals(Main.allTasks.getItem(i).getText(4)))
   			{
   				return i;
   			}
@@ -136,15 +136,15 @@ public class TaskObject
 	{
 		if(searchRecentbyID(Integer.valueOf(list[2])) != -1) //remove from list if already present
 		{
-			Main.tableList.remove(searchRecentbyID(Integer.valueOf(list[2])));
+			Main.recentTasks.remove(searchRecentbyID(Integer.valueOf(list[2])));
 		}
 		
-		new TableItem(Main.tableList, 0, newID).setText(list); // Add to top of tableList
+		new TableItem(Main.recentTasks, 0, newID).setText(list); // Add to top of recentTasks
 		
-		if(Main.tableList.getItemCount() > 4)
+		if(Main.recentTasks.getItemCount() > 4)
 		{
 		  	Main.allTasks.getItem(checkTable(4)).setText(3, "-");
-			Main.tableList.remove(4);
+			Main.recentTasks.remove(4);
 		}		
 	}
 	
@@ -181,7 +181,7 @@ public class TaskObject
 		String[] row = { newRow, title, elapsed, recent, taskID, notes, start, end, total };
 		addRow(newID, row);
 		
-		// Add to tableList
+		// Add to recentTasks
 		String[] list = { title, elapsed, taskID };
 		addRecent(0, list);
 		
@@ -206,7 +206,7 @@ public class TaskObject
 				String[] row = { newRow, title, elapsed, recent, taskID, notes, start, end, total };
 				addRow(ID, row);
 				
-				// Add to tableList
+				// Add to recentTasks
 				String[] list = { title, elapsed, taskID };
 				addRecent(0, list);
 				
@@ -226,7 +226,7 @@ public class TaskObject
 	  	int i = checkRecent(row);
 	  	if(i != -1)
 	  	{
-	  		Main.tableList.remove(i);
+	  		Main.recentTasks.remove(i);
 	  	}
 		Main.cell.grabHorizontal = false;
 		Main.allTasks.deselectAll();

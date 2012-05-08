@@ -13,14 +13,14 @@ import org.eclipse.swt.widgets.TableItem;
 
 public class TableListener 
 {
-	public void tableList()
+	public void recentTasks()
 	{
-		Main.tableList.addSelectionListener(new SelectionAdapter() 
+		Main.recentTasks.addSelectionListener(new SelectionAdapter() 
 		{
 			public void widgetSelected(SelectionEvent e)
 			{
 				SaveObject.collectCurrentTask();
-				int selected = Main.tableList.getSelectionIndex();
+				int selected = Main.recentTasks.getSelectionIndex();
 				int index = TaskObject.checkTable(selected);
 				TaskObject tempTask = TaskObject.returnTaskFromIndex(index);
 				TaskObject.saveTask(Main.currentTask);

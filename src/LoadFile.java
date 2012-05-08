@@ -21,9 +21,9 @@ public class LoadFile
 		if(fileExists)
 		{
 			// Empty existing table
-			while(Main.tableList.getItemCount() > 0)
+			while(Main.recentTasks.getItemCount() > 0)
 			{
-				Main.tableList.remove(0);
+				Main.recentTasks.remove(0);
 			}
 			while(Main.allTasks.getItemCount() > 0)
 			{

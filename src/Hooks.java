@@ -12,9 +12,7 @@ import org.eclipse.swt.widgets.Text;
 
 
 public class Hooks 
-{
-	public static boolean clearToggle;
-	
+{	
 	public static void tickTock()
 	{
 		if(Main.clockTicking)
@@ -60,7 +58,6 @@ public class Hooks
 			public void widgetSelected(SelectionEvent e) 
 			{			            
 				SaveObject.collectCurrentTask();
-				//TaskObject.createTask();
 				TaskObject.saveTask(Main.currentTask);
 				Main.pauseResume.setText("Pause");
 				Main.bottomPane.setSelection(Main.tab1);
@@ -68,9 +65,13 @@ public class Hooks
 				Main.textNotes.setText("Notes");
 				Main.currentTask.setTaskID(-1);
 				
-				if(Main.clockTicking == false) tickTock();
+				if(!Main.clockTicking)
+				{
+					tickTock();
+				}
 				StopWatch.newTask();
 				
+				BrowsePath.autoSave();				
 				Tools.debug("button:" + "new task");
 			}
 
@@ -100,7 +101,6 @@ public class Hooks
 		      {
 		    	  Main.textReport.setEnabled(true);
 		    	  Main.textReport.setText("");
-		    	  clearToggle = true;
 		    	  ReportObject.newReport();
 		    	  Tools.debug("button:" + "genReport");
 		      }
@@ -115,14 +115,6 @@ public class Hooks
 		      {
 		    	  Main.textReport.setText("");
 		    	  Main.textReport.setEnabled(false);
-		    	  if(!clearToggle)
-		    	  {
-		    		  clearToggle = true;
-		    	  }
-		    	  else
-		    	  {
-		    		  clearToggle = false;
-		    	  }
 		    	  Tools.debug("button:" + "clearReport");
 		      }
 	    });
@@ -209,7 +201,7 @@ public class Hooks
 		    		  				int recent = TaskObject.checkRecent(selected);
 		    		  				if(recent != -1)
 		    		  				{
-		    		  					Main.tableList.getItem(recent).setText(1, cellText.getText());
+		    		  					Main.recentTasks.getItem(recent).setText(1, cellText.getText());
 		    		  				}
 		    		  				
 		    		  				//update the actual elapsed time

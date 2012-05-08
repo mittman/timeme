@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -33,13 +34,13 @@ public class Main implements SelectionListener
 	protected static Shell frame;
 	
 	public static boolean clockTicking;
+	public static boolean configLoaded;
+	public static boolean interfaceDown;
+	public static boolean reportToggle;
 	public static boolean sort0;
 	public static boolean sort1;
 	public static boolean sort2;
 	public static boolean sort3;
-	public static boolean configLoaded;
-	public static boolean interfaceDown;
-	public static boolean reportToggle;
 	public static Button browseDialog;
 	public static Button clearReport;
 	public static Button collapse;
@@ -52,6 +53,7 @@ public class Main implements SelectionListener
 	public static Button newTask;
 	public static Button pauseResume;
 	public static Button saveDialog;
+	public static Button unloadFile;
 	public static Display display;
 	public static int maxTaskID;
 	public static int uniqueID;
@@ -60,14 +62,11 @@ public class Main implements SelectionListener
 	public static Label fileStatus;
 	public static LinkedList<Integer> recentTaskID;
 	public static LinkedList<TaskObject> taskList;
-	public static TaskObject currentTask;
-	public static Table tableList;
 	public static List list;
 	public static Rectangle down;
 	public static Rectangle up;
 	public static String selectedFile;
 	public static StyledText textNotes;
-	public static TableEditor cell;
 	public static TabFolder bottomPane;	
 	public static TabItem tab1; 
 	public static TabItem tab2; 
@@ -83,6 +82,12 @@ public class Main implements SelectionListener
 	public static TableColumn column6;
 	public static TableColumn column7;
 	public static TableColumn column8;
+	public static TableColumn recentColumn0;
+	public static TableColumn recentColumn1;
+	public static TableColumn recentColumn2;
+	public static TableEditor cell;
+	public static Table recentTasks;
+	public static TaskObject currentTask;
 	public static Text inline;
 	public static Text textDir;
 	public static Text textReport;
@@ -94,7 +99,7 @@ public class Main implements SelectionListener
 	 */
 	protected void initialize() 
 	{
-		configLoaded = true;
+		configLoaded = false;
 		untitled = 1;
 		currentTask = new TaskObject();
 		taskList = new LinkedList<TaskObject>();
@@ -121,23 +126,15 @@ public class Main implements SelectionListener
 	// Select All in text box
 	private Listener ctrlAListener = new Listener() 
 	{
-		   public void handleEvent( Event event ) 
+		   public void handleEvent(Event event) 
 		   {
-		      if ( event.stateMask == SWT.CTRL && event.keyCode == 'a' ) 
+		      if (event.stateMask == SWT.CTRL && event.keyCode == 'a') 
 		      {
 		         ((StyledText)event.widget).selectAll();
 		      }
 		   }
-	};	
-	
-	void saveTasktoList(int taskID)
-	{
-		taskList.get(taskID).setTitle(title.getText());
-		taskList.get(taskID).setNotes(textNotes.getText());
-		taskList.get(taskID).setTimeElapsed(StopWatch.getElapsed());
-		taskList.get(taskID).setEndTime(System.currentTimeMillis());
-	}
-	
+	};
+			
 	public static void load()
 	{
 		textDir.setEnabled(true);		
@@ -158,8 +155,7 @@ public class Main implements SelectionListener
 		try 
 		{
 			Main window = new Main();
-			window.open();
-			
+			window.open();			
 			// Close window gracefully
 			System.exit(0);
 		} 
@@ -179,6 +175,29 @@ public class Main implements SelectionListener
 		createContents();
 		frame.open();
 		frame.layout();
+		
+		frame.addListener(SWT.Close, new Listener()
+		{
+			public void handleEvent(Event event)
+			{
+				if(clockTicking)
+				{
+					Hooks.tickTock();
+				}
+				if(configLoaded)
+				{
+					MessageBox dialog = new MessageBox(frame, SWT.ICON_QUESTION | SWT.OK| SWT.CANCEL);
+					dialog.setText("Confirm close");
+					dialog.setMessage("Save changes before closing?");
+					if(dialog.open() == 32)
+					{
+						BrowsePath.autoSave();
+						Tools.debug("Auto-saved");
+					}
+				}
+			}
+		});
+
 		while (!frame.isDisposed()) 
 		{
 			if (!display.readAndDispatch()) 
@@ -206,7 +225,7 @@ public class Main implements SelectionListener
 		frame.setText("TimeMe");
 		frame.setLayout(null);
 		initialize();
-				
+						
 		//topPane -------------------------------------------------------
 		Composite topPane = new Composite(frame, 0);
 		topPane.setBounds(5, 5, 424, 135);
@@ -215,18 +234,22 @@ public class Main implements SelectionListener
 		collapse.setBounds(0, 94, 47, 41);
 		collapse.setText("<<");
 
-		tableList = new Table(topPane, SWT.BORDER | SWT.FULL_SELECTION);
-		tableList.setBounds(0, 0, 282, 88);
-		tableList.setHeaderVisible(false);
-		tableList.setSelection(0);
+		recentTasks = new Table(topPane, SWT.BORDER | SWT.FULL_SELECTION);
+		recentTasks.setBounds(0, 0, 282, 88);
+		recentTasks.setHeaderVisible(false);
+		recentTasks.setSelection(0);
 		
-		//{ title, elapsed, taskID }
-		TableColumn tL1 = new TableColumn(tableList, 0);
-		tL1.setWidth(160);		
-		TableColumn tL2 = new TableColumn(tableList, 0);
-		tL2.setWidth(80);	
-		TableColumn tL3 = new TableColumn(tableList, 0);
-		tL3.setWidth(0);	
+		// recent title
+		recentColumn0 = new TableColumn(recentTasks, 0);
+		recentColumn0.setWidth(160);		
+		
+		// recent elapsed
+		recentColumn1 = new TableColumn(recentTasks, 0);
+		recentColumn1.setWidth(80);
+		
+		// recent taskID
+		recentColumn2 = new TableColumn(recentTasks, 0);
+		recentColumn2.setWidth(0);	
 		
 		clock = new Label(topPane, 0);
 		clock.setFont(SWTResourceManager.getFont("Sans", 27, SWT.BOLD));
@@ -244,8 +267,7 @@ public class Main implements SelectionListener
 		pauseResume = new Button(topPane, 0);		
 		pauseResume.setBounds(302, 85, 112, 50);
 		pauseResume.setText("Resume");
-				
-		
+						
 		//bottomPane -------------------------------------------------------
 		bottomPane = new TabFolder(frame, SWT.BORDER);
 		bottomPane.setBounds(5, 156, 415, 216);
@@ -389,6 +411,10 @@ public class Main implements SelectionListener
 		saveDialog.setBounds(270, 80, 108, 40);
 		saveDialog.setText("Save as...");
 		
+		unloadFile = new Button(contentsTab4, 0);
+		unloadFile.setBounds(270, 134, 108, 40);
+		unloadFile.setText("Unload");
+		
 		textDir = new Text(contentsTab4, SWT.BORDER);
 		textDir.setEnabled(false);
 		textDir.setEditable(false);
@@ -432,7 +458,7 @@ public class Main implements SelectionListener
 		textHooks.textNotes();
 		
 		TableListener tableHooks = new TableListener();
-		tableHooks.tableList();
+		tableHooks.recentTasks();
 		tableHooks.row();
 		tableHooks.column0();
 		tableHooks.column1();

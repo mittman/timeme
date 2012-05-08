@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.FileDialog;
 
 
@@ -21,7 +22,6 @@ public class BrowsePath
 	    	  FileDialog browseDialog = new FileDialog(Main.frame, SWT.OPEN);
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event)
 		      {
-		    	  //browseDialog.setFilterPath(Main.selectedFile);
 		    	  browseDialog.setFilterNames(new String[] { "TSV Files" });
 		    	  browseDialog.setFilterExtensions(new String[] { "*.tsv" });
 		    	  String file = browseDialog.open();
@@ -39,6 +39,7 @@ public class BrowsePath
 		    	      		Main.load();		    	      		
 		    	      		Main.selectedFile = file;
 		    	          	Main.textDir.setText(Main.selectedFile);
+		    	          	
 		    	          	// load table		    	          	
 		    	          	try 
 		    	          	{
@@ -66,7 +67,6 @@ public class BrowsePath
 	    	  FileDialog saveDialog = new FileDialog(Main.frame, SWT.SAVE);
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 		      {
-		    	  //saveDialog.setFilterPath(Main.selectedFile);
 		    	  saveDialog.setFilterNames(new String[] { "TSV Files" });
 		    	  saveDialog.setFilterExtensions(new String[] { "*.tsv" });
 		    	  String file = saveDialog.open();
@@ -76,6 +76,7 @@ public class BrowsePath
 	    	      		Main.load();		    	      		
 	    	      		Main.selectedFile = file;
 	    	          	Main.textDir.setText(Main.selectedFile);
+	    	          	
 	    	          	// save table	    	          	
 	    	          	try 
 	    	          	{
@@ -93,6 +94,38 @@ public class BrowsePath
 		    	  Tools.debug("button:" + "saveDialog");
 		      }
 	    });
+	}
+	
+	public static void unload()
+	{
+		Main.unloadFile.addSelectionListener(new SelectionAdapter() 
+		{
+			public void widgetSelected(SelectionEvent e) 
+			{	
+	          	Main.fileStatus.setText("No file loaded");
+	          	Main.configLoaded = false;
+			}
+		});
+	}
+	
+	public static void autoSave()
+	{
+      	// save table
+		if(Main.configLoaded)
+		{
+			SaveObject.collectCurrentTask();
+			TaskObject.saveTask(Main.currentTask);
+          	try 
+          	{
+				new WriteFile(Main.selectedFile);
+	          	Main.fileStatus.setText("Auto-saved");
+			} 
+          	catch (IOException e2) 
+          	{
+				e2.printStackTrace();
+	          	Main.fileStatus.setText("Save failed");
+			}
+		}
 	}
 	
 }
