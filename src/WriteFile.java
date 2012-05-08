@@ -26,7 +26,7 @@ public class WriteFile
 				{
 					output.write(Main.allTasks.getItem(row).getText(col)+"\t");		
 				}
-				output.write("\n");
+				output.write("\r\n");
 			}			
 			output.close();
 		}

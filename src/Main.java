@@ -53,7 +53,6 @@ public class Main implements SelectionListener
 	public static Button newTask;
 	public static Button pauseResume;
 	public static Button saveDialog;
-	public static Button unloadFile;
 	public static Display display;
 	public static int maxTaskID;
 	public static int uniqueID;
@@ -134,11 +133,6 @@ public class Main implements SelectionListener
 		      }
 		   }
 	};
-			
-	public static void load()
-	{
-		textDir.setEnabled(true);		
-	}
 	
 	////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////
@@ -175,28 +169,7 @@ public class Main implements SelectionListener
 		createContents();
 		frame.open();
 		frame.layout();
-		
-		frame.addListener(SWT.Close, new Listener()
-		{
-			public void handleEvent(Event event)
-			{
-				if(clockTicking)
-				{
-					Hooks.tickTock();
-				}
-				if(configLoaded)
-				{
-					MessageBox dialog = new MessageBox(frame, SWT.ICON_QUESTION | SWT.OK| SWT.CANCEL);
-					dialog.setText("Confirm close");
-					dialog.setMessage("Save changes before closing?");
-					if(dialog.open() == 32)
-					{
-						BrowsePath.autoSave();
-						Tools.debug("Auto-saved");
-					}
-				}
-			}
-		});
+		SaveObject.shellListener();
 
 		while (!frame.isDisposed()) 
 		{
@@ -410,11 +383,7 @@ public class Main implements SelectionListener
 		saveDialog = new Button(contentsTab4, 0);
 		saveDialog.setBounds(270, 80, 108, 40);
 		saveDialog.setText("Save as...");
-		
-		unloadFile = new Button(contentsTab4, 0);
-		unloadFile.setBounds(270, 134, 108, 40);
-		unloadFile.setText("Unload");
-		
+				
 		textDir = new Text(contentsTab4, SWT.BORDER);
 		textDir.setEnabled(false);
 		textDir.setEditable(false);
@@ -452,6 +421,8 @@ public class Main implements SelectionListener
 		listeners.editNotes();
 		listeners.editTime();
 		listeners.deleteTask();
+		listeners.browseDialog();
+		listeners.saveDialog();
 		
 		TextListener textHooks = new TextListener();
 		textHooks.title();
@@ -464,10 +435,6 @@ public class Main implements SelectionListener
 		tableHooks.column1();
 		tableHooks.column2();
 		tableHooks.column3();
-
-		BrowsePath path = new BrowsePath();
-		path.browseDialog();
-		path.saveDialog();		
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////

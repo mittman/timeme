@@ -4,10 +4,12 @@
  * @author Team 0x00000001
  */
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
 
 
@@ -71,7 +73,6 @@ public class Hooks
 				}
 				StopWatch.newTask();
 				
-				BrowsePath.autoSave();				
 				Tools.debug("button:" + "new task");
 			}
 
@@ -272,6 +273,30 @@ public class Hooks
 						Tools.debug("radio:" + "modeEnd");
 					}
 		      }			
+	    });
+	}
+	
+	public void browseDialog()
+	{
+	    Main.browseDialog.addSelectionListener(new SelectionAdapter() 
+	    {
+	    	public void widgetSelected(org.eclipse.swt.events.SelectionEvent event)
+	    	{
+	    		BrowsePath.browseDialog();
+	    		Tools.debug("button:" + "browseDialog");
+	    	}
+	    });
+	}
+	
+	public void saveDialog()
+	{
+	    Main.saveDialog.addSelectionListener(new SelectionAdapter() 
+	    {
+	    	public void widgetSelected(org.eclipse.swt.events.SelectionEvent event)
+	    	{
+	    		BrowsePath.saveDialog();
+	    		Tools.debug("button:" + "saveDialog");
+	    	}
 	    });
 	}
 
