@@ -4,12 +4,10 @@
  * @author Team 0x00000001
  */
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
 
 
@@ -61,6 +59,7 @@ public class Hooks
 			{			            
 				SaveObject.collectCurrentTask();
 				TaskObject.saveTask(Main.currentTask);
+				Main.pauseResume.setEnabled(true);
 				Main.pauseResume.setText("Pause");
 				Main.bottomPane.setSelection(Main.tab1);
 				Main.title.setText("Title");

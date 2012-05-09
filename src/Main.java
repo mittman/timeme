@@ -4,7 +4,6 @@
  * @author Team 0x00000001
  */
 
-import java.util.LinkedList;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.TableEditor;
@@ -19,7 +18,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -59,8 +57,6 @@ public class Main implements SelectionListener
 	public static int untitled;
 	public static Label clock;
 	public static Label fileStatus;
-	public static LinkedList<Integer> recentTaskID;
-	public static LinkedList<TaskObject> taskList;
 	public static List list;
 	public static Rectangle down;
 	public static Rectangle up;
@@ -101,9 +97,6 @@ public class Main implements SelectionListener
 		configLoaded = false;
 		untitled = 1;
 		currentTask = new TaskObject();
-		taskList = new LinkedList<TaskObject>();
-		recentTaskID = new LinkedList<Integer>();
-		recentTaskID.add(new Integer(-1));
 		maxTaskID = -1;
 		reportToggle = false;
 	    selectedFile = "";
@@ -240,6 +233,7 @@ public class Main implements SelectionListener
 		pauseResume = new Button(topPane, 0);		
 		pauseResume.setBounds(302, 85, 112, 50);
 		pauseResume.setText("Resume");
+		pauseResume.setEnabled(false);
 						
 		//bottomPane -------------------------------------------------------
 		bottomPane = new TabFolder(frame, SWT.BORDER);

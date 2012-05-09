@@ -1,5 +1,3 @@
-import java.awt.Event;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
@@ -9,6 +7,7 @@ import org.eclipse.swt.widgets.MessageBox;
  * @project TimeMe
  * @author Team 0x00000001
  */
+
 
 public class SaveObject 
 {	

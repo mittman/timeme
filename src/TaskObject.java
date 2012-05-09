@@ -38,8 +38,14 @@ public class TaskObject
 		String total = taskToSave.getTimeElapsed() + "";
 		String[] row = { newRow, title, elapsed, recent, taskID, notes, start, end, total };
 		
-		if(newTask) new TableItem(Main.allTasks, 0, saveToRowIndex).setText(row);
-		else Main.allTasks.getItem(saveToRowIndex).setText(row);
+		if(newTask)
+		{
+			new TableItem(Main.allTasks, 0, saveToRowIndex).setText(row);
+		}
+		else 
+		{
+			Main.allTasks.getItem(saveToRowIndex).setText(row);
+		}
 		Main.allTasks.setSelection(saveToRowIndex);
 		
 		// Add to recentTasks
