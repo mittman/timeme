@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <CommunicationClass name="SaveObject" x="25" y="28">
+        <Communication destinationClassName="TaskObject"/>
+    </CommunicationClass>
+    <CommunicationClass name="LoadFile" x="87" y="457">
+        <Communication destinationClassName="TableListener"/>
+        <Communication destinationClassName="TaskObject"/>
+    </CommunicationClass>
+    <CommunicationClass name="Main" x="713" y="24">
+        <Association destinationClassName="TaskObject"
+            endpointName="currentTask" kind="Simple"/>
+        <Communication destinationClassName="SaveObject"/>
+        <Communication destinationClassName="TextListener"/>
+        <Communication destinationClassName="Hooks"/>
+        <Communication destinationClassName="TableListener"/>
+    </CommunicationClass>
+    <CommunicationClass name="TextListener" x="573" y="191"/>
+    <CommunicationClass name="StopWatch" x="588" y="319">
+        <Communication destinationClassName="TaskObject"/>
+    </CommunicationClass>
+    <CommunicationClass name="Hooks" x="410" y="105">
+        <Communication destinationClassName="StopWatch"/>
+    </CommunicationClass>
+    <CommunicationClass name="TableListener" x="644" y="458"/>
+    <CommunicationClass name="BrowsePath" x="26" y="332">
+        <Association destinationClassName="LoadFile"
+            endpointName="saveDialog" kind="Simple"/>
+        <Communication destinationClassName="SaveObject"/>
+        <Communication destinationClassName="TaskObject"/>
+    </CommunicationClass>
+    <CommunicationClass name="ReportObject" x="82" y="257"/>
+    <CommunicationClass name="WriteFile" x="35" y="393"/>
+    <CommunicationClass name="TaskObject" x="259" y="334">
+        <Communication destinationClassName="StopWatch"/>
+        <Communication destinationClassName="TableListener"/>
+    </CommunicationClass>
+</ClassDiagram>
