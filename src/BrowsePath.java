@@ -38,6 +38,7 @@ public class BrowsePath
 						new LoadFile(Main.selectedFile);
 	    	          	Main.fileStatus.setText("Loaded file");
 	    	          	Main.configLoaded = true;
+	    				Main.pauseResume.setEnabled(true);
 					} 
   	          	catch (IOException e) 
   	          	{

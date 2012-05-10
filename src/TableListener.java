@@ -73,7 +73,8 @@ public class TableListener
         		{
         			String[] values = { items[i].getText(0),items[i].getText(1),
         					items[i].getText(2),items[i].getText(3),items[i].getText(4),
-        					items[i].getText(5),items[i].getText(6),items[i].getText(7) };
+        					items[i].getText(5),items[i].getText(6),items[i].getText(7),
+        					items[i].getText(8) };
         			items[i].dispose();
                     TableItem item = new TableItem(Main.allTasks, 0, j);
                     item.setText(values);

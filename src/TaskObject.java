@@ -46,7 +46,7 @@ public class TaskObject
 		{
 			Main.allTasks.getItem(saveToRowIndex).setText(row);
 		}
-		Main.allTasks.setSelection(saveToRowIndex);
+		//Main.allTasks.setSelection(saveToRowIndex);
 		
 		// Add to recentTasks
 		String[] list = { title, elapsed, taskID };
@@ -68,14 +68,14 @@ public class TaskObject
 		//unpack the row
 		String selectedTitle = Main.allTasks.getItem(rowIndex).getText(1);
 		String selectedNotes = Main.allTasks.getItem(rowIndex).getText(5);
-		long elapsed = Long.valueOf(Main.allTasks.getItem(rowIndex).getText(8));
-		int taskID = Integer.valueOf(Main.allTasks.getItem(rowIndex).getText(4));
-		long startTime = Long.valueOf(Main.allTasks.getItem(rowIndex).getText(6));
-		long endTime = Long.valueOf(Main.allTasks.getItem(rowIndex).getText(7));
+		long elapsed = Long.parseLong(Main.allTasks.getItem(rowIndex).getText(8));
+		int taskID = Integer.parseInt(Main.allTasks.getItem(rowIndex).getText(4));
+		long startTime = Long.parseLong(Main.allTasks.getItem(rowIndex).getText(6));
+		long endTime = Long.parseLong(Main.allTasks.getItem(rowIndex).getText(7));
 		
 		returnable.setTitle(selectedTitle);
 		returnable.setNotes(selectedNotes);
-		returnable.setTimeElapsed(elapsed); //StopWatch.setElapsed(elapsed); needs to be done outside when unpacking the task
+		returnable.setTimeElapsed(elapsed);
 		returnable.setTaskID(taskID);
 		returnable.setStartTime(startTime);
 		returnable.setEndTime(endTime);
@@ -135,7 +135,6 @@ public class TaskObject
 	public static void addRow(int newID, String[] row)
 	{
 		new TableItem(Main.allTasks, 0, newID).setText(row);
-		Main.allTasks.setSelection(newID);
 	}
 	
 	public static void addRecent(int newID, String[] list)
