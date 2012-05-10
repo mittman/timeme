@@ -59,6 +59,7 @@ public class TaskObject
 	{
 		Main.title.setText(taskToUnpack.getTitle());
 		Main.textNotes.setText(taskToUnpack.getNotes());
+		Main.clock.setText(StopWatch.clockFormat(taskToUnpack.getTimeElapsed()));
 		StopWatch.setElapsed(taskToUnpack.getTimeElapsed());
 	}
 	
