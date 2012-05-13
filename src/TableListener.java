@@ -22,13 +22,17 @@ public class TableListener
 				SaveObject.collectCurrentTask();
 				int selected = Main.recentTasks.getSelectionIndex();
 				int index = TaskObject.checkTable(selected);
-				TaskObject tempTask = TaskObject.returnTaskFromIndex(index);
-				TaskObject.saveTask(Main.currentTask);
-				Main.currentTask = tempTask;
-				TaskObject.unpackFromCurrentTasktoFields(Main.currentTask);
-				Hooks.tickTock();
-				StopWatch.setElapsed(Main.currentTask.getTimeElapsed());
-				Hooks.tickTock();
+				if(index > -1)
+				{
+					TaskObject tempTask = TaskObject.returnTaskFromIndex(index);				
+					TaskObject.saveTask(Main.currentTask);
+					Main.currentTask = tempTask;
+					TaskObject.saveTask(Main.currentTask);
+					TaskObject.unpackFromCurrentTasktoFields(Main.currentTask);
+					Hooks.tickTock();
+					StopWatch.setElapsed(Main.currentTask.getTotal());
+					Hooks.tickTock();
+				}				
 			}
 		});
 	}

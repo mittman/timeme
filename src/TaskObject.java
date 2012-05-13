@@ -9,8 +9,8 @@ import org.eclipse.swt.widgets.TableItem;
 
 public class TaskObject 
 {	
-	private String title, notes;
-	private long startTime, endTime, timeElapsed;
+	private String title, notes, elapsed;
+	private long startTime, endTime, total;
 	private int taskID;
 	    
  	/**********************Do stuff***********************/
@@ -29,13 +29,13 @@ public class TaskObject
 		// Add to allTasks
 		String newRow = StopWatch.timeFormat(saveToRowIndex);		
 		String title = taskToSave.getTitle();
-		String elapsed = StopWatch.minFormat(taskToSave.getTimeElapsed());
+		String elapsed = StopWatch.minFormat(taskToSave.getTotal());
 		String recent = "+";
 		String taskID = taskToSave.getTaskID() + "";
 		String notes = taskToSave.getNotes();
 		String start = taskToSave.getStartTime() + "";
 		String end = taskToSave.getEndTime() + "";
-		String total = taskToSave.getTimeElapsed() + "";
+		String total = taskToSave.getTotal() + "";
 		String[] row = { newRow, title, elapsed, recent, taskID, notes, start, end, total };
 		
 		if(newTask)
@@ -46,21 +46,22 @@ public class TaskObject
 		{
 			Main.allTasks.getItem(saveToRowIndex).setText(row);
 		}
-		//Main.allTasks.setSelection(saveToRowIndex);
+		Main.allTasks.setSelection(saveToRowIndex);
 		
 		// Add to recentTasks
 		String[] list = { title, elapsed, taskID };
 		addRecent(0, list);
+		Main.recentTasks.setSelection(0);
 		
-		Tools.debug("saveCurrentTask: " + "Match found. Saving to row index");
+		//Tools.debug("saveCurrentTask: " + "Match found. Saving to row index");
 	}
 	
 	public static void unpackFromCurrentTasktoFields(TaskObject taskToUnpack)
 	{
 		Main.title.setText(taskToUnpack.getTitle());
 		Main.textNotes.setText(taskToUnpack.getNotes());
-		Main.clock.setText(StopWatch.clockFormat(taskToUnpack.getTimeElapsed()));
-		StopWatch.setElapsed(taskToUnpack.getTimeElapsed());
+		Main.clock.setText(taskToUnpack.getElapsed());
+		StopWatch.setElapsed(taskToUnpack.getTotal());
 	}
 	
 	public static TaskObject returnTaskFromIndex(int rowIndex)
@@ -68,19 +69,20 @@ public class TaskObject
 		TaskObject returnable = new TaskObject();
 		//unpack the row
 		String selectedTitle = Main.allTasks.getItem(rowIndex).getText(1);
+		String selectedElapsed = Main.allTasks.getItem(rowIndex).getText(2);
+		int selectedTaskID = Integer.parseInt(Main.allTasks.getItem(rowIndex).getText(4));
 		String selectedNotes = Main.allTasks.getItem(rowIndex).getText(5);
-		long elapsed = Long.parseLong(Main.allTasks.getItem(rowIndex).getText(8));
-		int taskID = Integer.parseInt(Main.allTasks.getItem(rowIndex).getText(4));
-		long startTime = Long.parseLong(Main.allTasks.getItem(rowIndex).getText(6));
-		long endTime = Long.parseLong(Main.allTasks.getItem(rowIndex).getText(7));
+		long selectedStartTime = Long.parseLong(Main.allTasks.getItem(rowIndex).getText(6));
+		long selectedEndTime = Long.parseLong(Main.allTasks.getItem(rowIndex).getText(7));
+		long selectedTotal = Long.parseLong(Main.allTasks.getItem(rowIndex).getText(8));
 		
 		returnable.setTitle(selectedTitle);
+		returnable.setElapsed(selectedElapsed);
+		returnable.setTaskID(selectedTaskID);
 		returnable.setNotes(selectedNotes);
-		returnable.setTimeElapsed(elapsed);
-		returnable.setTaskID(taskID);
-		returnable.setStartTime(startTime);
-		returnable.setEndTime(endTime);
-		
+		returnable.setStartTime(selectedStartTime);
+		returnable.setEndTime(selectedEndTime);
+		returnable.setTotal(selectedTotal);
 		return returnable;
 	}
 	
@@ -159,37 +161,23 @@ public class TaskObject
 		++Main.maxTaskID;
 				
 		int newID = Main.maxTaskID;
-
-		int rowID = 0;
-		if(newID > 1)
-		{
-			rowID = Integer.parseInt(Main.allTasks.getItem(newID-1).toString().split("[{}]")[1]) + 1; //what is going on here???
-		}
-		else
-		{
-			rowID = newID + 1;
-		}
-		
+		int rowID = 0;		
 		Main.currentTask.setTaskID(newID);
 		
 		// Add to table
 		String newRow = StopWatch.timeFormat(rowID);		
 		String title = Main.currentTask.getTitle();
-		String elapsed = StopWatch.minFormat(Main.currentTask.getTimeElapsed());
+		String elapsed = StopWatch.minFormat(Main.currentTask.getTotal());
 		String recent = "+";
 		String taskID = Main.currentTask.getTaskID() + "";
 		String notes = Main.currentTask.getNotes();
 		String start = Main.currentTask.getStartTime() + "";
 		String end = Main.currentTask.getEndTime() + "";
-		String total = Main.currentTask.getTimeElapsed() + "";
+		String total = Main.currentTask.getTotal() + "";
 		
 		// Add to allTasks
 		String[] row = { newRow, title, elapsed, recent, taskID, notes, start, end, total };
 		addRow(newID, row);
-		
-		// Add to recentTasks
-		String[] list = { title, elapsed, taskID };
-		addRecent(0, list);
 		
 		Main.clockTicking = true;
 		StopWatch.newTask();
@@ -200,13 +188,13 @@ public class TaskObject
 		// Add to table
 				String newRow = StopWatch.timeFormat(ID);		
 				String title = Main.currentTask.getTitle();
-				String elapsed = StopWatch.minFormat(Main.currentTask.getTimeElapsed());
+				String elapsed = StopWatch.minFormat(Main.currentTask.getTotal());
 				String recent = "+";
 				String taskID = Main.currentTask.getTaskID() + "";
 				String notes = Main.currentTask.getNotes();
 				String start = Main.currentTask.getStartTime() + "";
 				String end = Main.currentTask.getEndTime() + "";
-				String total = Main.currentTask.getTimeElapsed() + "";
+				String total = Main.currentTask.getTotal() + "";
 				
 				// Add to allTasks
 				String[] row = { newRow, title, elapsed, recent, taskID, notes, start, end, total };
@@ -258,6 +246,14 @@ public class TaskObject
 		this.notes = notes;
 	}
 
+	public String getElapsed() {
+		return elapsed;
+	}
+
+	public void setElapsed(String elapsed) {
+		this.elapsed = elapsed;
+	}
+	
 	public long getStartTime() {
 		return startTime;
 	}
@@ -274,12 +270,12 @@ public class TaskObject
 		this.endTime = endTime;
 	}
 
-	public long getTimeElapsed() {
-		return timeElapsed;
+	public long getTotal() {
+		return total;
 	}
 
-	public void setTimeElapsed(long timeElapsed) {
-		this.timeElapsed = timeElapsed;
+	public void setTotal(long total) {
+		this.total = total;
 	}
 	
 	public int getTaskID() {

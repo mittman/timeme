@@ -100,6 +100,7 @@ public class StopWatch
 			if(change+1000 < elapsed)
 			{
 				Main.frame.setText("TimeMe " + minFormat(elapsed));
+				//Main.recentTasks.getItem(0).setText(1, minFormat(elapsed));
 				change += 1000;
 			}
 		}

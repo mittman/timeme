@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -68,6 +69,7 @@ public class Main implements SelectionListener
 	public static TabItem tab3; 
 	public static TabItem tab4;
 	public static Table allTasks;
+	public static Table recentTasks;
 	public static TableColumn column0;
 	public static TableColumn column1;
 	public static TableColumn column2;
@@ -81,7 +83,7 @@ public class Main implements SelectionListener
 	public static TableColumn recentColumn1;
 	public static TableColumn recentColumn2;
 	public static TableEditor cell;
-	public static Table recentTasks;
+	public static TableItem firstTask;
 	public static TaskObject currentTask;
 	public static Text inline;
 	public static Text textDir;
@@ -97,12 +99,15 @@ public class Main implements SelectionListener
 		configLoaded = false;
 		untitled = 1;
 		currentTask = new TaskObject();
+		currentTask.setTitle("Untitled-0");
+		currentTask.setElapsed("00:00:00");
+		currentTask.setTaskID(0);
 		maxTaskID = -1;
 		reportToggle = false;
 	    selectedFile = "";
 		interfaceDown = true;
 		up = new Rectangle(0,0,0,0);
-		down = new Rectangle(0, 150, 424, 226);
+		down = new Rectangle(0, 150, 424, 226);		
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////
@@ -203,7 +208,7 @@ public class Main implements SelectionListener
 		recentTasks = new Table(topPane, SWT.BORDER | SWT.FULL_SELECTION);
 		recentTasks.setBounds(0, 0, 282, 88);
 		recentTasks.setHeaderVisible(false);
-		recentTasks.setSelection(0);
+		//recentTasks.setSelection(0);
 		
 		// recent title
 		recentColumn0 = new TableColumn(recentTasks, 0);
@@ -215,7 +220,12 @@ public class Main implements SelectionListener
 		
 		// recent taskID
 		recentColumn2 = new TableColumn(recentTasks, 0);
-		recentColumn2.setWidth(0);	
+		recentColumn2.setWidth(0);
+		
+		String[] list = { "Untitled-0", "00:00:00", "0" };
+		firstTask = new TableItem(Main.recentTasks, 0, 0);
+		firstTask.setText(list);
+		Main.recentTasks.setSelection(0);
 		
 		clock = new Label(topPane, 0);
 		clock.setFont(SWTResourceManager.getFont("Sans", 27, SWT.BOLD));
@@ -233,7 +243,7 @@ public class Main implements SelectionListener
 		pauseResume = new Button(topPane, 0);		
 		pauseResume.setBounds(302, 85, 112, 50);
 		pauseResume.setText("Resume");
-		pauseResume.setEnabled(false);
+		//pauseResume.setEnabled(false);
 						
 		//bottomPane -------------------------------------------------------
 		bottomPane = new TabFolder(frame, SWT.BORDER);
@@ -390,14 +400,15 @@ public class Main implements SelectionListener
 		Label hDivider = new Label(frame, SWT.SEPARATOR | SWT.HORIZONTAL);
 		hDivider.setBounds(5, 140, 415, 8);
 		
-		
+		TaskObject.saveTask(Main.currentTask);
+
 		////////////////////////////////////////////////////////////////////////////////////
 		////////////////////////////////////////////////////////////////////////////////////
 		////////////////////////////////////////////////////////////////////////////////////
 		////////////////////////////////////////////////////////////////////////////////////
 		////////////////////////////////////////////////////////////////////////////////////
 
-		
+
 		/**
 		 * Listener Hooks
 		 */

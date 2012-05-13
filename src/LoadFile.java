@@ -50,6 +50,7 @@ public class LoadFile
 						  String[] list = { col[1], col[2], col[4] };
 						  TaskObject.addRecent(0, list);
 					  }
+					  //Main.maxTaskID = Integer.parseInt(col[4]);
 					  thisLine = buffer.readLine();
 				  }
 				  TableListener.sort(true, 0);			  

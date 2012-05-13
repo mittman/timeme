@@ -71,7 +71,7 @@ public class Hooks
 					tickTock();
 				}
 				StopWatch.newTask();
-				
+											
 				Tools.debug("button:" + "new task");
 			}
 
@@ -136,7 +136,7 @@ public class Hooks
 	    		  Main.currentTask = tempTask;
 	    		  TaskObject.unpackFromCurrentTasktoFields(Main.currentTask);
 	    		  Hooks.tickTock();
-	    		  StopWatch.setElapsed(Main.currentTask.getTimeElapsed());
+	    		  StopWatch.setElapsed(Main.currentTask.getTotal());
 	    		  Hooks.tickTock();
 	    		  
 	    		  Main.bottomPane.setSelection(Main.tab1);

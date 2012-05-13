@@ -24,11 +24,13 @@ public class SaveObject
 		{
 			taskName = Main.title.getText();
 		}
+		
 		Main.currentTask.setTitle(Main.title.getText());
+		//Main.currentTask.setElapsed(Main.clock.getText());
 		Main.currentTask.setNotes(Main.textNotes.getText());
-		Main.currentTask.setTimeElapsed(StopWatch.getElapsed());
 		Main.currentTask.setStartTime(StopWatch.begin);
 		Main.currentTask.setEndTime(System.currentTimeMillis());
+		Main.currentTask.setTotal(StopWatch.getElapsed());
 	}
 	
 	public static void shellListener()
