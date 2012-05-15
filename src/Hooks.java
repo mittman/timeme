@@ -278,6 +278,7 @@ public class Hooks
 		    		  StopWatch.clearTimer();
 		    		  TaskObject.newTask();
 		    	  }
+		    	  Main.recentTasks.setSelection(0);
 		      }
 	    });
 	}
