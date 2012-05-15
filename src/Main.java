@@ -54,7 +54,6 @@ public class Main implements SelectionListener
 	public static Button saveDialog;
 	public static Display display;
 	public static int maxTaskID;
-	public static int uniqueID;
 	public static int untitled;
 	public static Label clock;
 	public static Label fileStatus;
@@ -163,7 +162,7 @@ public class Main implements SelectionListener
 	public void open() 
 	{
 		display = Display.getDefault();
-		//display.setWarnings(false);
+		display.setWarnings(false);
 		createContents();
 		frame.open();
 		frame.layout();
@@ -220,11 +219,6 @@ public class Main implements SelectionListener
 		// recent taskID
 		recentColumn2 = new TableColumn(recentTasks, 0);
 		recentColumn2.setWidth(0);
-		
-		String[] list = { "Untitled-0", "00:00:00", "0" };
-		firstTask = new TableItem(Main.recentTasks, 0, 0);
-		firstTask.setText(list);
-		Main.recentTasks.setSelection(0);
 		
 		clock = new Label(topPane, 0);
 		clock.setFont(SWTResourceManager.getFont("Sans", 27, SWT.BOLD));

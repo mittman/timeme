@@ -18,7 +18,7 @@ public class TaskObject
 	{		
 		++Main.maxTaskID;
 		int saveToRowIndex = Main.maxTaskID;
-		String newRow = StopWatch.timeFormat(saveToRowIndex);
+		String newRow = StopWatch.timeFormat(saveToRowIndex+1);
 		String title = Main.title.getText();
 		String elapsed = "00:00:00";
 		String recent = "+";
@@ -34,12 +34,7 @@ public class TaskObject
 				
 		// Add to recentTasks
 		String[] list = { title, elapsed, taskID };
-		
-		//remove from list if already present
-		if(searchRecentbyID(Integer.valueOf(list[2])) != -1) 
-		{
-			Main.recentTasks.remove(searchRecentbyID(Integer.valueOf(list[2])));
-		}		
+	
 		// Add to top of recentTasks
 		new TableItem(Main.recentTasks, 0, 0).setText(list);		
 		Main.recentTasks.setSelection(0);
@@ -61,7 +56,7 @@ public class TaskObject
 		}
 				
 		// Add to allTasks
-		String newRow = StopWatch.timeFormat(saveToRowIndex);		
+		String newRow = StopWatch.timeFormat(saveToRowIndex+1);		
 		String title = taskToSave.getTitle();
 		String elapsed = StopWatch.minFormat(taskToSave.getTotal());
 		String recent = "+";

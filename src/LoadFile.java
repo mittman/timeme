@@ -20,17 +20,8 @@ public class LoadFile
 		
 		if(fileExists)
 		{
-			// Stop timer
-			if(Main.clockTicking)
-			{
-				Hooks.tickTock();
-			}
-			
 			// Clear timer
-			StopWatch.elapsed = 0;
-			Main.currentTask.setStartTime(StopWatch.begin);
-			Main.clock.setText("00:00:00.0");
-			Main.frame.setText("TimeMe");
+			StopWatch.clearTimer();
 			
 			// Empty existing table
 			while(Main.recentTasks.getItemCount() > 0)
@@ -73,7 +64,7 @@ public class LoadFile
 				  TaskObject tempTask = TaskObject.returnTaskFromIndex(recent);
 				  Main.currentTask = tempTask;
 				  TaskObject.unpackFromCurrentTasktoFields(tempTask);
-				  //Main.allTasks.setSelection(recent);
+				  Main.allTasks.setSelection(recent);
 				  Main.recentTasks.setSelection(0);
 			}
 			

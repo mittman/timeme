@@ -10,6 +10,20 @@ public class StopWatch
 	   private static long change = 0;
 	   public static long elapsed = 0;
 
+	   public static void clearTimer()
+	   {
+			// Stop timer
+			if(Main.clockTicking)
+			{
+				Hooks.tickTock();
+			}
+			
+			// Clear timer
+			elapsed = 0;
+			Main.currentTask.setStartTime(begin);
+			Main.clock.setText("00:00:00.0");
+			Main.frame.setText("TimeMe");
+	   }
 	   
 	   public static void newTask()
 	   {

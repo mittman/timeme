@@ -243,6 +243,13 @@ public class Hooks
 		    		  TaskObject.removeTask(row);
 		    		  Tools.debug("button:" + "deleteTask:" + row);
 		    	  }
+		    	  if(Main.allTasks.getItemCount() == 0)
+		    	  {
+		    		  StopWatch.clearTimer();
+		    		  Main.maxTaskID = -1;
+		    		  Main.untitled = 1;
+		    		  TaskObject.newTask();
+		    	  }
 		      }
 	    });
 	}
