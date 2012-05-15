@@ -46,16 +46,18 @@ public class Hooks
 		{
 			public void widgetSelected(SelectionEvent e) 
 			{
-				tickTock();
-				if(!Main.clockTicking)
+				if(Main.clockTicking)
 				{
 					String elapsed = Main.allTasks.getItem(TaskObject.checkTable(0)).getText(2);
 					Main.recentTasks.getItem(0).setText(1, elapsed);
 				}
 				else
 				{
+					String total = Main.allTasks.getItem(TaskObject.checkTable(0)).getText(8);
+					StopWatch.setElapsed(Long.parseLong(total));
 					Main.recentTasks.getItem(0).setText(1, "Running");
 				}
+				tickTock();
 			}
 		});
 	}
@@ -168,6 +170,13 @@ public class Hooks
 	    	  final int selected = Main.allTasks.getSelectionIndex();
 	    	  if(selected != -1)
 	    	  {
+		  		  int recent = TaskObject.checkRecent(selected);
+		  		  if(Main.clockTicking && recent == 0)
+			      {
+					Hooks.tickTock();
+					SaveObject.collectCurrentTask();
+				  }
+		  		  
 	    		  Main.inline = new Text(Main.allTasks, 0);
 	    		  Main.cell.grabHorizontal = true;
 	    		  Main.cell.setEditor(Main.inline, Main.allTasks.getItem(selected), column);
@@ -209,7 +218,8 @@ public class Hooks
 		    		  			
 		    		  			if(clockFormat)
 		    		  			{
-		    		  				Main.cell.getItem().setText(column, cellText.getText());  //update the recent list
+		    		  				//update the recent list
+		    		  				Main.cell.getItem().setText(column, cellText.getText());
 		    		  				int recent = TaskObject.checkRecent(selected);
 		    		  				if(recent != -1)
 		    		  				{
@@ -225,12 +235,13 @@ public class Hooks
 		    		  				
 		    		  				long milliseconds = (timeInts[0]*60*60*1000)+(timeInts[1]*60*1000)+(timeInts[2]*1000);
 		    		  				Main.allTasks.getItem(selected).setText(8, milliseconds+"");
-		    		  				if(Integer.parseInt(Main.allTasks.getItem(selected).getText()) == Main.currentTask.getTaskID())
-		    		  				{
-		    		  					Hooks.tickTock();
-		    		  					StopWatch.setElapsed(milliseconds);
-		    		  					Hooks.tickTock();
-		    		  				}
+
+	    		  					if(recent == 0)
+	    		  					{
+		    		  					String total = Main.allTasks.getItem(TaskObject.checkTable(0)).getText(8);
+		    							StopWatch.setElapsed(Long.parseLong(total));
+		    							Main.clock.setText(StopWatch.clockFormat(Long.parseLong(total)));
+	    		  					}
 		    		  			}
 			    		 	}
 		    		  	}
@@ -246,8 +257,13 @@ public class Hooks
 	    Main.deleteTask.addSelectionListener(new SelectionAdapter() 
 	    {
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
-		      {		    	  	
-		    	  if(Main.allTasks.getSelectionIndex() != -1)
+		      {		    
+		    	  int index = Main.allTasks.getSelectionIndex();
+		    	  if(TaskObject.checkRecent(index) == 0)
+		    	  {
+		    		  StopWatch.clearTimer();
+		    	  }
+		    	  if(index != -1)
 		    	  {
 		    		  int row = TableListener.getRow();
 		    		  TaskObject.removeTask(row);
@@ -258,6 +274,7 @@ public class Hooks
 		    		  Main.maxTaskID = -1;
 		    		  Main.untitled = 1;
 		    		  Main.title.setText("Untitled-" + Main.untitled);
+		    		  Main.pauseResume.setText("Start");
 		    		  StopWatch.clearTimer();
 		    		  TaskObject.newTask();
 		    	  }

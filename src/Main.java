@@ -233,7 +233,7 @@ public class Main implements SelectionListener
 		
 		pauseResume = new Button(topPane, 0);		
 		pauseResume.setBounds(302, 85, 112, 50);
-		pauseResume.setText("Resume");
+		pauseResume.setText("Start");
 						
 		//bottomPane -------------------------------------------------------
 		bottomPane = new TabFolder(frame, SWT.BORDER);

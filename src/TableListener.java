@@ -35,7 +35,10 @@ public class TableListener
 						Hooks.tickTock();
 						StopWatch.setElapsed(Main.currentTask.getTotal());
 						Hooks.tickTock();
-						Main.recentTasks.getItem(0).setText(1, "Running");
+						if(Main.clockTicking)
+						{
+							Main.recentTasks.getItem(0).setText(1, "Running");
+						}
 					}	
 				}
 			}

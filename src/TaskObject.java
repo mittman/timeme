@@ -31,9 +31,14 @@ public class TaskObject
 		new TableItem(Main.allTasks, 0, saveToRowIndex).setText(row);
 		
 		Main.allTasks.setSelection(saveToRowIndex);
-				
+		
+		if(Main.clockTicking)
+		{
+			elapsed = "Running";
+		}
+		
 		// Add to recentTasks
-		String[] list = { title, "Running", taskID };
+		String[] list = { title, elapsed, taskID };
 
 		// Add to top of recentTasks
 		new TableItem(Main.recentTasks, 0, 0).setText(list);		
@@ -82,8 +87,8 @@ public class TaskObject
 	{
 		Main.title.setText(taskToUnpack.getTitle());
 		Main.textNotes.setText(taskToUnpack.getNotes());
-		Main.clock.setText(taskToUnpack.getElapsed());
 		StopWatch.setElapsed(taskToUnpack.getTotal());
+		Main.clock.setText(StopWatch.getFormattedElapsed());
 	}
 	
 	public static TaskObject returnTaskFromIndex(int rowIndex)
@@ -147,7 +152,7 @@ public class TaskObject
   		return -1;
 	}
 	
-	public static int searchTableByID(int ID) // searches for an event from the recent list 
+	public static int searchTableByID(int ID) // searches for an event from the table
 	{
   		for (int i = 0; i < Main.allTasks.getItemCount(); i++)
   		{

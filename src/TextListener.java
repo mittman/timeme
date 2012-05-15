@@ -16,8 +16,10 @@ public class TextListener
 	    {
 			public void modifyText(ModifyEvent e) 
 			{
-	    	  	if((!Main.title.getText().equals("Title")) && Main.title.isFocusControl())
+	    	  	if(Main.title.isFocusControl())
 	    	  	{
+	    	  		SaveObject.collectCurrentTask();
+	    	  		TaskObject.saveTask(Main.currentTask);
 	    	  		Tools.debug("input:" + "title");
 	    	  	}
 			}
@@ -30,8 +32,10 @@ public class TextListener
 	    {
 			public void modifyText(ModifyEvent e) 
 			{
-	    	  	if((!Main.textNotes.getText().equals("Notes")) && Main.textNotes.isFocusControl())
+	    	  	if(Main.textNotes.isFocusControl())
 	    	  	{
+	    	  		SaveObject.collectCurrentTask();
+	    	  		TaskObject.saveTask(Main.currentTask);
 	    	  		Tools.debug("input:" + "textNotes");
 	    	  	}								
 			}
