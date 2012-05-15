@@ -22,11 +22,7 @@ public class TableListener
 				int selected = Main.recentTasks.getSelectionIndex();
 				int index = TaskObject.checkTable(selected);
 				
-				if(selected == 0)
-				{
-					TaskObject.saveCurrentToRow();
-				}
-				else
+				if(selected != 0)
 				{
 					SaveObject.collectCurrentTask();
 					if(index > -1)
@@ -39,6 +35,7 @@ public class TableListener
 						Hooks.tickTock();
 						StopWatch.setElapsed(Main.currentTask.getTotal());
 						Hooks.tickTock();
+						Main.recentTasks.getItem(0).setText(1, "Running");
 					}	
 				}
 			}

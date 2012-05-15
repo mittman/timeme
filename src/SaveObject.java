@@ -12,26 +12,17 @@ import org.eclipse.swt.widgets.MessageBox;
 public class SaveObject 
 {	
 	public static void collectCurrentTask() 
-	{		
-		String taskName = "";
-		if(Main.title.getText().equals("Title"))
-		{
-			taskName = "Untitled-" + Main.untitled;
-			++Main.untitled;
-			Main.title.setText(taskName);
-		}
-		else
-		{
-			taskName = Main.title.getText();
-		}
-		
+	{	
 		int index = TaskObject.checkTable(0);
-		Main.currentTask.setTitle(Main.title.getText());
-		Main.currentTask.setElapsed(StopWatch.minFormat(StopWatch.getElapsed()));
-		Main.currentTask.setNotes(Main.textNotes.getText());
-		Main.currentTask.setStartTime(Long.parseLong(Main.allTasks.getItem(index).getText(6)));
-		Main.currentTask.setEndTime(System.currentTimeMillis());
-		Main.currentTask.setTotal(StopWatch.getElapsed());
+		if(index != -1)
+		{
+			Main.currentTask.setTitle(Main.title.getText());
+			Main.currentTask.setElapsed(StopWatch.minFormat(StopWatch.getElapsed()));
+			Main.currentTask.setNotes(Main.textNotes.getText());
+			Main.currentTask.setStartTime(Long.parseLong(Main.allTasks.getItem(index).getText(6)));
+			Main.currentTask.setEndTime(System.currentTimeMillis());
+			Main.currentTask.setTotal(StopWatch.getElapsed());
+		}
 	}
 	
 	public static void shellListener()

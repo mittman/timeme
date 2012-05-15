@@ -15,7 +15,7 @@ public class TaskObject
 	    
  	/**********************Do stuff***********************/
 	public static void newTask()
-	{		
+	{	
 		++Main.maxTaskID;
 		int saveToRowIndex = Main.maxTaskID;
 		String newRow = StopWatch.timeFormat(saveToRowIndex+1);
@@ -33,11 +33,11 @@ public class TaskObject
 		Main.allTasks.setSelection(saveToRowIndex);
 				
 		// Add to recentTasks
-		String[] list = { title, elapsed, taskID };
-	
+		String[] list = { title, "Running", taskID };
+
 		// Add to top of recentTasks
 		new TableItem(Main.recentTasks, 0, 0).setText(list);		
-		Main.recentTasks.setSelection(0);
+		Main.recentTasks.setSelection(0);				
 		
 		if(Main.recentTasks.getItemCount() > 4)
 		{
@@ -47,7 +47,7 @@ public class TaskObject
 	}
 	
 	public static void saveTask(TaskObject taskToSave)
-	{  		
+	{  	
 		int saveToRowIndex = searchTableByID(taskToSave.getTaskID());
 		if(saveToRowIndex == -1)
 		{
@@ -134,13 +134,16 @@ public class TaskObject
 	
 	public static int checkTable(int selected) // searches for an event from the recent list 
 	{
-  		for (int i = 0; i < Main.allTasks.getItemCount(); i++)
-  		{
-  			if(Main.recentTasks.getItem(selected).getText(2).equals(Main.allTasks.getItem(i).getText(4)))
-  			{
-  				return i;
-  			}
-  		}
+		if(Main.recentTasks.getItemCount() > 0)
+		{
+	  		for (int i = 0; i < Main.allTasks.getItemCount(); i++)
+	  		{
+	  			if(Main.recentTasks.getItem(selected).getText(2).equals(Main.allTasks.getItem(i).getText(4)))
+	  			{
+	  				return i;
+	  			}
+	  		}
+		}
   		return -1;
 	}
 	
@@ -207,15 +210,18 @@ public class TaskObject
 	
 	public static void saveCurrentToRow()
 	{
-		Main.recentTasks.getItem(0).setText(0, Main.title.getText());
-		Main.recentTasks.getItem(0).setText(1, StopWatch.minFormat(StopWatch.getElapsed()));
-		
 		int index = checkTable(0);
-		Main.allTasks.getItem(index).setText(1, Main.title.getText());
-		Main.allTasks.getItem(index).setText(2, StopWatch.minFormat(StopWatch.getElapsed()));
-		Main.allTasks.getItem(index).setText(5, Main.textNotes.getText());
-		Main.allTasks.getItem(index).setText(7, System.currentTimeMillis() + "");
-		Main.allTasks.getItem(index).setText(8, StopWatch.getElapsed() + "");		
+		if(index != -1)
+		{
+			Main.recentTasks.getItem(0).setText(0, Main.title.getText());
+			Main.recentTasks.getItem(0).setText(1, StopWatch.minFormat(StopWatch.getElapsed()));
+			
+			Main.allTasks.getItem(index).setText(1, Main.title.getText());
+			Main.allTasks.getItem(index).setText(2, StopWatch.minFormat(StopWatch.getElapsed()));
+			Main.allTasks.getItem(index).setText(5, Main.textNotes.getText());
+			Main.allTasks.getItem(index).setText(7, System.currentTimeMillis() + "");
+			Main.allTasks.getItem(index).setText(8, StopWatch.getElapsed() + "");
+		}
 	}
 	
 	public static void saveTaskToRow(int ID)

@@ -98,8 +98,6 @@ public class Main implements SelectionListener
 		configLoaded = false;
 		untitled = 1;
 		currentTask = new TaskObject();
-		currentTask.setTitle("Untitled-0");
-		currentTask.setElapsed("00:00:00");
 		currentTask.setTaskID(0);
 		maxTaskID = -1;
 		reportToggle = false;
@@ -248,7 +246,7 @@ public class Main implements SelectionListener
 		tab1.setControl(contentsTab1);
 	
 		title = new Text(contentsTab1, SWT.BORDER);
-		title.setText("Title");
+		title.setText("Untitled-" + Main.untitled);
 		title.setBounds(5, 5, 393, 21);
 		
 		textNotes = new StyledText(contentsTab1, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
@@ -394,6 +392,7 @@ public class Main implements SelectionListener
 		
 		TaskObject.newTask();
 
+		
 		////////////////////////////////////////////////////////////////////////////////////
 		////////////////////////////////////////////////////////////////////////////////////
 		////////////////////////////////////////////////////////////////////////////////////

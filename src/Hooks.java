@@ -20,9 +20,9 @@ public class Hooks
 			//pause
 			Main.clockTicking = false;
 			Main.pauseResume.setText("Resume");
+			TaskObject.saveCurrentToRow();
 			Main.frame.setText("TimeMe [paused]");
-			Tools.debug("button:" + "pause");
-			
+			Tools.debug("button:" + "pause");			
 		}
 		else
 		{
@@ -46,7 +46,16 @@ public class Hooks
 		{
 			public void widgetSelected(SelectionEvent e) 
 			{
-				tickTock();				
+				tickTock();
+				if(!Main.clockTicking)
+				{
+					String elapsed = Main.allTasks.getItem(TaskObject.checkTable(0)).getText(2);
+					Main.recentTasks.getItem(0).setText(1, elapsed);
+				}
+				else
+				{
+					Main.recentTasks.getItem(0).setText(1, "Running");
+				}
 			}
 		});
 	}
@@ -56,13 +65,13 @@ public class Hooks
 		Main.newTask.addSelectionListener(new SelectionAdapter() 
 		{
 			public void widgetSelected(SelectionEvent e) 
-			{			            
+			{	
+				++Main.untitled;
 				SaveObject.collectCurrentTask();
 				TaskObject.saveTask(Main.currentTask);
-				Main.pauseResume.setEnabled(true);
 				Main.pauseResume.setText("Pause");
 				Main.bottomPane.setSelection(Main.tab1);
-				Main.title.setText("Title");
+				Main.title.setText("Untitled-" + Main.untitled);
 				Main.textNotes.setText("Notes");
 				Main.currentTask.setTaskID(-1);
 				
@@ -73,6 +82,7 @@ public class Hooks
 					tickTock();
 				}
 				StopWatch.newTask();
+				Main.recentTasks.getItem(0).setText(1, "Running");
 											
 				Tools.debug("button:" + "new task");
 			}
@@ -245,9 +255,10 @@ public class Hooks
 		    	  }
 		    	  if(Main.allTasks.getItemCount() == 0)
 		    	  {
-		    		  StopWatch.clearTimer();
 		    		  Main.maxTaskID = -1;
 		    		  Main.untitled = 1;
+		    		  Main.title.setText("Untitled-" + Main.untitled);
+		    		  StopWatch.clearTimer();
 		    		  TaskObject.newTask();
 		    	  }
 		      }
