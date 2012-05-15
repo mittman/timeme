@@ -80,6 +80,7 @@ public class ReportObject
 	public static void newReport()
 	{
 	  	  String[][] reports = new String[Main.allTasks.getItemCount()][4];
+	  	  TaskObject.saveCurrentToRow();
 	  	  getData(reports);
 	  	  
 	  	  if(!Main.reportToggle)

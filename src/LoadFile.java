@@ -20,6 +20,18 @@ public class LoadFile
 		
 		if(fileExists)
 		{
+			// Stop timer
+			if(Main.clockTicking)
+			{
+				Hooks.tickTock();
+			}
+			
+			// Clear timer
+			StopWatch.elapsed = 0;
+			Main.currentTask.setStartTime(StopWatch.begin);
+			Main.clock.setText("00:00:00.0");
+			Main.frame.setText("TimeMe");
+			
 			// Empty existing table
 			while(Main.recentTasks.getItemCount() > 0)
 			{
@@ -28,7 +40,7 @@ public class LoadFile
 			while(Main.allTasks.getItemCount() > 0)
 			{
 				Main.allTasks.remove(0);
-			}
+			}			
 			
 			// Load existing file
 			try
@@ -50,11 +62,19 @@ public class LoadFile
 						  String[] list = { col[1], col[2], col[4] };
 						  TaskObject.addRecent(0, list);
 					  }
-					  //Main.maxTaskID = Integer.parseInt(col[4]);
+					  Main.maxTaskID = Integer.parseInt(col[4]);
 					  thisLine = buffer.readLine();
 				  }
 				  TableListener.sort(true, 0);			  
 				  input.close();
+				  
+				  // Select recent task
+				  int recent = TaskObject.checkTable(0);
+				  TaskObject tempTask = TaskObject.returnTaskFromIndex(recent);
+				  Main.currentTask = tempTask;
+				  TaskObject.unpackFromCurrentTasktoFields(tempTask);
+				  //Main.allTasks.setSelection(recent);
+				  Main.recentTasks.setSelection(0);
 			}
 			
 			catch (Exception e)

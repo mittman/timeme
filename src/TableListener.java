@@ -19,20 +19,28 @@ public class TableListener
 		{
 			public void widgetSelected(SelectionEvent e)
 			{
-				SaveObject.collectCurrentTask();
 				int selected = Main.recentTasks.getSelectionIndex();
 				int index = TaskObject.checkTable(selected);
-				if(index > -1)
+				
+				if(selected == 0)
 				{
-					TaskObject tempTask = TaskObject.returnTaskFromIndex(index);				
-					TaskObject.saveTask(Main.currentTask);
-					Main.currentTask = tempTask;
-					TaskObject.saveTask(Main.currentTask);
-					TaskObject.unpackFromCurrentTasktoFields(Main.currentTask);
-					Hooks.tickTock();
-					StopWatch.setElapsed(Main.currentTask.getTotal());
-					Hooks.tickTock();
-				}				
+					TaskObject.saveCurrentToRow();
+				}
+				else
+				{
+					SaveObject.collectCurrentTask();
+					if(index > -1)
+					{
+						TaskObject tempTask = TaskObject.returnTaskFromIndex(index);				
+						TaskObject.saveTask(Main.currentTask);
+						Main.currentTask = tempTask;
+						TaskObject.saveTask(Main.currentTask);
+						TaskObject.unpackFromCurrentTasktoFields(Main.currentTask);
+						Hooks.tickTock();
+						StopWatch.setElapsed(Main.currentTask.getTotal());
+						Hooks.tickTock();
+					}	
+				}
 			}
 		});
 	}

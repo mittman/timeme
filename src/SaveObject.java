@@ -25,10 +25,11 @@ public class SaveObject
 			taskName = Main.title.getText();
 		}
 		
+		int index = TaskObject.checkTable(0);
 		Main.currentTask.setTitle(Main.title.getText());
-		//Main.currentTask.setElapsed(Main.clock.getText());
+		Main.currentTask.setElapsed(StopWatch.minFormat(StopWatch.getElapsed()));
 		Main.currentTask.setNotes(Main.textNotes.getText());
-		Main.currentTask.setStartTime(StopWatch.begin);
+		Main.currentTask.setStartTime(Long.parseLong(Main.allTasks.getItem(index).getText(6)));
 		Main.currentTask.setEndTime(System.currentTimeMillis());
 		Main.currentTask.setTotal(StopWatch.getElapsed());
 	}

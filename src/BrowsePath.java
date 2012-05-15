@@ -26,27 +26,24 @@ public class BrowsePath
   	      	{
   	    		Tools.debug("browse:" + "dupe");
   	      	}
-  	      	else
-  	      	{		    	      		
-  	      		Main.selectedFile = file;
-  	      		Main.textDir.setEnabled(true);
-  	          	Main.textDir.setText(Main.selectedFile);
-  	          	
-  	          	// load table		    	          	
-  	          	try 
-  	          	{
-						new LoadFile(Main.selectedFile);
-	    	          	Main.fileStatus.setText("Loaded file");
-	    	          	Main.configLoaded = true;
-	    				Main.pauseResume.setEnabled(true);
-					} 
-  	          	catch (IOException e) 
-  	          	{
-						e.printStackTrace();
-	    	          	Main.fileStatus.setText("Invalid file");
-	    	          	Main.configLoaded = false;
-					}
-  	      	}
+  	    	Main.selectedFile = file;
+	      	Main.textDir.setEnabled(true);
+	        Main.textDir.setText(Main.selectedFile);
+	          	
+	        // load table		    	          	
+	        try 
+	       	{
+				new LoadFile(Main.selectedFile);
+              	Main.fileStatus.setText("Loaded file");
+   	          	Main.configLoaded = true;
+   				Main.pauseResume.setEnabled(true);
+			} 
+          	catch (IOException e) 
+          	{
+				e.printStackTrace();
+              	Main.fileStatus.setText("Invalid file");
+   	          	Main.configLoaded = false;
+			}
 		}
 	}
 	

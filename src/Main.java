@@ -208,7 +208,6 @@ public class Main implements SelectionListener
 		recentTasks = new Table(topPane, SWT.BORDER | SWT.FULL_SELECTION);
 		recentTasks.setBounds(0, 0, 282, 88);
 		recentTasks.setHeaderVisible(false);
-		//recentTasks.setSelection(0);
 		
 		// recent title
 		recentColumn0 = new TableColumn(recentTasks, 0);
@@ -243,7 +242,6 @@ public class Main implements SelectionListener
 		pauseResume = new Button(topPane, 0);		
 		pauseResume.setBounds(302, 85, 112, 50);
 		pauseResume.setText("Resume");
-		//pauseResume.setEnabled(false);
 						
 		//bottomPane -------------------------------------------------------
 		bottomPane = new TabFolder(frame, SWT.BORDER);
@@ -400,7 +398,7 @@ public class Main implements SelectionListener
 		Label hDivider = new Label(frame, SWT.SEPARATOR | SWT.HORIZONTAL);
 		hDivider.setBounds(5, 140, 415, 8);
 		
-		TaskObject.saveTask(Main.currentTask);
+		TaskObject.newTask();
 
 		////////////////////////////////////////////////////////////////////////////////////
 		////////////////////////////////////////////////////////////////////////////////////

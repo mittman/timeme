@@ -14,18 +14,52 @@ public class TaskObject
 	private int taskID;
 	    
  	/**********************Do stuff***********************/
+	public static void newTask()
+	{		
+		++Main.maxTaskID;
+		int saveToRowIndex = Main.maxTaskID;
+		String newRow = StopWatch.timeFormat(saveToRowIndex);
+		String title = Main.title.getText();
+		String elapsed = "00:00:00";
+		String recent = "+";
+		String taskID = Main.maxTaskID + "";
+		String notes = Main.textNotes.getText();
+		String start = System.currentTimeMillis() + "";
+		String end = System.currentTimeMillis() + "";
+		String total = "0";
+		String[] row = { newRow, title, elapsed, recent, taskID, notes, start, end, total };
+		new TableItem(Main.allTasks, 0, saveToRowIndex).setText(row);
+		
+		Main.allTasks.setSelection(saveToRowIndex);
+				
+		// Add to recentTasks
+		String[] list = { title, elapsed, taskID };
+		
+		//remove from list if already present
+		if(searchRecentbyID(Integer.valueOf(list[2])) != -1) 
+		{
+			Main.recentTasks.remove(searchRecentbyID(Integer.valueOf(list[2])));
+		}		
+		// Add to top of recentTasks
+		new TableItem(Main.recentTasks, 0, 0).setText(list);		
+		Main.recentTasks.setSelection(0);
+		
+		if(Main.recentTasks.getItemCount() > 4)
+		{
+		  	Main.allTasks.getItem(checkTable(4)).setText(3, "-");
+			Main.recentTasks.remove(4);
+		}	
+	}
+	
 	public static void saveTask(TaskObject taskToSave)
 	{  		
-		boolean newTask = false;
 		int saveToRowIndex = searchTableByID(taskToSave.getTaskID());
 		if(saveToRowIndex == -1)
 		{
-			++Main.maxTaskID;
 			taskToSave.setTaskID(Main.maxTaskID);
 			saveToRowIndex = Main.maxTaskID;
-			newTask = true;
 		}
-		
+				
 		// Add to allTasks
 		String newRow = StopWatch.timeFormat(saveToRowIndex);		
 		String title = taskToSave.getTitle();
@@ -38,14 +72,7 @@ public class TaskObject
 		String total = taskToSave.getTotal() + "";
 		String[] row = { newRow, title, elapsed, recent, taskID, notes, start, end, total };
 		
-		if(newTask)
-		{
-			new TableItem(Main.allTasks, 0, saveToRowIndex).setText(row);
-		}
-		else 
-		{
-			Main.allTasks.getItem(saveToRowIndex).setText(row);
-		}
+		Main.allTasks.getItem(saveToRowIndex).setText(row);
 		Main.allTasks.setSelection(saveToRowIndex);
 		
 		// Add to recentTasks
@@ -53,7 +80,7 @@ public class TaskObject
 		addRecent(0, list);
 		Main.recentTasks.setSelection(0);
 		
-		//Tools.debug("saveCurrentTask: " + "Match found. Saving to row index");
+		Tools.debug("saveCurrentTask: " + "Match found. Saving to row index");
 	}
 	
 	public static void unpackFromCurrentTasktoFields(TaskObject taskToUnpack)
@@ -181,6 +208,19 @@ public class TaskObject
 		
 		Main.clockTicking = true;
 		StopWatch.newTask();
+	}
+	
+	public static void saveCurrentToRow()
+	{
+		Main.recentTasks.getItem(0).setText(0, Main.title.getText());
+		Main.recentTasks.getItem(0).setText(1, StopWatch.minFormat(StopWatch.getElapsed()));
+		
+		int index = checkTable(0);
+		Main.allTasks.getItem(index).setText(1, Main.title.getText());
+		Main.allTasks.getItem(index).setText(2, StopWatch.minFormat(StopWatch.getElapsed()));
+		Main.allTasks.getItem(index).setText(5, Main.textNotes.getText());
+		Main.allTasks.getItem(index).setText(7, System.currentTimeMillis() + "");
+		Main.allTasks.getItem(index).setText(8, StopWatch.getElapsed() + "");		
 	}
 	
 	public static void saveTaskToRow(int ID)
