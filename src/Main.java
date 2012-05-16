@@ -199,11 +199,11 @@ public class Main implements SelectionListener
 		topPane.setBounds(5, 5, 424, 135);
 		
 		collapse = new Button(topPane, 0);
-		collapse.setBounds(0, 94, 47, 41);
+		collapse.setBounds(0, 98, 47, 37);
 		collapse.setText("<<");
 
 		recentTasks = new Table(topPane, SWT.BORDER | SWT.FULL_SELECTION);
-		recentTasks.setBounds(0, 0, 282, 88);
+		recentTasks.setBounds(0, 0, 282, 94);
 		recentTasks.setHeaderVisible(false);
 		
 		// recent title
@@ -221,7 +221,7 @@ public class Main implements SelectionListener
 		clock = new Label(topPane, 0);
 		clock.setFont(SWTResourceManager.getFont("Sans", 27, SWT.BOLD));
 		clock.setAlignment(SWT.CENTER);
-		clock.setBounds(53, 94, 229, 41);
+		clock.setBounds(53, 96, 229, 41);
 		clock.setText("00:00:00.0");
 						
 		newTask = new Button(topPane, 0);
@@ -354,13 +354,13 @@ public class Main implements SelectionListener
 		sortReport.setText("Sort:");
 		
 		modeStart = new Button(contentsTab3, SWT.RADIO);
-		modeStart.setBounds(50, 135, 90, 16);
+		modeStart.setBounds(50, 135, 100, 16);
 		modeStart.setSelection(true);
 		modeStart.setText("Start Time");
 		
 		modeEnd = new Button(contentsTab3, SWT.RADIO);
 		modeEnd.setText("End Time");
-		modeEnd.setBounds(50, 155, 90, 16);
+		modeEnd.setBounds(50, 155, 100, 16);
 		
 		//Configuration Tab ----------------------------------------
 		
