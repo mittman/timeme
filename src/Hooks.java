@@ -259,26 +259,29 @@ public class Hooks
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 		      {		    
 		    	  int index = Main.allTasks.getSelectionIndex();
-		    	  if(TaskObject.checkRecent(index) == 0)
-		    	  {
-		    		  StopWatch.clearTimer();
-		    	  }
 		    	  if(index != -1)
 		    	  {
+			    	  if(TaskObject.checkRecent(index) == 0)
+			    	  {
+			    		  StopWatch.clearTimer();
+			    	  }
+			    	  
 		    		  int row = TableListener.getRow();
 		    		  TaskObject.removeTask(row);
-		    		  Tools.debug("button:" + "deleteTask:" + row);
+		    		  
+			    	  if(Main.allTasks.getItemCount() == 0)
+			    	  {
+			    		  Main.maxTaskID = -1;
+			    		  Main.untitled = 1;
+			    		  Main.title.setText("Untitled-" + Main.untitled);
+			    		  Main.pauseResume.setText("Start");
+			    		  StopWatch.clearTimer();
+			    		  TaskObject.newTask();
+			    	  }
+			    	  
+			    	  Main.recentTasks.setSelection(0);
+			    	  Tools.debug("button:" + "deleteTask:" + row);
 		    	  }
-		    	  if(Main.allTasks.getItemCount() == 0)
-		    	  {
-		    		  Main.maxTaskID = -1;
-		    		  Main.untitled = 1;
-		    		  Main.title.setText("Untitled-" + Main.untitled);
-		    		  Main.pauseResume.setText("Start");
-		    		  StopWatch.clearTimer();
-		    		  TaskObject.newTask();
-		    	  }
-		    	  Main.recentTasks.setSelection(0);
 		      }
 	    });
 	}
