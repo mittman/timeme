@@ -16,14 +16,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -57,7 +55,6 @@ public class Main implements SelectionListener
 	public static int untitled;
 	public static Label clock;
 	public static Label fileStatus;
-	public static List list;
 	public static Rectangle down;
 	public static Rectangle up;
 	public static String selectedFile;
@@ -82,7 +79,6 @@ public class Main implements SelectionListener
 	public static TableColumn recentColumn1;
 	public static TableColumn recentColumn2;
 	public static TableEditor cell;
-	public static TableItem firstTask;
 	public static TaskObject currentTask;
 	public static Text inline;
 	public static Text textDir;
