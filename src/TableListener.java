@@ -64,7 +64,6 @@ public class TableListener
   		  				Main.inline.dispose();
   		  			}
   		  			catch(Exception unedit){}
-					Tools.debug("row:" + getRow());
 		      }
 	    });
 	}
@@ -112,7 +111,6 @@ public class TableListener
 		          {
 		          	Main.sort0 = false;
 		          }
-		    	  Tools.debug("sort:" + "column0");
 		      }
 	    });
 	}
@@ -132,7 +130,6 @@ public class TableListener
 		          {
 		          	Main.sort1 = false;
 		          }
-		    	  Tools.debug("sort:" + "column1");
 		      }
 	    });
 	}
@@ -152,7 +149,6 @@ public class TableListener
 		          {
 		          	Main.sort2 = false;
 		          }
-		    	  Tools.debug("sort:" + "column2");
 		      }
 	    });
 	}
@@ -172,7 +168,6 @@ public class TableListener
 		          {
 		          	Main.sort3 = false;
 		          }
-		    	  Tools.debug("sort:" + "column3");
 		      }
 	    });
 	}

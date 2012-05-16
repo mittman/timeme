@@ -20,7 +20,6 @@ public class TextListener
 	    	  	{
 	    	  		SaveObject.collectCurrentTask();
 	    	  		TaskObject.saveTask(Main.currentTask);
-	    	  		Tools.debug("input:" + "title");
 	    	  	}
 			}
 	    });
@@ -36,7 +35,6 @@ public class TextListener
 	    	  	{
 	    	  		SaveObject.collectCurrentTask();
 	    	  		TaskObject.saveTask(Main.currentTask);
-	    	  		Tools.debug("input:" + "textNotes");
 	    	  	}								
 			}
 	    });

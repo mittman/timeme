@@ -78,9 +78,7 @@ public class TaskObject
 		// Add to recentTasks
 		String[] list = { title, elapsed, taskID };
 		addRecent(0, list);
-		Main.recentTasks.setSelection(0);
-		
-		Tools.debug("saveCurrentTask: " + "Match found. Saving to row index");
+		Main.recentTasks.setSelection(0);		
 	}
 	
 	public static void unpackFromCurrentTasktoFields(TaskObject taskToUnpack)

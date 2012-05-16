@@ -22,7 +22,6 @@ public class Hooks
 			Main.pauseResume.setText("Resume");
 			TaskObject.saveCurrentToRow();
 			Main.frame.setText("TimeMe [paused]");
-			Tools.debug("button:" + "pause");			
 		}
 		else
 		{
@@ -31,7 +30,6 @@ public class Hooks
 			StopWatch.resume();
 			Main.pauseResume.setText("Pause");
 			Main.frame.setText("TimeMe " + StopWatch.minFormat(StopWatch.elapsed));
-			Tools.debug("button:" + "resume");
 		}
 	}
 	
@@ -84,9 +82,7 @@ public class Hooks
 					tickTock();
 				}
 				StopWatch.newTask();
-				Main.recentTasks.getItem(0).setText(1, "Running");
-											
-				Tools.debug("button:" + "new task");
+				Main.recentTasks.getItem(0).setText(1, "Running");											
 			}
 
 		});
@@ -100,7 +96,7 @@ public class Hooks
 	    {
 		      public void widgetSelected(org.eclipse.swt.events.SelectionEvent event) 
 		      {
-		    	  Tools.debug("tab:" + (Main.bottomPane.getSelectionIndex() + 1));
+		    	  //Tools.debug("tab:" + (Main.bottomPane.getSelectionIndex() + 1));
 		      }
 	    });
 	}
@@ -116,7 +112,6 @@ public class Hooks
 		    	  Main.textReport.setEnabled(true);
 		    	  Main.textReport.setText("");
 		    	  ReportObject.newReport();
-		    	  Tools.debug("button:" + "genReport");
 		      }
 	    });
 	}
@@ -129,7 +124,6 @@ public class Hooks
 		      {
 		    	  Main.textReport.setText("");
 		    	  Main.textReport.setEnabled(false);
-		    	  Tools.debug("button:" + "clearReport");
 		      }
 	    });
 	}
@@ -164,7 +158,6 @@ public class Hooks
 	    		  
 	    		  Main.bottomPane.setSelection(Main.tab1);
 	    	  }	    	
-	    	  Tools.debug("button:" + "editNotes");
 	      }
 	    });
 	}
@@ -256,7 +249,6 @@ public class Hooks
 		    		  	}
 	    		  });
 	    	  }
-	    	  Tools.debug("button:" + "editTime");
 	      }
 	    });
 	}
@@ -289,7 +281,6 @@ public class Hooks
 			    	  }
 			    	  
 			    	  Main.recentTasks.setSelection(0);
-			    	  Tools.debug("button:" + "deleteTask:" + row);
 		    	  }
 		      }
 	    });
@@ -304,7 +295,6 @@ public class Hooks
 					if(Main.reportToggle)
 					{
 						Main.reportToggle = false;
-						Tools.debug("radio:" + "modeStart");
 					}
 		      }
 	    });
@@ -319,7 +309,6 @@ public class Hooks
 					if(!Main.reportToggle)
 					{
 						Main.reportToggle = true;
-						Tools.debug("radio:" + "modeEnd");
 					}
 		      }			
 	    });
@@ -332,7 +321,6 @@ public class Hooks
 	    	public void widgetSelected(org.eclipse.swt.events.SelectionEvent event)
 	    	{
 	    		BrowsePath.browseDialog();
-	    		Tools.debug("button:" + "browseDialog");
 	    	}
 	    });
 	}
@@ -344,7 +332,6 @@ public class Hooks
 	    	public void widgetSelected(org.eclipse.swt.events.SelectionEvent event)
 	    	{
 	    		BrowsePath.saveDialog();
-	    		Tools.debug("button:" + "saveDialog");
 	    	}
 	    });
 	}
@@ -362,14 +349,12 @@ public class Hooks
 					Main.bottomPane.setBounds(Main.up);
 					Main.collapse.setText(">>");
 					Main.interfaceDown = false;
-					Tools.debug("panel:" + "collapse");
 				} 
 				else 
 				{
 					Main.bottomPane.setBounds(Main.down);
 					Main.collapse.setText("<<");
 					Main.interfaceDown = true;
-					Tools.debug("panel:" + "expand");
 				}
 				Main.frame.pack ();
 		    }

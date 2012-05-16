@@ -24,7 +24,7 @@ public class BrowsePath
 	  		  
   	    	if (file.equals(Main.selectedFile))
   	      	{
-  	    		Tools.debug("browse:" + "dupe");
+  	    		Main.fileStatus.setText("Duplicate file");
   	      	}
   	    	Main.selectedFile = file;
 	      	Main.textDir.setEnabled(true);
