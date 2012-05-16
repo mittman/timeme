@@ -75,6 +75,11 @@ public class TaskObject
 		Main.allTasks.getItem(saveToRowIndex).setText(row);
 		Main.allTasks.setSelection(saveToRowIndex);
 		
+		if(Main.clockTicking && (Main.title.isFocusControl() || Main.textNotes.isFocusControl()))
+		{
+			elapsed = "Running";
+		}
+		
 		// Add to recentTasks
 		String[] list = { title, elapsed, taskID };
 		addRecent(0, list);
