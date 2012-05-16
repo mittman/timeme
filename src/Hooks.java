@@ -142,16 +142,25 @@ public class Hooks
 	      {
 	    	  if(Main.allTasks.getSelectionIndex() != -1)
 	    	  {
-	    		  int selected = Main.allTasks.getSelectionIndex();
+	    		  	int index = Main.allTasks.getSelectionIndex();
 
-	    		  SaveObject.collectCurrentTask();
-	    		  TaskObject tempTask = TaskObject.returnTaskFromIndex(selected);
-	    		  TaskObject.saveTask(Main.currentTask);
-	    		  Main.currentTask = tempTask;
-	    		  TaskObject.unpackFromCurrentTasktoFields(Main.currentTask);
-	    		  Hooks.tickTock();
-	    		  StopWatch.setElapsed(Main.currentTask.getTotal());
-	    		  Hooks.tickTock();
+					SaveObject.collectCurrentTask();
+					if(index > -1)
+					{
+						if(Main.clockTicking)
+						{
+							Hooks.tickTock();
+						}
+						
+						TaskObject tempTask = TaskObject.returnTaskFromIndex(index);				
+						TaskObject.saveTask(Main.currentTask);
+						Main.currentTask = tempTask;
+						TaskObject.saveTask(Main.currentTask);
+						TaskObject.unpackFromCurrentTasktoFields(Main.currentTask);
+						StopWatch.setElapsed(Main.currentTask.getTotal());
+						Main.clock.setText(StopWatch.clockFormat(Main.currentTask.getTotal()));
+
+					}
 	    		  
 	    		  Main.bottomPane.setSelection(Main.tab1);
 	    	  }	    	
