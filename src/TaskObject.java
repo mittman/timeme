@@ -88,7 +88,7 @@ public class TaskObject
 		Main.title.setText(taskToUnpack.getTitle());
 		Main.textNotes.setText(taskToUnpack.getNotes());
 		StopWatch.setElapsed(taskToUnpack.getTotal());
-		Main.clock.setText(StopWatch.getFormattedElapsed());
+		Main.clock.setText(StopWatch.clockFormat(taskToUnpack.getTotal()));
 	}
 	
 	public static TaskObject returnTaskFromIndex(int rowIndex)
