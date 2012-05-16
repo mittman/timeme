@@ -79,6 +79,12 @@ public class ReportObject
 		
 	public static void newReport()
 	{
+	  	  TaskObject.saveCurrentToRow();
+	  	  if(Main.clockTicking)
+	  	  {
+	  		  Main.recentTasks.getItem(0).setText(1, "Running");
+	  	  }
+	  	  
 	  	  String[][] reports = new String[Main.allTasks.getItemCount()][4];
 	  	  getData(reports);
 	  	  
