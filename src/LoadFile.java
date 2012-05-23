@@ -20,8 +20,6 @@ public class LoadFile
 		
 		if(fileExists)
 		{
-			// Clear timer
-			StopWatch.clearTimer();
 			
 			// Empty existing table
 			while(Main.recentTasks.getItemCount() > 0)
@@ -32,6 +30,9 @@ public class LoadFile
 			{
 				Main.allTasks.remove(0);
 			}			
+
+			// Clear timer
+			StopWatch.clearTimer();
 			
 			// Load existing file
 			try
