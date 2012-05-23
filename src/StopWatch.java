@@ -7,7 +7,7 @@
 public class StopWatch 
 {
 	   public static long begin = System.currentTimeMillis();
-	   private static long change = 0;
+	   private static double change = 0;
 	   public static long elapsed = 0;
 
 	   public static void clearTimer()
@@ -81,6 +81,7 @@ public class StopWatch
 		public static void setElapsed(long elapsed)
 		{
 			StopWatch.elapsed = elapsed;
+			StopWatch.change = Math.ceil((elapsed/100.0));
 		}
 						
 	    public static long getElapsed()
@@ -109,12 +110,11 @@ public class StopWatch
 		}
 		
 		public static void countChange()
-		{
-			
-			if(change+1000 < elapsed)
+		{	
+			if((elapsed/100.0) > change)
 			{
 				Main.frame.setText("TimeMe " + minFormat(elapsed));
-				change += 1000;
+				change = Math.ceil((elapsed/100.0));
 			}
 		}
 }
