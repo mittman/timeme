@@ -7,8 +7,8 @@ Moved project from [Google Code](https://code.google.com/archive/a/eclipselabs.o
 
 ## Quick links:
 #### Download - [TimeMe 1.1 JAR](https://github.com/mittman/timeme/raw/master/jars/TimeMe_1.1.jar)
-#### Documentation - [Software Requirements Specification (SRS)](docs/TimeMe_SRS.pdf)
-#### Overview - [Slide Presentation](docs/TimeMe_present.pdf)
+#### Documentation - [Software Requirements Specification (SRS)](files/TimeMe_SRS.pdf)
+#### Overview - [Slide Presentation](files/TimeMe_present.pdf)
 
 ## Screenshots:
 ![screenshot](wiki/TimeMe_Z18_gtk2-ambiance.png)
