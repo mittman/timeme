@@ -6,7 +6,7 @@ Open source Java-based time-tracking event list.
 Moved project from [Google Code](https://code.google.com/archive/a/eclipselabs.org/p/timeme) to [GitHub](https://github.com/mittman/timeme)
 
 ## Quick links:
-#### Download - [TimeMe 1.1 JAR](https://github.com/mittman/timeme/raw/master/jars/TimeMe_1.1.jar)
+#### Download - [TimeMe 1.1 JAR](https://github.com/mittman/timeme/releases/download/v1.1/TimeMe_1.1.jar)
 #### Documentation - [Software Requirements Specification (SRS)](files/TimeMe_SRS.pdf)
 #### Overview - [Slide Presentation](files/TimeMe_present.pdf)
 
